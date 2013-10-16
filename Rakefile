@@ -17,11 +17,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "sportsdata"
   gem.homepage = "http://github.com/miamiruby/sportsdata"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Sports Data}
+  gem.description = %Q{Fetch Data from sportsdatainc.com}
   gem.email = "paul@miamiphp.org"
-  gem.authors = ["Paul Kruger"]
-  # dependencies defined in Gemfile
+  gem.authors = ["Paul Kruger", "Aldo Delgado"]
 end
 Jeweler::RubygemsDotOrgTasks.new
 
