@@ -26,9 +26,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
-    "lib/sportsdata.rb",
-    "test/helper.rb",
-    "test/test_sportsdata.rb"
+    "lib/sportsdata.rb"
   ]
   s.homepage = "http://github.com/miamiruby/sportsdata"
   s.licenses = ["MIT"]
