@@ -8,7 +8,7 @@ To configure sports data
 /config/initializers/sportsdata.rb
 
 ```ruby
-SPORTSDATA.configure do |config|
+Sportsdata.configure do |config|
   config.nfl_api_key    = ENV['NFL_API_KEY']
   config.nhl_api_key    = ENV['NHL_API_KEY']
   config.nba_api_key    = ENV['NBA_API_KEY']

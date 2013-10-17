@@ -1,12 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
-describe SPORTSDATA do
+
+describe Sportsdata do
   it "should respond to configure" do
     subject.respond_to?(:configure).should be
   end
 
   context "Sports Data Config" do
     before do
-      SPORTSDATA.configure do |config|
+      Sportsdata.configure do |config|
         config.nfl_api_key = 'nfl'
         config.nhl_api_key = 'nhl'
         config.nba_api_key = 'nba'

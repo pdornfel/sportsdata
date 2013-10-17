@@ -1,4 +1,6 @@
-module SPORTSDATA
+require 'sportsdata/nfl.rb'
+
+module Sportsdata
   class << self
     attr_accessor :nfl_api_key
     attr_accessor :nhl_api_key
