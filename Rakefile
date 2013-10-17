@@ -11,6 +11,11 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
+desc "Open an irb session preloaded with this library"
+task :console do
+    sh "irb -rubygems -I lib -r sportsdata.rb"
+end
+
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
@@ -21,17 +26,18 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Fetch Data from sportsdatainc.com}
   gem.email = "paul@miamiphp.org"
   gem.authors = ["Paul Kruger", "Aldo Delgado"]
+  gem.files.include 'lib/**/*'
 end
+
 Jeweler::RubygemsDotOrgTasks.new
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
 end
 
-task :default => :test
+task :default => :spec
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
