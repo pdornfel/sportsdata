@@ -2,7 +2,8 @@
 
 Sports Data Gem
 
-Setting up travis-ci
+Build Status
+{<img src="https://travis-ci.org/miamiruby/sportsdata.png" alt="Build Status" />}[https://travis-ci.org/miamiruby/sportsdata]
 == Copyright
 
 Copyright (c) 2013 Paul Kruger and Aldo Delgado. See LICENSE.txt for
