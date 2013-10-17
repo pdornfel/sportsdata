@@ -7,6 +7,14 @@ sportsdatainc.com
 To configure sports data
 /config/initializers/sportsdata.rb
 
+You can access this gem through console
+rake console
+
+How to do a single line config in console
+```ruby
+Sportsdata.configure{|config| config.nfl_api_key = 'moo'}
+```
+
 ```ruby
 Sportsdata.configure do |config|
   config.nfl_api_key    = ENV['NFL_API_KEY']
