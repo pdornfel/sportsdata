@@ -2,13 +2,13 @@ require 'active_support/core_ext/hash'
 require 'rubygems'
 
 module Sportsdata
-  class Nfl
+  class Nhl
     #include HTTParty
     attr_accessor :api_key, :api_mode
     #default_timeout 15
 
     def initialize
-      @api_key = Sportsdata.nfl_api_key
+      @api_key = Sportsdata.nhl_api_key
       @api_mode = Sportsdata.api_mode
     end
 
