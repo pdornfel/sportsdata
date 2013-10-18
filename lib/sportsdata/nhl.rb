@@ -1,15 +1,15 @@
-require 'active_support/core_ext/hash'
-require 'rubygems'
-
 module Sportsdata
   class Nhl
     #include HTTParty
     attr_accessor :api_key, :api_mode
     #default_timeout 15
 
-    def initialize
-      @api_key = Sportsdata.nhl_api_key
-      @api_mode = Sportsdata.api_mode
+    def self.api_key
+      Sportsdata.nhl_api_key
+    end
+
+    def self.api_mode
+      Sportsdata.api_mode
     end
 
     def venues(options = {})

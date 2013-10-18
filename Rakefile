@@ -2,6 +2,8 @@
 
 require 'rubygems'
 require 'bundler'
+require 'yaml'
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -13,7 +15,13 @@ require 'rake'
 
 desc "Open an irb session preloaded with this library"
 task :console do
-    sh "irb -rubygems -I lib -r sportsdata.rb"
+
+  dev = File.join('config.yml')
+  config_string = ''
+  YAML.load(File.open(dev)).each do |key, value|
+    config_string += "#{key}=#{value} "
+  end if File.exists?(dev)
+  sh "#{config_string} irb -rubygems -I lib -r sportsdata_console.rb"
 end
 
 require 'jeweler'

@@ -1,5 +1,5 @@
 module Sportsdata
-  module Nfl
+  module Ncaamb
     class Exception < ::Exception
     end
     #include HTTParty
@@ -7,7 +7,7 @@ module Sportsdata
     #default_timeout 15
 
     def self.api_key
-      Sportsdata.nfl_api_key
+      Sportsdata.ncaamb_api_key
     end
 
     def self.api_mode
@@ -19,7 +19,6 @@ module Sportsdata
     end
 
     def self.teams(options = {})
-      #puts self.api_key
       []
     end
 
