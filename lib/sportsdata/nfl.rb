@@ -15,129 +15,111 @@ module Sportsdata
       Sportsdata.api_mode
     end
 
-    def get_raw(base, url)
-      conn = Faraday.new base do |c|
-        c.response :xml, :content_type => /\bxml$/
-        c.adapter Faraday.default_adapter
-      end
-
-      req = conn.get url
-      return req.body
+    def self.venuesx(options = {})
+      raise Sportsdata::Exception.new("Sportsdata could not be reached")
     end
 
     def self.venues(options = {})
-      # Create a new SportsData object
-      sd = SportsData.new
-
-      # 
-      data = sd.get options.first['teams'], options
-
-      # Base URL for Sports Data
-      base = "http://api.sportsdatallc.org/nfl-#{options.api_mode}1"
-
-      # URL &  for calling venues
-      url = "venus/venues.xml?api_key=#{options.nflapi_key}"
-
-      # Create a venues array
       venues = []
-
-      # 
-      xvenues = data['league'].try(:[], 'conference')
-
-      # If xvenues is empty create an array
-      xvenues ||= []
-
-      # Create an hash for storing the venues we get back from the API
-      venue_record = {}
-
-      # Loop through the xvenues on conference
-      xvenues.each { |conference|
-
-        # Loop through the xvenues on division
+      url = "teams/hierarchy.xml"
+      response = self.get_raw(url)
+      debugger
+      all_venues = response['league'].try(:[], 'conference')
+      all_venues ||= []
+      all_venues.each { |conference|
         conference['division'].each { |division|
-
-          # Loop through the xvenues on team
           division['team'].each { |team|
-
-            # Match API columns to our new hash
-            venue_record['name']              = team['venue']['name']
-            venue_record['slug']              = sd.to_slug(team['venue']['name']).downcase
-            venue_record['url']               = ''
-            venue_record['state']             = sd.get_state(team['venue']['state'])
-            venue_record['city']              = team['venue']['city']
-            venue_record['sports_data_guid']  = team['venue']['id']
-            venue_record['twitter']           = ''
-            venue_record['capacity']          = team['venue']['capacity']
-
-            #venue_record['address'] = team['venue']['address']
-            venue_record['surface'] = team['venue']['surface']
-            venue_record['type'] = team['venue']['type']
-            #venue_record['zip'] = team['venue']['zip']
-
-            sport = Sport.where("slug = ?", options.first['sport_abbr']).first
-
-            if venue_record
-              team_venue = Venue.new(
-                :name => venue_record['name'].humanize.titlecase,
-                :slug => venue_record['slug'],
-                :url => '',
-                :state => venue_record['state'],
-                :city => venue_record['city'],
-                :sports_data_guid => venue_record['sports_data_guid'],
-                :twitter => '',
-                :capacity => venue_record['capacity'],
-                :surface => venue_record['surface'],
-                :venue_type => venue_record['type'],
-                :left_field => '',
-                :left_center_field => '',
-                :center_field => '',
-                :right_center_field => '',
-                :right_field => '',
-                :middle_left_field => '',
-                :middle_left_center_field => '',
-                :middle_right_field => '',
-                #:address => venue_record['address'],
-                #venue_record['zip'] = team['venue']['zip']
-                :sport_id => sport.id,
-              )
-            else
-              return nil
-            end
-            venues.append(team_venue)
+            venue_record = {}
+            venue_record[:name]              = team['venue']['name'].humanize.titlecase
+            venue_record[:slug]              = sd.to_slug(team['venue']['name']).downcase
+            venue_record[:state]             = sd.get_state(team['venue']['state'])
+            venue_record[:city]              = team['venue']['city']
+            venue_record[:sports_data_guid]  = team['venue']['id']
+            venue_record[:capacity]          = team['venue']['capacity']
+            venue_record[:surface]           = team['venue']['surface']
+            venue_record[:venue_type]        = team['venue']['type']
+            venues.append(venue_record)
           }
         }
       }
-      venues_cache = {}
-      venues.each do | t |
-        venue = Venue.where("sports_data_guid = ?", t['sports_data_guid']).first
-        venue ||= t
-        venue.save
-        venues_cache[venue.sports_data_guid] = venue
-      end
-
-
-
+      venues
     end
 
     def self.teams(options = {})
-      #puts self.api_key
-      []
+      raise Sportsdata::Exception.new("Sportsdata could not be reached")
+    end
+
+    def self.teamsx(options = {})
+      # Base URL for Sports Data
+      base = "http://api.sportsdatallc.org/nfl-#{self.api_mode}1"
+
+      # URL &  for calling venues
+      url = "teams/hierarchy.xml?api_key=#{self.api_key}"
+
+      # Get XML data
+      data = self.get_raw(base, url)
+
     end
 
     def self.players(options = {})
-      []
+      raise Sportsdata::Exception.new("Sportsdata could not be reached")
     end
 
     def self.games(options = {})
       []
+      raise Sportsdata::Exception.new("Sportsdata could not be reached")
     end
 
     def self.schedules(options = {})
       []
+      raise Sportsdata::Exception.new("Sportsdata could not be reached")
     end
 
     private
+    def self.version
+      "1"
+    end
+
     def self.base_url
+      "http://api.sportsdatallc.org/nfl-#{self.api_mode}#{self.version}"
+    end
+
+    def self.get_rawx(url)
+      begin
+        return RestClient.get(url, params: { api_key: SportsDataApi.key })
+      rescue RestClient::RequestTimeout => timeout
+        raise SportsDataApi::Exception, 'The API did not respond in a reasonable amount of time'
+      rescue RestClient::Exception => e
+        message = if e.response.headers.key? :x_server_error
+                    JSON.parse(e.response.headers[:x_server_error], { symbolize_names: true })[:message]
+                  elsif e.response.headers.key? :x_mashery_error_code
+                    e.response.headers[:x_mashery_error_code]
+                  else
+                    "The server did not specify a message"
+                  end
+        raise SportsDataApi::Exception, message
+      end
+    end
+
+    def self.get_raw(url)
+      begin
+        api = Faraday.new self.base_url, :api_key => self.api_key do |a|
+          a.response :xml, :content_type => /\bxml$/
+          a.adapter Faraday.default_adapter
+        end
+        return api.get url
+      rescue Faraday::Error::TimeoutError => timeout
+        raise Sportsdata::Exception, 'Sportsdata Timeout Error'
+      rescue Faraday::Error::Exception => e
+        message = if e.response.headers.key? :x_server_error
+                    JSON.parse(e.response.headers[:x_server_error], { symbolize_names: true })[:message]
+                  elsif e.response.headers.key? :x_mashery_error_code
+                    e.response.headers[:x_mashery_error_code]
+                  else
+                    "The server did not specify a message"
+                  end
+        raise Sportsdata::Exception, message
+      end
     end
 
     def self.errors

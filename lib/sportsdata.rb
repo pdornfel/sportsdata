@@ -1,4 +1,7 @@
 require 'ostruct'
+require 'open-uri'
+require 'faraday_middleware'
+require 'active_support/all'
 
 module Sportsdata
   class << self
@@ -14,9 +17,6 @@ module Sportsdata
     attr_accessor :log_level
     attr_accessor :nfl
 
-    #def self.nfl
-    #  Sportsdata::Nfl
-    #end
     def sports
       hash = {
        :nfl => nfl,

@@ -19,11 +19,17 @@ describe Sportsdata do
     end
     it "should be able to configure api keys and mode" do
       subject.nfl_api_key.should == 'nfl'
+      subject.nfl.api_key.should == 'nfl'
       subject.nhl_api_key.should == 'nhl'
+      subject.nhl.api_key.should == 'nhl'
       subject.nba_api_key.should == 'nba'
+      subject.nba.api_key.should == 'nba'
       subject.mlb_api_key.should == 'mlb'
+      subject.mlb.api_key.should == 'mlb'
       subject.ncaafb_api_key.should == 'ncaafb'
+      subject.ncaafb.api_key.should == 'ncaafb'
       subject.ncaamb_api_key.should == 'ncaamb'
+      subject.ncaamb.api_key.should == 'ncaamb'
       subject.api_mode.should == 'rt'
     end
   end
