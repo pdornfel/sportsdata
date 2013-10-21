@@ -26,7 +26,6 @@ describe Sportsdata::Nfl do
     end
 
     describe '.teams' do
-      debugger
       it { expect { subject.teams }.to raise_error(Sportsdata::Exception) }
     end
 
