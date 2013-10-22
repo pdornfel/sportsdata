@@ -6,8 +6,6 @@ describe Sportsdata::Nfl, vcr: {
     match_requests_on: [:uri]
   } do
 
-#describe Sportsdata::Nfl do
-
  context 'no response from the api' do
    before(:each) {
      stub_request(:any, /api\.sportsdatallc\.org.*/).to_timeout
@@ -21,16 +19,13 @@ describe Sportsdata::Nfl, vcr: {
     it { expect { subject.teams }.to raise_error(Sportsdata::Exception) }
    end
 
-   describe '.players' do
-     it { expect { subject.players }.to raise_error(Sportsdata::Exception) }
-   end
-
    describe '.games' do
      it { expect { subject.games }.to raise_error(Sportsdata::Exception) }
    end
 
-   describe '.schedules' do
-     it { expect { subject.schedules }.to raise_error(Sportsdata::Exception) }
+   describe '.players' do
+     it { expect { subject.players }.to raise_error(Sportsdata::Exception) }
    end
+
  end
 end
