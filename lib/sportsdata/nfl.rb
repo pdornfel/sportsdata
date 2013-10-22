@@ -34,13 +34,13 @@ module Sportsdata
         conference['division'].each { |division|
           division['team'].each { |team|
             venue_record = {}
-            venue_record[:name]              = team['venue']['name'].humanize.titlecase
-            venue_record[:state]             = team['venue']['state']
-            venue_record[:city]              = team['venue']['city']
-            venue_record[:guid]  = team['venue']['id']
-            venue_record[:capacity]          = team['venue']['capacity']
-            venue_record[:surface]           = team['venue']['surface']
-            venue_record[:venue_type]        = team['venue']['type']
+            venue_record[:name]       = team['venue']['name'].humanize.titlecase
+            venue_record[:state]      = team['venue']['state']
+            venue_record[:city]       = team['venue']['city']
+            venue_record[:guid]       = team['venue']['id']
+            venue_record[:capacity]   = team['venue']['capacity']
+            venue_record[:surface]    = team['venue']['surface']
+            venue_record[:venue_type] = team['venue']['type']
             venues.append(Venue.new(venue_record))
           }
         }
@@ -49,32 +49,58 @@ module Sportsdata
     end
 
     def self.teams(options = {})
-      raise Sportsdata::Exception.new("Sportsdata could not be reached")
+      teams = []
+      response = self.get_raw(self.teams_url)
+      all_teams = response['league'].try(:[], 'conference')
+      all_teams ||= []
+      all_teams.each { |conference|
+        team_record = {}
+        team_record[:league_abbr] = conference['name']
+        conference['division'].each { |division|
+          team_record[:division] = division['name']
+          division['team'].each { |team|
+            team_record[:guid]  = team['id']
+            team_record[:abbr]  = team['id']
+            team_record[:name]  = team['market'] + ' ' + team['name']
+            team_record[:slug]  = sd.to_slug(team_record['name']).downcase
+            team_record[:city]  = team['market']
+            teams.append(Team.new(team_record))
+          }
+        }
+      }
+      teams
     end
 
-    def self.teamsx(options = {})
-      # Base URL for Sports Data
-      base = "http://api.sportsdatallc.org/nfl-#{self.api_mode}1"
-
-      # URL &  for calling venues
-      url = "teams/hierarchy.xml?api_key=#{self.api_key}"
-
-      # Get XML data
-      data = self.get_raw(base, url)
-
-    end
-
-    def self.players(options = {})
-      raise Sportsdata::Exception.new("Sportsdata could not be reached")
-    end
-
-    def self.games(options = {})
-      []
-      raise Sportsdata::Exception.new("Sportsdata could not be reached")
+    #fetch last year, this year and next year
+    # 
+    def self.games(options = {:year => Date.today.year, :season => 'REG'})
+      games = []
+      response = self.get_raw(games_url(:year => 2012))
+      #games_url(:year => 2012)
+      #games_url(:year => 2012)
+      all_games = response['season'].try(:[], 'week')
+      all_games ||= []
+      all_games.each { |week|
+        game_record = {}
+        game_record[:week]  = week['week']
+        week['game'].each { |game|
+          game_record[:guid]      = game['guid']
+          game_record[:scheduled] = game['scheduled']
+          game_record[:home]      = game['home']
+          game_record[:away]      = game['away']
+          game_record[:status]    = game['status']
+          games.append(Game.new(game_record))
+        }
+      }
+      games
     end
 
     def self.schedules(options = {})
       []
+      raise Sportsdata::Exception.new("Sportsdata could not be reached")
+    end
+
+    def self.players(options = {})
       raise Sportsdata::Exception.new("Sportsdata could not be reached")
     end
 
@@ -89,6 +115,14 @@ module Sportsdata
 
     def self.venues_url
       "teams/hierarchy.xml"
+    end
+
+    def self.teams_url
+      "teams/hierarchy.xml"
+    end
+
+    def self.games_url(options = {})
+      "#{options[:year]}/#{options[:season]}/schedule.xml"
     end
 
     def self.api
