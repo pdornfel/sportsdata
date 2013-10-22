@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "sportsdata"
-  s.version = "1.0.0"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Kruger", "Aldo Delgado"]
@@ -41,7 +41,10 @@ Gem::Specification.new do |s|
     "lib/sportsdata/nhl.rb",
     "lib/sportsdata_console.rb",
     "spec/cassettes/sportsdata_nfl.yml",
+    "spec/lib/mlb_spec.rb",
+    "spec/lib/nba_spec.rb",
     "spec/lib/nfl_spec.rb",
+    "spec/lib/nhl_spec.rb",
     "spec/spec_helper.rb",
     "spec/sportsdata_spec.rb",
     "sportsdata.gemspec"
