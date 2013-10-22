@@ -2,6 +2,16 @@ module Sportsdata
   module Mlb
     class Exception < ::Exception
     end
+    class Venue < OpenStruct
+    end
+    class Player < OpenStruct
+    end
+    class Team < OpenStruct
+    end
+    class Schedule < OpenStruct
+    end
+    class Game < OpenStruct
+    end
 
     #include HTTParty
     attr_accessor :api_key, :api_mode
@@ -15,118 +25,155 @@ module Sportsdata
       Sportsdata.api_mode
     end
 
-    def self.get_raw(base, url)
-      conn = Faraday.new base do |c|
-        c.response :xml, :content_type => /\bxml$/
-        c.adapter Faraday.default_adapter
-      end
-
-      req = conn.get url
-      return req.body
-    end
-
     def self.venues(options = {})
-      # Base URL for Sports Data
-      base = "http://api.sportsdatallc.org/mlb-#{self.api_mode}3"
-
-      # URL &  for calling venues
-      url = "venues/venues.xml?api_key=#{self.api_key}"
-
-      # Get XML data
-      data = self.get_raw(base, url)
-
-      # Create a venues array
       venues = []
-
-      #
-      xvenues = data['venues'].try(:[], 'venue')
-
-      #
-      xvenues ||= []
-
-      #
-      venue_record = {}
-
-      #
-      xvenues.each { |venue|
-        sport = Sport.where("slug = ?", options.first['sport_abbr']).first
-        venue_record['sports_data_guid'] = venue['id']
-        venue_record['name'] = venue['name']
-        venue_record['slug'] = sd.to_slug(venue['name']).downcase
-        #venue_record['capacity'] = venue['capacity']
-        #venue_record['address'] = venue['address']
-        venue_record['city'] = venue['market']
-        #venue_record['state'] = sd.get_state(venue['state'])
-        #venue_record['surface'] = venue['surface']
-        #venue_record['type'] = venue['type']
-        #venue_record['zip'] = venue['zip']
-        venue_record['left_field'] = venue['distances']['lf']
-        venue_record['left_center_field'] = venue['distances']['lcf']
-        venue_record['center_field'] = venue['distances']['cf']
-        venue_record['right_center_field'] = venue['distances']['rcf']
-        venue_record['right_field'] = venue['distances']['rf']
-        venue_record['middle_left_field'] = venue['distances']['mlf']
-        venue_record['middle_left_center_field'] = venue['distances']['mlcf']
-        venue_record['middle_right_center_field'] = venue['distances']['mrcf']
-        venue_record['middle_right_field'] = venue['distances']['mrf']
-        venue_record['sport_id'] = sport.id
-        if venue_record
-          team_venue = Venue.new(
-            :name => venue_record['name'].humanize.titlecase,
-            :slug => venue_record['slug'],
-            :url => '',
-            :state => '',
-            :city => venue_record['city'],
-            :sports_data_guid => venue_record['sports_data_guid'],
-            :twitter => '',
-            :capacity => '',
-            :surface => '',
-            :venue_type => '',
-            :left_field => venue_record['left_field'],
-            :left_center_field => venue_record['left_center_field'],
-            :center_field => venue_record['center_field'],
-            :right_center_field => venue_record['right_center_field'],
-            :right_field => venue_record['right_field'],
-            :middle_left_field => venue_record['middle_left_field'],
-            :middle_left_center_field => venue_record['middle_left_center_field'],
-            :middle_right_center_field => venue_record['middle_right_center_field'],
-            :middle_right_field => venue_record['middle_right_field'],
-            #:address => venue_record['address'],
-            #venue_record['zip'] = team['venue']['zip']
-            :sport_id => sport.id,
-          )
-        else
-          return nil
-        end
-        venues.append(team_venue)
+      response = self.get_raw(self.venues_url)
+      all_venues = response['league'].try(:[], 'conference')
+      all_venues ||= []
+      all_venues.each { |conference|
+        conference['division'].each { |division|
+          division['team'].each { |team|
+            venue_record = {}
+            venue_record[:name]       = team['venue']['name'].humanize.titlecase
+            venue_record[:state]      = team['venue']['state']
+            venue_record[:city]       = team['venue']['city']
+            venue_record[:guid]       = team['venue']['id']
+            venue_record[:capacity]   = team['venue']['capacity']
+            venue_record[:surface]    = team['venue']['surface']
+            venue_record[:venue_type] = team['venue']['type']
+            venues.append(Venue.new(venue_record))
+          }
+        }
       }
-      venues_cache = {}
-      venues.each do | t |
-        venue = Venue.where("sports_data_guid = ?", t['sports_data_guid']).first
-        venue ||= t
-        venue.save
-        venues_cache[venue.sports_data_guid] = venue
-      end
+      venues
     end
 
     def self.teams(options = {})
-      []
+      teams = []
+      response = self.get_raw(self.teams_url)
+      all_teams = response['league'].try(:[], 'conference')
+      all_teams ||= []
+      all_teams.each { |conference|
+        team_record = {}
+        team_record[:league_abbr] = conference['name']
+        conference['division'].each { |division|
+          team_record[:division] = division['name']
+          division['team'].each { |team|
+            team_record[:guid]  = team['id']
+            team_record[:abbr]  = team['id']
+            team_record[:name]  = team['market'] + ' ' + team['name']
+            team_record[:slug]  = sd.to_slug(team_record['name']).downcase
+            team_record[:city]  = team['market']
+            teams.append(Team.new(team_record))
+          }
+        }
+      }
+      teams
+    end
+
+    #fetch last year, this year and next year
+    # Their are three season options (PRE, REG, PST)
+    def self.games(options = {:year => Date.today.year, :season => 'REG'})
+      games = []
+      response = self.get_raw(games_url(:year => 2012))
+      #games_url(:year => 2012)
+      #games_url(:year => 2012)
+      all_games = response['season'].try(:[], 'week')
+      all_games ||= []
+      all_games.each { |week|
+        game_record = {}
+        game_record[:week]  = week['week']
+        week['game'].each { |game|
+          game_record[:guid]      = game['guid']
+          game_record[:scheduled] = game['scheduled']
+          game_record[:home]      = game['home']
+          game_record[:away]      = game['away']
+          game_record[:status]    = game['status']
+          games.append(Game.new(game_record))
+        }
+      }
+      games
     end
 
     def self.players(options = {})
-      []
-    end
-
-    def self.games(options = {})
-      []
-    end
-
-    def self.schedules(options = {})
-      []
+      players = []
+      response = self.get_raw(players_url(:team_abbr => 'MIA'))
+      all_players = response['team'].try(:[], 'player')
+      all_players ||= []
+      all_players.each { |player|
+        player_record = {}
+        player_record[:guid]            = player['id']
+        player_record[:name_full]       = player['name_full']
+        player_record[:name_first]      = player['name_first']
+        player_record[:name_last]       = player['name_last']
+        player_record[:name_abbr]       = player['name_abbr']
+        player_record[:birthdate]       = player['birthdate']
+        player_record[:birth_place]     = player['birth_place']
+        player_record[:high_school]     = player['high_school']
+        player_record[:height]          = player['height']
+        player_record[:weight]          = player['weight']
+        player_record[:college]         = player['college']
+        player_record[:position]        = player['position']
+        player_record[:jersey_number]   = player['jersey_number']
+        player_record[:status]          = player['status']
+        player_record[:salary]          = player['salary']
+        player_record[:experience]      = player['experience']
+        player_record[:draft_pick]      = player['draft_pick']
+        player_record[:draft_round]     = player['draft_round']
+        player_record[:draft_team]      = player['draft_team']
+        players.append(Player.new(player_record))
+      }
+      players
     end
 
     private
+    def self.version
+      "3"
+    end
+
     def self.base_url
+      "http://api.sportsdatallc.org/mlb-#{self.api_mode}#{self.version}"
+    end
+
+    def self.venues_url
+      "teams/hierarchy.xml"
+    end
+
+    def self.teams_url
+      "teams/hierarchy.xml"
+    end
+
+    def self.games_url(options = {})
+      "#{options[:year]}/#{options[:season]}/schedule.xml"
+    end
+
+    def self.players_url(options = {})
+      "teams/#{options[:team_abbr]}/roster.xml"
+    end
+
+    def self.api
+      Faraday.new self.base_url do |a|
+        a.response :xml, :content_type => /\bxml$/
+        a.adapter Faraday.default_adapter
+      end
+    end
+
+    def self.get_raw(url)
+      begin
+        response = self.api.get(url, { :api_key => self.api_key })
+        return response.body
+      rescue Faraday::Error::TimeoutError => timeout
+        raise Sportsdata::Exception, 'Sportsdata Timeout Error'
+      rescue Exception => e
+        message = if e.response.headers.key? :x_server_error
+                    JSON.parse(e.response.headers[:x_server_error], { symbolize_names: true })[:message]
+                  elsif e.response.headers.key? :x_mashery_error_code
+                    e.response.headers[:x_mashery_error_code]
+                  else
+                    "The server did not specify a message"
+                  end
+        raise Sportsdata::Exception, message
+      end
     end
 
     def self.errors
