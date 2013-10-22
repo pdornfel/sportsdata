@@ -1,5 +1,5 @@
 module Sportsdata
-  module Nfl
+  module Nascar
     class Exception < ::Exception
     end
     class Venue < OpenStruct
@@ -18,7 +18,7 @@ module Sportsdata
     #default_timeout 15
 
     def self.api_key
-      Sportsdata.nfl_api_key
+      Sportsdata.nascar_api_key
     end
 
     def self.api_mode
@@ -62,7 +62,7 @@ module Sportsdata
             team_record[:guid]  = team['id']
             team_record[:abbr]  = team['id']
             team_record[:name]  = team['market'] + ' ' + team['name']
-            team_record[:slug]  = team_record['name']
+            team_record[:slug]  = sd.to_slug(team_record['name']).downcase
             team_record[:city]  = team['market']
             teams.append(Team.new(team_record))
           }
@@ -128,11 +128,11 @@ module Sportsdata
 
     private
     def self.version
-      "1"
+      "3"
     end
 
     def self.base_url
-      "http://api.sportsdatallc.org/nfl-#{self.api_mode}#{self.version}"
+      "http://api.sportsdatallc.org/mlb-#{self.api_mode}#{self.version}"
     end
 
     def self.venues_url
