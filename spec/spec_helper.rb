@@ -26,5 +26,8 @@ VCR.configure do |c|
   c.configure_rspec_metadata!
   ##
   # Filter the real API key so that it does not make its way into the VCR cassette
-  c.filter_sensitive_data('<API_KEY>')  { api_key }
+  #dev = File.join('config.yml')
+  #YAML.load(File.open(dev)).each do |key, value|
+  #  c.filter_sensitive_data("<#{key}>")  { value }
+  #end if File.exists?(dev)
 end
