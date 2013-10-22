@@ -15,4 +15,3 @@ Sportsdata.configure do |config|
   #API_MODE use 'rt' for production and 't' for testing
   config.api_mode = 't'
 end
-

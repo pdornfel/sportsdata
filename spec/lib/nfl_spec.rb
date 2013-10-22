@@ -10,17 +10,6 @@ describe Sportsdata::Nfl, vcr: {
 
  context 'no response from the api' do
    before(:each) {
-     Sportsdata.configure do |config|
-       config.nfl_api_key = ENV['NFL_API_KEY']
-       config.nhl_api_key = ENV['NHL_API_KEY']
-       config.nba_api_key = ENV['NBA_API_KEY']
-       config.mlb_api_key = ENV['MLB_API_KEY']
-       config.ncaafb_api_key = ENV['NCAAFB_API_KEY']
-       config.ncaamb_api_key = ENV['NCAAMB_API_KEY']
-       config.nascar_api_key = ENV['NASCAR_API_KEY']
-       config.golf_api_key = ENV['GOLF_API_KEY']
-       config.api_mode = ENV['API_MODE']
-     end
      stub_request(:any, /api\.sportsdatallc\.org.*/).to_timeout
    }
 
@@ -50,17 +39,6 @@ describe Sportsdata::Nfl, vcr: {
 #   #let(:venues_url) { 'teams/hierarchy.xml' }
 #   #let(:teams_url) { 'http://api.sportsdatallc.org/nfl-t1/teams/hierarchy.xml' }
 #   before(:each) do
-#     Sportsdata.configure do |config|
-#       config.nfl_api_key = ENV['NFL_API_KEY']
-#       config.nhl_api_key = ENV['NHL_API_KEY']
-#       config.nba_api_key = ENV['NBA_API_KEY']
-#       config.mlb_api_key = ENV['MLB_API_KEY']
-#       config.ncaafb_api_key = ENV['NCAAFB_API_KEY']
-#       config.ncaamb_api_key = ENV['NCAAMB_API_KEY']
-#       config.nascar_api_key = ENV['NASCAR_API_KEY']
-#       config.golf_api_key = ENV['GOLF_API_KEY']
-#       config.api_mode = ENV['API_MODE']
-#     end
 #     @venues_xml = Sportsdata.nfl.get_raw("#{venues_url}")
 #     #@teams_xml = Faraday.new.get("#{teams_url}?api_key=#{Sportsdata.nfl_api_key}")
 #   end
