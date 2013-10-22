@@ -102,6 +102,7 @@ module Sportsdata
           #game_record[:broadcast_satellite]  = game['broadcast']['satellite']
           #game_record[:broadcast_internet]   = game['broadcast']['internet']
           #game_record[:broadcast_cable]      = game['broadcast']['cable']
+          debugger
           games.append(Game.new(game_record))
         }
       }

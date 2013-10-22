@@ -1,5 +1,5 @@
 module Sportsdata
-  module Mlb
+  module Ncaafb
     class Exception < ::Exception
     end
     class Venue < OpenStruct
@@ -18,7 +18,7 @@ module Sportsdata
     #default_timeout 15
 
     def self.api_key
-      Sportsdata.mlb_api_key
+      Sportsdata.ncaafb_api_key
     end
 
     def self.api_mode
