@@ -34,10 +34,12 @@ module Sportsdata
         conference['division'].each { |division|
           division['team'].each { |team|
             venue_record = {}
-            venue_record[:name]       = team['venue']['name'].humanize.titlecase
-            venue_record[:state]      = team['venue']['state']
-            venue_record[:city]       = team['venue']['city']
             venue_record[:guid]       = team['venue']['id']
+            venue_record[:name]       = team['venue']['name']
+            venue_record[:address]    = team['venue']['address']
+            venue_record[:city]       = team['venue']['city']
+            venue_record[:state]      = team['venue']['state']
+            venue_record[:zip]        = team['venue']['zip']
             venue_record[:capacity]   = team['venue']['capacity']
             venue_record[:surface]    = team['venue']['surface']
             venue_record[:venue_type] = team['venue']['type']
@@ -61,8 +63,7 @@ module Sportsdata
           division['team'].each { |team|
             team_record[:guid]  = team['id']
             team_record[:abbr]  = team['id']
-            team_record[:name]  = team['market'] + ' ' + team['name']
-            team_record[:slug]  = team_record['name']
+            team_record[:name]  = team['name']
             team_record[:city]  = team['market']
             teams.append(Team.new(team_record))
           }
@@ -89,6 +90,18 @@ module Sportsdata
           game_record[:home]      = game['home']
           game_record[:away]      = game['away']
           game_record[:status]    = game['status']
+
+          #game_record[:wind_speed]           = game['weather']['wind']['speed']
+          #game_record[:wind_direction]       = game['weather']['wind']['direction']
+
+          #game_record[:weather_temperature]  = game['weather']['temperature']
+          #game_record[:weather_condition]    = game['weather']['condition']
+          #game_record[:weather_humidity]     = game['weather']['humidity']
+
+          #game_record[:broadcast_network]    = game['broadcast']['network']
+          #game_record[:broadcast_satellite]  = game['broadcast']['satellite']
+          #game_record[:broadcast_internet]   = game['broadcast']['internet']
+          #game_record[:broadcast_cable]      = game['broadcast']['cable']
           games.append(Game.new(game_record))
         }
       }
@@ -121,6 +134,7 @@ module Sportsdata
         player_record[:draft_pick]      = player['draft_pick']
         player_record[:draft_round]     = player['draft_round']
         player_record[:draft_team]      = player['draft_team']
+        debugger
         players.append(Player.new(player_record))
       }
       players
