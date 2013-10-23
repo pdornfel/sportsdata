@@ -14,4 +14,5 @@ group :development do
   gem "debugger"
   gem 'vcr'
   gem 'webmock', "~> 1.9.0"
+  gem 'travis'
 end
