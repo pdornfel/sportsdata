@@ -25,17 +25,16 @@ RSpec.configure do |config|
   end if File.exists?(dev)
 end
 
-
 Sportsdata.configure do |config|
-  config.nfl_api_key = ENV['NFL_API_KEY']
-  config.nhl_api_key = ENV['NHL_API_KEY']
-  config.nba_api_key = ENV['NBA_API_KEY']
-  config.mlb_api_key = ENV['MLB_API_KEY']
-  config.ncaafb_api_key = ENV['NCAAFB_API_KEY']
-  config.ncaamb_api_key = ENV['NCAAMB_API_KEY']
-  config.nascar_api_key = ENV['NASCAR_API_KEY']
-  config.golf_api_key = ENV['GOLF_API_KEY']
-  config.api_mode = ENV['API_MODE']
+  config.nfl_api_key = ENV['SPORTSDATA_NFL_API_KEY']
+  config.nhl_api_key = ENV['SPORTSDATA_NHL_API_KEY']
+  config.nba_api_key = ENV['SPORTSDATA_NBA_API_KEY']
+  config.mlb_api_key = ENV['SPORTSDATA_MLB_API_KEY']
+  config.ncaafb_api_key = ENV['SPORTSDATA_NCAAFB_API_KEY']
+  config.ncaamb_api_key = ENV['SPORTSDATA_NCAAMB_API_KEY']
+  config.nascar_api_key = ENV['SPORTSDATA_NASCAR_API_KEY']
+  config.golf_api_key = ENV['SPORTSDATA_GOLF_API_KEY']
+  config.api_mode = ENV['SPORTSDATA_API_MODE']
 end
 
 VCR.configure do |c|
