@@ -129,7 +129,6 @@ module Sportsdata
         #player_record[:injury_description]= player['injuries']['injury']['desc']
         #player_record[:injury_status]= player['injuries']['injury']['status']
         #player_record[:injury_start_date]= player['injuries']['injury']['start_date']
-        debugger
         players.append(Player.new(player_record))
       }
       players

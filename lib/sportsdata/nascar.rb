@@ -13,9 +13,7 @@ module Sportsdata
     class Game < OpenStruct
     end
 
-    #include HTTParty
     attr_accessor :api_key, :api_mode
-    #default_timeout 15
 
     def self.api_key
       Sportsdata.nascar_api_key

@@ -102,7 +102,6 @@ module Sportsdata
           #game_record[:broadcast_satellite]  = game['broadcast']['satellite']
           #game_record[:broadcast_internet]   = game['broadcast']['internet']
           #game_record[:broadcast_cable]      = game['broadcast']['cable']
-          debugger
           games.append(Game.new(game_record))
         }
       }
@@ -135,7 +134,6 @@ module Sportsdata
         player_record[:draft_pick]      = player['draft_pick']
         player_record[:draft_round]     = player['draft_round']
         player_record[:draft_team]      = player['draft_team']
-        debugger
         players.append(Player.new(player_record))
       }
       players

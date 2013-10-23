@@ -91,7 +91,6 @@ module Sportsdata
         game_record[:home_team_abbr]  = game['home']['alias']
         game_record[:away_team_name]  = game['away']['name']
         game_record[:away_team_abbr]  = game['away']['alias']
-        debugger
         games.append(Game.new(game_record))
       }
       games
@@ -101,7 +100,6 @@ module Sportsdata
       players = []
       response = self.get_raw(players_url(:team_guid => '583ecd4f-fb46-11e1-82cb-f4ce4684ea4c'))
       all_players = response['team'].try(:[], 'players')
-      debugger
       all_players ||= []
       all_players.each { |player|
         player_record = {}
