@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Kruger", "Aldo Delgado"]
-  s.date = "2013-10-22"
+  s.date = "2013-10-23"
   s.description = "Fetch Data from sportsdatainc.com"
   s.email = "paul@miamiphp.org"
   s.extra_rdoc_files = [
@@ -52,7 +52,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/miamiruby/sportsdata"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "2.0.6"
+  s.rubygems_version = "2.0.3"
   s.summary = "Sports Data"
 
   if s.respond_to? :specification_version then
@@ -71,6 +71,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<debugger>, [">= 0"])
       s.add_development_dependency(%q<vcr>, [">= 0"])
       s.add_development_dependency(%q<webmock>, ["~> 1.9.0"])
+      s.add_development_dependency(%q<travis>, [">= 0"])
     else
       s.add_dependency(%q<activesupport>, [">= 0"])
       s.add_dependency(%q<faraday>, [">= 0"])
@@ -84,6 +85,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<debugger>, [">= 0"])
       s.add_dependency(%q<vcr>, [">= 0"])
       s.add_dependency(%q<webmock>, ["~> 1.9.0"])
+      s.add_dependency(%q<travis>, [">= 0"])
     end
   else
     s.add_dependency(%q<activesupport>, [">= 0"])
@@ -98,6 +100,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<debugger>, [">= 0"])
     s.add_dependency(%q<vcr>, [">= 0"])
     s.add_dependency(%q<webmock>, ["~> 1.9.0"])
+    s.add_dependency(%q<travis>, [">= 0"])
   end
 end
 
