@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "sportsdata"
-  s.version = "1.2.0"
+  s.version = "1.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Kruger", "Aldo Delgado"]
@@ -52,7 +52,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/miamiruby/sportsdata"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "2.0.3"
+  s.rubygems_version = "2.0.6"
   s.summary = "Sports Data"
 
   if s.respond_to? :specification_version then
