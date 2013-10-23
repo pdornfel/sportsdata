@@ -1,6 +1,16 @@
 language: ruby
 rvm:
-  - 2.0.0
+- 2.0.0
 script:
-  - cp config.example.yml config.yml
-  - bundle exec rake
+- bundle exec rake
+env:
+  global:
+  - secure: DmSvwJWWX8Rs//EIaU8YUz/RmUo1ItOjub3bOlFUN3A+onNYL7v1+Gxk/ZEad/1f9fJUQcMok+7tU2/i60YC6Qx3foXfGD6gBIU14ojT86hH04VdarTo2WEVMJRb3GVrpRJsAOJSa5rNawTMJd8ikKA0Sar7p22HsOiEKw6SuzM=
+  - secure: ROPGh0rD38vrC9hJgcFdjx55xa48jfjYqQP2/rmSNt2iEFiLdFR0ySQJ6jjHexDWygqJEYTpsRDcDlSbTg84uKiVQsKPn8F9SHWgdkoKtEkPZTXvvbe9D2sQWnJsqFheBde/2nHs9Gf7BIXbLHPu5SxeKjSsD2drjR3+bMfMNYU=
+  - secure: mrcj0sxiaFs+Klw5m/wmNaHRfOkY4JYcWjYfa8/JottzwfOf8ql6XqOHemjqc1qze8bwKcPSVXtBKyRMMbt9FAL97JMustvwF8npX+loJfxrQFUzJ7RokwedT7CReYQ7n4SsAnHsEJoyjMLVlALvaDaYKMoZl/XHKfR0GKXPv3M=
+  - secure: g47lw4UZc/C1JMuMv9KVYHYbfeX8PDOpF1dBSGZabKMbXPH422XnQV6JJDhMjqSB4WDWQJ//FQfrQnQ1sCnA//NaIGnvucvUcrSfTTlv1e9/6RtmXaehycvE6KB02wKTVRiDmaNzX+io6hRHnIh/0b86CyyT2pDnxq2Ll9LaSM0=
+  - secure: VMnUQnxi9j+0PqGiO+Yoaix4+o1wnIfacPzvQCv8jX4xB4hbUxcxLDjPdgXUv/qBtdGmf6+hWqQ3rvCSZ1wO2lui3xuUS4Ir5/KW+UAtcyMWpmTaCz5Md9RtZDNNEZoroRsqBmg936JiqHPPcRJAMcjDdKf4A++QNtTBFRo+3ic=
+  - secure: cN5zzxKTFC/ZYDLRFx/0nXvkLTLA4x7sVCYiw/9RbqXpcmKi4Sgo/yboeOE7dNjon7KMvIFd9Huf9HibkJlUFZLNlxei9jJUS1oURy4apVGYmXSxr+kGt7h8liWJeKcglyaxKW6LGTaGhpv4gKcZNRhMOt1O6OOP+1Zq9Bz2IyQ=
+  - secure: FlR7evT2Z2NDH71OXHMrK/ARebdbuHfvjGIiRmwNhEkzY64xGMdlRHVZNXrDLmj600149klIUl2mNi9kTKjwGrRvWuhdcrDzFT7yRVLgIMKDYj4Vloi2jrED5cg8EqusSzEIsfUNXfKV7ALMtah2HRoCLItuYSD8skH3dZg1HkE=
+  - secure: X5+RXjQJDi1RY2VszOdhrfIgD2ugrvW4DQDJ/ylr7Dx3e1pZFDMPDKwZ0JbVx5ppKN9jU+XcTWTlT/p3wvLot8ikwXw1hNv3Qru33ZZ3ny1yMaUB4TYyzDFrHn8NgCRv4z0H7qqFYlbHBDxy3Z1lMeJ8DRniZ/ZQYwf57unwnhI=
+  - secure: E4cNcdJP+jia4xSLPltbvIjS1p5nIhuLvyvNo+vSlUxf3p4rcvnXKwBuEjHZfXyYGp5DjsPo1bSd10Lvj46SvZT8rkIJd4Fj2LOEig6UWpdOu5sCaWmE2Pf/hBHTW2ZzpmGh1e3v5Dnm6wbW9b9LNGs72H4XgkJ9fE4fCZnOG90=
