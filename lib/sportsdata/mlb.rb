@@ -32,7 +32,7 @@ module Sportsdata
       all_venues ||= []
       all_venues.each { |venue|
         venue_record = {}
-        venue_record[:guid]                       = venue['id']
+        venue_record[:sports_data_guid]           = venue['id']
         venue_record[:name]                       = venue['name']
         venue_record[:city]                       = venue['market']
         venue_record[:left_field]                 = venue['distances']['lf']
@@ -56,13 +56,13 @@ module Sportsdata
       all_teams ||= []
       all_teams.each { |team|
         team_record = {}
-        team_record[:guid]        = team['id']
-        team_record[:abbr]        = team['abbr']
-        team_record[:name]        = team['name']
-        team_record[:city]        = team['market']
-        team_record[:league]      = team['league']
-        team_record[:division]    = team['division']
-        team_record[:venue_guid]  = team['venue']
+        team_record[:sports_data_guid]  = team['id']
+        team_record[:abbr]              = team['abbr']
+        team_record[:name]              = team['name']
+        team_record[:city]              = team['market']
+        team_record[:league]            = team['league']
+        team_record[:division]          = team['division']
+        team_record[:venue_guid]        = team['venue']
         teams.append(Team.new(team_record))
       }
       teams
@@ -79,13 +79,13 @@ module Sportsdata
       all_games ||= []
       all_games.each { |game|
         game_record = {}
-        game_record[:guid]                = game['id']
-        game_record[:scheduled_start]     = game['scheduled_start']
+        game_record[:sports_data_guid]    = game['id']
+        game_record[:scheduled_at]        = game['scheduled_start']
         game_record[:season_type]         = game['season_type']
         game_record[:status]              = game['status']
-        game_record[:visitor]             = game['visitor']
-        game_record[:home]                = game['home']
-        game_record[:venue]               = game['venue']
+        game_record[:away_team_guid]      = game['visitor']
+        game_record[:home_team_guid]      = game['home']
+        game_record[:venue_guid]          = game['venue']
         game_record[:tbd]                 = game['tbd']
         game_record[:broadcast_network]   = game['broadcast']['network']
         game_record[:broadcast_satellite] = game['broadcast']['satellite']

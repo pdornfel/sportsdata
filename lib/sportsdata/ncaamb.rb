@@ -34,7 +34,7 @@ module Sportsdata
         conference['division'].each { |division|
           division['team'].each { |team|
             venue_record = {}
-            venue_record[:name]       = team['venue']['name'].humanize.titlecase
+            venue_record[:name]       = team['venue']['name']
             venue_record[:state]      = team['venue']['state']
             venue_record[:city]       = team['venue']['city']
             venue_record[:guid]       = team['venue']['id']

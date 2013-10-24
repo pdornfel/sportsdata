@@ -34,13 +34,13 @@ module Sportsdata
         conference['division'].each { |division|
           division['team'].each { |team|
             venue_record = {}
-            venue_record[:guid]       = team['venue']['id']
-            venue_record[:name]       = team['venue']['name']
-            venue_record[:capacity]   = team['venue']['capacity']
-            venue_record[:address]    = team['venue']['address']
-            venue_record[:city]       = team['venue']['city']
-            venue_record[:state]      = team['venue']['state']
-            venue_record[:zip]        = team['venue']['zip']
+            venue_record[:sports_data_guid] = team['venue']['id']
+            venue_record[:name]             = team['venue']['name']
+            venue_record[:capacity]         = team['venue']['capacity']
+            venue_record[:address]          = team['venue']['address']
+            venue_record[:city]             = team['venue']['city']
+            venue_record[:state]            = team['venue']['state']
+            venue_record[:zip]              = team['venue']['zip']
             venues.append(Venue.new(venue_record))
           }
         }
@@ -59,7 +59,7 @@ module Sportsdata
         conference['division'].each { |division|
           team_record[:division] = division['name']
           division['team'].each { |team|
-            team_record[:guid]  = team['id']
+            team_record[:sports_data_guid]  = team['id']
             team_record[:name]  = team['name']
             team_record[:city]  = team['market']
             team_record[:abbr]  = team['alias']
@@ -79,12 +79,12 @@ module Sportsdata
       all_games ||= []
       all_games['games']['game'].each { |game|
         game_record = {}
-        game_record[:game_guid]         = game['id']
+        game_record[:sports_data_guid]  = game['id']
         game_record[:status]            = game['status']
         game_record[:coverage]          = game['coverage']
         game_record[:home_team_guid]    = game['home_team']
         game_record[:away_team_guid]    = game['away_team']
-        game_record[:scheduled]         = game['scheduled']
+        game_record[:scheduled_at]      = game['scheduled']
         game_record[:broadcast_network] = game['broadcast']['network']
         game_record[:home_team_name]    = game['home']['name']
         game_record[:home_team_abbr]    = game['home']['alias']
@@ -102,7 +102,7 @@ module Sportsdata
       all_players ||= []
       all_players['player'].each { |player|
         player_record = {}
-        player_record[:guid]              = player['id']
+        player_record[:sports_data_guid]  = player['id']
         player_record[:status]            = player['status']
         player_record[:full_name]         = player['full_name']
         player_record[:first_name]        = player['first_name']
@@ -116,7 +116,7 @@ module Sportsdata
         player_record[:jersey_number]     = player['jersey_number']
         player_record[:experience]        = player['experience']
         player_record[:birth_place]       = player['birth_place']
-        player_record[:birthdate]         = player['birthdate']
+        player_record[:birthday]          = player['birthdate']
         player_record[:updated]           = player['updated']
 
         # Below is not on every player

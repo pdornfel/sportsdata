@@ -34,15 +34,15 @@ module Sportsdata
         conference['division'].each { |division|
           division['team'].each { |team|
             venue_record = {}
-            venue_record[:guid]       = team['venue']['id']
-            venue_record[:name]       = team['venue']['name']
-            venue_record[:address]    = team['venue']['address']
-            venue_record[:city]       = team['venue']['city']
-            venue_record[:state]      = team['venue']['state']
-            venue_record[:zip]        = team['venue']['zip']
-            venue_record[:capacity]   = team['venue']['capacity']
-            venue_record[:surface]    = team['venue']['surface']
-            venue_record[:venue_type] = team['venue']['type']
+            venue_record[:sports_data_guid] = team['venue']['id']
+            venue_record[:name]             = team['venue']['name']
+            venue_record[:address]          = team['venue']['address']
+            venue_record[:city]             = team['venue']['city']
+            venue_record[:state]            = team['venue']['state']
+            venue_record[:zip]              = team['venue']['zip']
+            venue_record[:capacity]         = team['venue']['capacity']
+            venue_record[:surface]          = team['venue']['surface']
+            venue_record[:venue_type]       = team['venue']['type']
             venues.append(Venue.new(venue_record))
           }
         }
@@ -61,10 +61,10 @@ module Sportsdata
         conference['division'].each { |division|
           team_record[:division] = division['name']
           division['team'].each { |team|
-            team_record[:guid]  = team['id']
-            team_record[:abbr]  = team['id']
-            team_record[:name]  = team['name']
-            team_record[:city]  = team['market']
+            team_record[:sports_data_guid]  = team['id']
+            team_record[:abbr]              = team['id']
+            team_record[:name]              = team['name']
+            team_record[:city]              = team['market']
             teams.append(Team.new(team_record))
           }
         }
@@ -85,11 +85,11 @@ module Sportsdata
         game_record = {}
         game_record[:week]  = week['week']
         week['game'].each { |game|
-          game_record[:guid]      = game['guid']
-          game_record[:scheduled] = game['scheduled']
-          game_record[:home]      = game['home']
-          game_record[:away]      = game['away']
-          game_record[:status]    = game['status']
+          game_record[:sports_data_guid]  = game['guid']
+          game_record[:scheduled_at]      = game['scheduled']
+          game_record[:home_team_guid]    = game['home']
+          game_record[:away_team_guid]    = game['away']
+          game_record[:status]            = game['status']
 
           #game_record[:wind_speed]           = game['weather']['wind']['speed']
           #game_record[:wind_direction]       = game['weather']['wind']['direction']
@@ -115,25 +115,25 @@ module Sportsdata
       all_players ||= []
       all_players.each { |player|
         player_record = {}
-        player_record[:guid]            = player['id']
-        player_record[:name_full]       = player['name_full']
-        player_record[:name_first]      = player['name_first']
-        player_record[:name_last]       = player['name_last']
-        player_record[:name_abbr]       = player['name_abbr']
-        player_record[:birthdate]       = player['birthdate']
-        player_record[:birth_place]     = player['birth_place']
-        player_record[:high_school]     = player['high_school']
-        player_record[:height]          = player['height']
-        player_record[:weight]          = player['weight']
-        player_record[:college]         = player['college']
-        player_record[:position]        = player['position']
-        player_record[:jersey_number]   = player['jersey_number']
-        player_record[:status]          = player['status']
-        player_record[:salary]          = player['salary']
-        player_record[:experience]      = player['experience']
-        player_record[:draft_pick]      = player['draft_pick']
-        player_record[:draft_round]     = player['draft_round']
-        player_record[:draft_team]      = player['draft_team']
+        player_record[:sports_data_guid] = player['id']
+        player_record[:full_name]        = player['name_full']
+        player_record[:first_name]       = player['name_first']
+        player_record[:last_name]        = player['name_last']
+        player_record[:abbr_name]        = player['name_abbr']
+        player_record[:birthday]         = player['birthdate']
+        player_record[:birth_place]      = player['birth_place']
+        player_record[:high_school]      = player['high_school']
+        player_record[:height]           = player['height']
+        player_record[:weight]           = player['weight']
+        player_record[:college]          = player['college']
+        player_record[:position]         = player['position']
+        player_record[:jersey_number]    = player['jersey_number']
+        player_record[:status]           = player['status']
+        player_record[:salary]           = player['salary']
+        player_record[:experience]       = player['experience']
+        player_record[:draft_pick]       = player['draft_pick']
+        player_record[:draft_round]      = player['draft_round']
+        player_record[:draft_team]       = player['draft_team']
         players.append(Player.new(player_record))
       }
       players
