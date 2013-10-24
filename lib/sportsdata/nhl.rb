@@ -2,20 +2,8 @@ module Sportsdata
   module Nhl
     class Exception < ::Exception
     end
-    class Venue < OpenStruct
-    end
-    class Player < OpenStruct
-    end
-    class Team < OpenStruct
-    end
-    class Schedule < OpenStruct
-    end
-    class Game < OpenStruct
-    end
 
-    #include HTTParty
     attr_accessor :api_key, :api_mode
-    #default_timeout 15
 
     def self.api_key
       Sportsdata.nhl_api_key
@@ -41,7 +29,7 @@ module Sportsdata
             venue_record[:city]             = team['venue']['city']
             venue_record[:state]            = team['venue']['state']
             venue_record[:zip]              = team['venue']['zip']
-            venues.append(Venue.new(venue_record))
+            venues.append(venue_record)
           }
         }
       }
@@ -63,7 +51,7 @@ module Sportsdata
             team_record[:name]  = team['name']
             team_record[:city]  = team['market']
             team_record[:abbr]  = team['alias']
-            teams.append(Team.new(team_record))
+            teams.append(team_record)
           }
         }
       }
@@ -90,7 +78,7 @@ module Sportsdata
         game_record[:home_team_abbr]    = game['home']['alias']
         game_record[:away_team_name]    = game['away']['name']
         game_record[:away_team_abbr]    = game['away']['alias']
-        games.append(Game.new(game_record))
+        games.append(game_record)
       }
       games
     end
@@ -129,7 +117,7 @@ module Sportsdata
         #player_record[:injury_description]= player['injuries']['injury']['desc']
         #player_record[:injury_status]= player['injuries']['injury']['status']
         #player_record[:injury_start_date]= player['injuries']['injury']['start_date']
-        players.append(Player.new(player_record))
+        players.append(player_record)
       }
       players
     end

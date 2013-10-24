@@ -4,6 +4,7 @@ gem 'activesupport'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'multi_xml'
+gem 'hashie'
 
 group :development do
   gem "awesome_print"

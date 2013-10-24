@@ -137,6 +137,7 @@ DEPENDENCIES
   debugger
   faraday
   faraday_middleware
+  hashie
   jeweler (~> 1.8.7)
   multi_xml
   rdoc (~> 4.0.0)

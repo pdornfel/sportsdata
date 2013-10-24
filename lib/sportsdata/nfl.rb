@@ -2,20 +2,8 @@ module Sportsdata
   module Nfl
     class Exception < ::Exception
     end
-    class Venue < OpenStruct
-    end
-    class Player < OpenStruct
-    end
-    class Team < OpenStruct
-    end
-    class Schedule < OpenStruct
-    end
-    class Game < OpenStruct
-    end
 
-    #include HTTParty
     attr_accessor :api_key, :api_mode
-    #default_timeout 15
 
     def self.api_key
       Sportsdata.nfl_api_key
@@ -43,7 +31,7 @@ module Sportsdata
             venue_record[:capacity]         = team['venue']['capacity']
             venue_record[:surface]          = team['venue']['surface']
             venue_record[:venue_type]       = team['venue']['type']
-            venues.append(Venue.new(venue_record))
+            venues.append(venue_record)
           }
         }
       }
@@ -65,7 +53,7 @@ module Sportsdata
             team_record[:abbr]              = team['id']
             team_record[:name]              = team['name']
             team_record[:city]              = team['market']
-            teams.append(Team.new(team_record))
+            teams.append(team_record)
           }
         }
       }
@@ -102,7 +90,7 @@ module Sportsdata
           #game_record[:broadcast_satellite]  = game['broadcast']['satellite']
           #game_record[:broadcast_internet]   = game['broadcast']['internet']
           #game_record[:broadcast_cable]      = game['broadcast']['cable']
-          games.append(Game.new(game_record))
+          games.append(game_record)
         }
       }
       games
@@ -134,7 +122,7 @@ module Sportsdata
         player_record[:draft_pick]       = player['draft_pick']
         player_record[:draft_round]      = player['draft_round']
         player_record[:draft_team]       = player['draft_team']
-        players.append(Player.new(player_record))
+        players.append(player_record)
       }
       players
     end

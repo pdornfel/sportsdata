@@ -2,20 +2,8 @@ module Sportsdata
   module Mlb
     class Exception < ::Exception
     end
-    class Venue < OpenStruct
-    end
-    class Player < OpenStruct
-    end
-    class Team < OpenStruct
-    end
-    class Schedule < OpenStruct
-    end
-    class Game < OpenStruct
-    end
 
-    #include HTTParty
     attr_accessor :api_key, :api_mode
-    #default_timeout 15
 
     def self.api_key
       Sportsdata.mlb_api_key
@@ -44,7 +32,7 @@ module Sportsdata
         venue_record[:middle_left_center__field]  = venue['distances']['mlcf']
         venue_record[:middle_right_center_field]  = venue['distances']['mrcf']
         venue_record[:middle_right_field]         = venue['distances']['mrf']
-        venues.append(Venue.new(venue_record))
+        venues.append(venue_record)
       }
       venues
     end
@@ -63,7 +51,7 @@ module Sportsdata
         team_record[:league]            = team['league']
         team_record[:division]          = team['division']
         team_record[:venue_guid]        = team['venue']
-        teams.append(Team.new(team_record))
+        teams.append(team_record)
       }
       teams
     end
@@ -91,7 +79,7 @@ module Sportsdata
         game_record[:broadcast_satellite] = game['broadcast']['satellite']
         game_record[:broadcast_internet]  = game['broadcast']['internet']
         game_record[:broadcast_cable]     = game['broadcast']['cable']
-        games.append(Game.new(game_record))
+        games.append(game_record)
       }
       games
     end
@@ -130,7 +118,7 @@ module Sportsdata
             player_record[:status]          = player['status']
             player_record[:jersey]          = player['jersey']
             player_record[:position]        = player['position']
-            players.append(Player.new(player_record))
+            players.append(player_record)
           }
         end
       }
