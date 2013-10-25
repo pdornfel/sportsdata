@@ -29,7 +29,7 @@ module Sportsdata
         venue_record[:right_center_field]         = venue['distances']['rcf']
         venue_record[:right_field]                = venue['distances']['rf']
         venue_record[:middle_left_field]          = venue['distances']['mlf']
-        venue_record[:middle_left_center__field]  = venue['distances']['mlcf']
+        venue_record[:middle_left_center_field]  = venue['distances']['mlcf']
         venue_record[:middle_right_center_field]  = venue['distances']['mrcf']
         venue_record[:middle_right_field]         = venue['distances']['mrf']
         venues.append(venue_record)
