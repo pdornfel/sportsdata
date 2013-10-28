@@ -74,11 +74,11 @@ module Sportsdata
           game_record[:home_team_guid]    = game['home_team']
           game_record[:away_team_guid]    = game['away_team']
           game_record[:scheduled_at]      = game['scheduled']
-          game_record[:broadcast_network] = game['broadcast']['network']
           game_record[:home_team_name]    = game['home']['name']
           game_record[:home_team_abbr]    = game['home']['alias']
           game_record[:away_team_name]    = game['away']['name']
           game_record[:away_team_abbr]    = game['away']['alias']
+          game_record[:broadcast_network] = game['broadcast']['network'] if game['broadcast']
           games.append(game_record)
         }
       end

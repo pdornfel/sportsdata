@@ -33,7 +33,7 @@ Jeweler::Tasks.new do |gem|
   gem.summary = %Q{Sports Data}
   gem.description = %Q{Fetch Data from sportsdatainc.com}
   gem.email = "paul@miamiphp.org"
-  gem.authors = ["Paul Kruger", "Aldo Delgado", "Moises Zaragoza"]
+  gem.authors = ["Paul Kruger", "Moises Zaragoza", "Aldo Delgado"]
   gem.files.include 'lib/**/*'
 end
 

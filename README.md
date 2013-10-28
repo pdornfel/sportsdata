@@ -31,4 +31,4 @@ end
 ```
 == Copyright
 
-Copyright (c) 2013 Paul Kruger and Aldo Delgado. See LICENSE.txt for further details.
+Copyright (c) 2013 Paul Kruger, Moises Zaragoza and Aldo Delgado. See LICENSE.txt for further details.

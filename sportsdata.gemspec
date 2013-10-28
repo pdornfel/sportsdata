@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version = "1.6.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Paul Kruger", "Aldo Delgado", "Moises Zaragoza"]
+  s.authors = ["Paul Kruger", "Moises Zaragoza", "Aldo Delgado"]
   s.date = "2013-10-28"
   s.description = "Fetch Data from sportsdatainc.com"
   s.email = "paul@miamiphp.org"
