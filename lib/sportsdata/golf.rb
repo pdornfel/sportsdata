@@ -85,7 +85,7 @@ module Sportsdata
         game_record[:week]  = week['week']
         week['game'].each { |game|
           game_record[:guid]      = game['guid']
-          game_record[:scheduled] = game['scheduled']
+          game_record[:scheduled_at] = game['scheduled']
           game_record[:home]      = game['home']
           game_record[:away]      = game['away']
           game_record[:status]    = game['status']

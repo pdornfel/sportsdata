@@ -74,7 +74,7 @@ module Sportsdata
         game_record[:coverage]          = game['coverage']
         game_record[:home_team_guid]    = game['home_team']
         game_record[:away_team_guid]    = game['away_team']
-        game_record[:scheduled]         = game['scheduled']
+        game_record[:scheduled_at]      = game['scheduled']
         game_record[:home_team_name]    = game['home']['name']
         game_record[:home_team_abbr]    = game['home']['alias']
         game_record[:away_team_name]    = game['away']['name']
