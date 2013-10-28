@@ -65,21 +65,23 @@ module Sportsdata
       response = self.get_raw(games_url(:year => 2013, :season => 'REG'))
       all_games = response['league'].try(:[], 'season_schedule')
       all_games ||= []
-      all_games['games']['game'].each { |game|
-        game_record = {}
-        game_record[:sports_data_guid]  = game['id']
-        game_record[:status]            = game['status']
-        game_record[:coverage]          = game['coverage']
-        game_record[:home_team_guid]    = game['home_team']
-        game_record[:away_team_guid]    = game['away_team']
-        game_record[:scheduled_at]      = game['scheduled']
-        game_record[:broadcast_network] = game['broadcast']['network']
-        game_record[:home_team_name]    = game['home']['name']
-        game_record[:home_team_abbr]    = game['home']['alias']
-        game_record[:away_team_name]    = game['away']['name']
-        game_record[:away_team_abbr]    = game['away']['alias']
-        games.append(game_record)
-      }
+      if all_games['games']
+        all_games['games']['game'].each { |game|
+          game_record = {}
+          game_record[:sports_data_guid]  = game['id']
+          game_record[:status]            = game['status']
+          game_record[:coverage]          = game['coverage']
+          game_record[:home_team_guid]    = game['home_team']
+          game_record[:away_team_guid]    = game['away_team']
+          game_record[:scheduled_at]      = game['scheduled']
+          game_record[:broadcast_network] = game['broadcast']['network']
+          game_record[:home_team_name]    = game['home']['name']
+          game_record[:home_team_abbr]    = game['home']['alias']
+          game_record[:away_team_name]    = game['away']['name']
+          game_record[:away_team_abbr]    = game['away']['alias']
+          games.append(game_record)
+        }
+      end
       games
     end
 
