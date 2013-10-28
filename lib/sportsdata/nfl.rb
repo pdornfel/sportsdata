@@ -43,7 +43,7 @@ module Sportsdata
       response = self.get_raw(self.teams_url)
       all_teams = response['league'].try(:[], 'conference')
       all_teams ||= []
-      ap all_teams.each { |conference|
+      all_teams.each { |conference|
         conference['division'].each { |division|
           division['team'].each { |team|
             team_record = {}
