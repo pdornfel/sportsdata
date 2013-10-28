@@ -42,11 +42,11 @@ module Sportsdata
       all_teams = response['league'].try(:[], 'conference')
       all_teams ||= []
       all_teams.each { |conference|
-        team_record = {}
-        team_record[:league_abbr] = conference['name']
         conference['division'].each { |division|
-          team_record[:division] = division['name']
           division['team'].each { |team|
+            team_record = {}
+            team_record[:league_abbr]       = conference['name']
+            team_record[:division]          = division['name']
             team_record[:sports_data_guid]  = team['id']
             team_record[:name]              = team['name']
             team_record[:city]              = team['market']

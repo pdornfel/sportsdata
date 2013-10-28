@@ -91,14 +91,14 @@ module Sportsdata
       all_players ||= []
       all_players.each { |team|
         if team['players']
-          player_record = {}
-          player_record[:team_guid]       = team['id']
-          player_record[:team_abbr]       = team['abbr']
-          player_record[:team_name]       = team['name']
-          player_record[:team_market]     = team['market']
-          player_record[:league]          = team['league']
-          player_record[:division]        = team['division']
           team['players']['profile'].each { |player|
+            player_record = {}
+            player_record[:team_guid]       = team['id']
+            player_record[:team_abbr]       = team['abbr']
+            player_record[:team_name]       = team['name']
+            player_record[:team_market]     = team['market']
+            player_record[:league]          = team['league']
+            player_record[:division]        = team['division']
             player_record[:player_guid]     = player['id']
             player_record[:mlbam_id]        = player['mlbam_id']
             player_record[:first_name]      = player['first']

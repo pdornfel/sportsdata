@@ -43,12 +43,12 @@ module Sportsdata
       response = self.get_raw(self.teams_url)
       all_teams = response['league'].try(:[], 'conference')
       all_teams ||= []
-      all_teams.each { |conference|
-        team_record = {}
-        team_record[:league_abbr] = conference['name']
+      ap all_teams.each { |conference|
         conference['division'].each { |division|
-          team_record[:division] = division['name']
           division['team'].each { |team|
+            team_record = {}
+            team_record[:league_abbr]       = conference['name']
+            team_record[:division]          = division['name']
             team_record[:sports_data_guid]  = team['id']
             team_record[:abbr]              = team['id']
             team_record[:name]              = team['name']
@@ -70,9 +70,9 @@ module Sportsdata
       all_games = response['season'].try(:[], 'week')
       all_games ||= []
       all_games.each { |week|
-        game_record = {}
-        game_record[:week]  = week['week']
         week['game'].each { |game|
+          game_record = {}
+          game_record[:week]              = week['week']
           game_record[:sports_data_guid]  = game['guid']
           game_record[:scheduled_at]      = game['scheduled']
           game_record[:home_team_guid]    = game['home']
