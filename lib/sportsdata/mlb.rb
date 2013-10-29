@@ -60,7 +60,7 @@ module Sportsdata
     # Their are three season options (PRE, REG, PST)
     def self.games(options = {:year => Date.today.year})
       games = []
-      response = self.get_raw(games_url(:year => 2012))
+      response = self.get_raw(games_url(:year => 2013))
       #games_url(:year => 2012)
       #games_url(:year => 2012)
       all_games = response['calendars'].try(:[], 'event')

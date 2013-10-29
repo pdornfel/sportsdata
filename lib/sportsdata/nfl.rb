@@ -78,6 +78,7 @@ module Sportsdata
           game_record[:home_team_guid]    = game['home']
           game_record[:away_team_guid]    = game['away']
           game_record[:status]            = game['status']
+          game_record[:venue_guid]        = game['venue']['id']
 
           #game_record[:wind_speed]           = game['weather']['wind']['speed']
           #game_record[:wind_direction]       = game['weather']['wind']['direction']
