@@ -84,43 +84,45 @@ module Sportsdata
       games
     end
 
-    def self.players(options = {:year => Date.today.year})
+    def self.players(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1]})
       players = []
-      response = self.get_raw(players_url(:year => '2013'))
-      all_players = response['rosters'].try(:[], 'team')
-      all_players ||= []
-      all_players.each { |team|
-        if team['players']
-          team['players']['profile'].each { |player|
-            player_record = {}
-            player_record[:team_guid]       = team['id']
-            player_record[:team_abbr]       = team['abbr']
-            player_record[:team_name]       = team['name']
-            player_record[:team_market]     = team['market']
-            player_record[:league]          = team['league']
-            player_record[:division]        = team['division']
-            player_record[:player_guid]     = player['id']
-            player_record[:mlbam_id]        = player['mlbam_id']
-            player_record[:first_name]      = player['first']
-            player_record[:preferred_first] = player['preferred_first']
-            player_record[:last]            = player['last']
-            player_record[:bat_hand]        = player['bat_hand']
-            player_record[:throw_hand]      = player['throw_hand']
-            player_record[:weight]          = player['weight']
-            player_record[:height]          = player['height']
-            player_record[:birthdate]       = player['birthdate']
-            player_record[:birthcity]       = player['birthcity']
-            player_record[:birthstate]      = player['birthstate']
-            player_record[:birthcountry]    = player['birthcountry']
-            player_record[:highschool]      = player['highschool']
-            player_record[:college]         = player['college']
-            player_record[:pro_debut]       = player['pro_debut']
-            player_record[:status]          = player['status']
-            player_record[:jersey]          = player['jersey']
-            player_record[:position]        = player['position']
-            players.append(player_record)
-          }
-        end
+      options[:years].each{|year|
+        response = self.get_raw(players_url(:year => year))
+        all_players = response['rosters'].try(:[], 'team')
+        all_players ||= []
+        all_players.each { |team|
+          if team['players']
+            team['players']['profile'].each { |player|
+              player_record = {}
+              player_record[:team_guid]       = team['id']
+              player_record[:team_abbr]       = team['abbr']
+              player_record[:team_name]       = team['name']
+              player_record[:team_market]     = team['market']
+              player_record[:league]          = team['league']
+              player_record[:division]        = team['division']
+              player_record[:player_guid]     = player['id']
+              player_record[:mlbam_id]        = player['mlbam_id']
+              player_record[:first_name]      = player['first']
+              player_record[:preferred_first] = player['preferred_first']
+              player_record[:last]            = player['last']
+              player_record[:bat_hand]        = player['bat_hand']
+              player_record[:throw_hand]      = player['throw_hand']
+              player_record[:weight]          = player['weight']
+              player_record[:height]          = player['height']
+              player_record[:birthdate]       = player['birthdate']
+              player_record[:birthcity]       = player['birthcity']
+              player_record[:birthstate]      = player['birthstate']
+              player_record[:birthcountry]    = player['birthcountry']
+              player_record[:highschool]      = player['highschool']
+              player_record[:college]         = player['college']
+              player_record[:pro_debut]       = player['pro_debut']
+              player_record[:status]          = player['status']
+              player_record[:jersey]          = player['jersey']
+              player_record[:position]        = player['position']
+              players.append(player_record)
+            }
+          end
+        }
       }
       players
     end

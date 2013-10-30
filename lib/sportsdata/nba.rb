@@ -90,33 +90,42 @@ module Sportsdata
 
     def self.players(options = {})
       players = []
-      response = self.get_raw(players_url(:team_guid => '583ecd4f-fb46-11e1-82cb-f4ce4684ea4c'))
-      all_players = response['team'].try(:[], 'players')
-      all_players ||= []
-      all_players.each { |player|
-        player_record = {}
-        player_record[:sports_data_guid]  = player['id']
-        player_record[:status]            = player['status']
-        player_record[:full_name]         = player['full_name']
-        player_record[:first_name]        = player['first_name']
-        player_record[:last_name]         = player['last_name']
-        player_record[:abbr_name]         = player['abbr_name']
-        player_record[:height]            = player['height']
-        player_record[:weight]            = player['weight']
-        player_record[:position]          = player['position']
-        player_record[:primary_position]  = player['primary_position']
-        player_record[:jersey_number]     = player['jersey_number']
-        player_record[:experience]        = player['experience']
-        player_record[:college]           = player['college']
-        player_record[:birth_place]       = player['birth_place']
-        player_record[:birthday]          = player['birthdate']
-        player_record[:updated_at]        = player['updated']
-        player_record[:draft_team_guid]   = player['draft']['team_id']
-        player_record[:draft_year]        = player['draft']['year']
-        player_record[:draft_round]       = player['draft']['round']
-        player_record[:draft_pick]        = player['draft']['pick']
+      teams = Sportsdata.nba.teams
+      teams.each{|team|
+        response = self.get_raw(players_url(:team_guid => team[:sports_data_guid]))
+        all_players = response['team'].try(:[], 'players')
+        all_players ||= []
+        if all_players
+          all_players.each { |player|
+            player[1].each{|player_array|
+              player_record = {}
+              player_record[:sports_data_guid]  = player_array['id']
+              player_record[:status]            = player_array['status']
+              player_record[:full_name]         = player_array['full_name']
+              player_record[:first_name]        = player_array['first_name']
+              player_record[:last_name]         = player_array['last_name']
+              player_record[:abbr_name]         = player_array['abbr_name']
+              player_record[:height]            = player_array['height']
+              player_record[:weight]            = player_array['weight']
+              player_record[:position]          = player_array['position']
+              player_record[:primary_position]  = player_array['primary_position']
+              player_record[:jersey_number]     = player_array['jersey_number']
+              player_record[:experience]        = player_array['experience']
+              player_record[:college]           = player_array['college']
+              player_record[:birth_place]       = player_array['birth_place']
+              player_record[:birthday]          = player_array['birthdate']
+              player_record[:updated_at]        = player_array['updated']
 
-        players.append(player_record)
+              if player_array['draft'] && player_array['draft']['team_id']
+                player_record[:draft_team_guid]   = player_array['draft']['team_id']
+                player_record[:draft_year]        = player_array['draft']['year']
+                player_record[:draft_round]       = player_array['draft']['round']
+                player_record[:draft_pick]        = player_array['draft']['pick']
+              end
+              players.append(player_record)
+            }
+          }
+        end
       }
       players
     end

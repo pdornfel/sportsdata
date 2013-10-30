@@ -91,39 +91,45 @@ module Sportsdata
 
     def self.players(options = {})
       players = []
-      response = self.get_raw(players_url(:team_guid => '4416272f-0f24-11e2-8525-18a905767e44'))
-      all_players = response['team'].try(:[], 'players')
-      all_players ||= []
-      all_players['player'].each { |player|
-        player_record = {}
-        player_record[:sports_data_guid]  = player['id']
-        player_record[:status]            = player['status']
-        player_record[:full_name]         = player['full_name']
-        player_record[:first_name]        = player['first_name']
-        player_record[:last_name]         = player['last_name']
-        player_record[:abbr_name]         = player['abbr_name']
-        player_record[:height]            = player['height']
-        player_record[:weight]            = player['weight']
-        player_record[:handedness]        = player['handedness']
-        player_record[:position]          = player['position']
-        player_record[:primary_position]  = player['primary_position']
-        player_record[:jersey_number]     = player['jersey_number']
-        player_record[:experience]        = player['experience']
-        player_record[:birth_place]       = player['birth_place']
-        player_record[:birthday]          = player['birthdate']
-        player_record[:updated]           = player['updated']
+      teams = Sportsdata.nhl.teams
+      teams.each{|team|
+        response = self.get_raw(players_url(:team_guid => team[:sports_data_guid]))
+        all_players = response['team'].try(:[], 'players')
+        all_players ||= []
+        if all_players
+          all_players['player'].each { |player|
+            player_record = {}
+            player_record[:sports_data_guid]  = player['id']
+            player_record[:status]            = player['status']
+            player_record[:full_name]         = player['full_name']
+            player_record[:first_name]        = player['first_name']
+            player_record[:last_name]         = player['last_name']
+            player_record[:abbr_name]         = player['abbr_name']
+            player_record[:height]            = player['height']
+            player_record[:weight]            = player['weight']
+            player_record[:handedness]        = player['handedness']
+            player_record[:position]          = player['position']
+            player_record[:primary_position]  = player['primary_position']
+            player_record[:jersey_number]     = player['jersey_number']
+            player_record[:experience]        = player['experience']
+            player_record[:birth_place]       = player['birth_place']
+            player_record[:birthday]          = player['birthdate']
+            player_record[:updated]           = player['updated']
 
-        # Below is not on every player
-        #player_record[:draft_team_guid]   = player['draft']['team_guid']
-        #player_record[:draft_year]        = player['draft']['year']
-        #player_record[:draft_round]       = player['draft']['round']
-        #player_record[:draft_pick]        = player['draft']['pick']
+            if player['draft'] && player['draft']['team_id']
+              player_record[:draft_team_guid]   = player['draft']['team_id']
+              player_record[:draft_year]        = player['draft']['year']
+              player_record[:draft_round]       = player['draft']['round']
+              player_record[:draft_pick]        = player['draft']['pick']
+            end
 
-        #player_record[:injury_guid]       = player['injuries']['injury']['id']
-        #player_record[:injury_description]= player['injuries']['injury']['desc']
-        #player_record[:injury_status]= player['injuries']['injury']['status']
-        #player_record[:injury_start_date]= player['injuries']['injury']['start_date']
-        players.append(player_record)
+            #player_record[:injury_guid]       = player['injuries']['injury']['id']
+            #player_record[:injury_description]= player['injuries']['injury']['desc']
+            #player_record[:injury_status]= player['injuries']['injury']['status']
+            #player_record[:injury_start_date]= player['injuries']['injury']['start_date']
+            players.append(player_record)
+          }
+        end
       }
       players
     end
