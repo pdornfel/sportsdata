@@ -59,7 +59,7 @@ module Sportsdata
     def self.games(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1]})
       games = []
         options[:years].each{|year|
-          response = self.get_raw(games_url(:year => 2012))
+          response = self.get_raw(games_url(:year => options[:year]))
           if response['calendars']
             all_games = response['calendars'].try(:[], 'event')
             all_games ||= []
