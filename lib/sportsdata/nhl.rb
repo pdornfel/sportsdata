@@ -58,31 +58,35 @@ module Sportsdata
       teams
     end
 
-    #fetch last year, this year and next year
-    # Their are three season options (PRE, REG, PST)
-    def self.games(options = {:year => Date.today.year, :season => 'REG'})
+    def self.games(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1], :seasons => ['pre', 'reg', 'pst']})
       games = []
-      response = self.get_raw(games_url(:year => 2013, :season => 'REG'))
-      all_games = response['league'].try(:[], 'season_schedule')
-      all_games ||= []
-      if all_games['games']
-        all_games['games']['game'].each { |game|
-          game_record = {}
-          game_record[:sports_data_guid]  = game['id']
-          game_record[:status]            = game['status']
-          game_record[:coverage]          = game['coverage']
-          game_record[:home_team_guid]    = game['home_team']
-          game_record[:away_team_guid]    = game['away_team']
-          game_record[:scheduled_at]      = game['scheduled']
-          game_record[:home_team_name]    = game['home']['name']
-          game_record[:home_team_abbr]    = game['home']['alias']
-          game_record[:away_team_name]    = game['away']['name']
-          game_record[:away_team_abbr]    = game['away']['alias']
-          game_record[:broadcast_network] = game['broadcast']['network'] if game['broadcast']
-          games.append(game_record)
+      options[:seasons].each{|season|
+        options[:years].each{|year|
+          response = self.get_raw(games_url(:year => year, :season => season))
+          if response['league']
+            all_games = response['league'].try(:[], 'season_schedule')
+            all_games ||= []
+            if all_games['games']
+              all_games['games']['game'].each { |game|
+                game_record = {}
+                game_record[:sports_data_guid]  = game['id']
+                game_record[:status]            = game['status']
+                game_record[:coverage]          = game['coverage']
+                game_record[:home_team_guid]    = game['home_team']
+                game_record[:away_team_guid]    = game['away_team']
+                game_record[:scheduled_at]      = game['scheduled']
+                game_record[:home_team_name]    = game['home']['name']
+                game_record[:home_team_abbr]    = game['home']['alias']
+                game_record[:away_team_name]    = game['away']['name']
+                game_record[:away_team_abbr]    = game['away']['alias']
+                game_record[:broadcast_network] = game['broadcast']['network'] if game['broadcast']
+                games.append(game_record)
+              }
+            end
+          end
+          games
         }
-      end
-      games
+      }
     end
 
     def self.players(options = {})

@@ -60,41 +60,59 @@ module Sportsdata
       teams
     end
 
-    #fetch last year, this year and next year
-    # Their are three season options (PRE, REG, PST)
-    def self.games(options = {:year => Date.today.year, :season => 'REG'})
+    def self.games(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1], :seasons => [:pre, :reg, :pst]})
       games = []
-      response = self.get_raw(games_url(:year => 2012))
-      #games_url(:year => 2012)
-      #games_url(:year => 2012)
-      all_games = response['season'].try(:[], 'week')
-      all_games ||= []
-      all_games.each { |week|
-        week['game'].each { |game|
-          game_record = {}
-          game_record[:week]              = week['week']
-          game_record[:sports_data_guid]  = game['id']
-          game_record[:scheduled_at]      = game['scheduled']
-          game_record[:home_team_guid]    = game['home']
-          game_record[:away_team_guid]    = game['away']
-          game_record[:status]            = game['status']
-          game_record[:venue_guid]        = game['venue']['id']
-
-          #game_record[:wind_speed]           = game['weather']['wind']['speed']
-          #game_record[:wind_direction]       = game['weather']['wind']['direction']
-
-          #game_record[:weather_temperature]  = game['weather']['temperature']
-          #game_record[:weather_condition]    = game['weather']['condition']
-          #game_record[:weather_humidity]     = game['weather']['humidity']
-
-          #game_record[:broadcast_network]    = game['broadcast']['network']
-          #game_record[:broadcast_satellite]  = game['broadcast']['satellite']
-          #game_record[:broadcast_internet]   = game['broadcast']['internet']
-          #game_record[:broadcast_cable]      = game['broadcast']['cable']
-          games.append(game_record)
+      options[:seasons].each{|season|
+        options[:years].each{|year|
+          response = self.get_raw(games_url(:year => year, :season => season))
+          if response['season']
+            all_games = response['season'].try(:[], 'week')
+            all_games ||= []
+            all_games.each { |week|
+              if week['game'].class.name == 'Array'
+                week['game'].each { |game|
+                  game_record = {}
+                  game_record[:week]                = week['week']
+                  if game.class.name == 'Hash'
+                    game_record[:sports_data_guid]  = game['id']
+                    game_record[:scheduled_at]      = game['scheduled']
+                    game_record[:home_team_guid]    = game['home']
+                    game_record[:away_team_guid]    = game['away']
+                    game_record[:status]            = game['status']
+                  else
+                    game_record[:sports_data_guid]  = game[1]['id']
+                    game_record[:scheduled_at]      = game[1]['scheduled']
+                    game_record[:home_team_guid]    = game[1]['home']
+                    game_record[:away_team_guid]    = game[1]['away']
+                    game_record[:status]            = game[1]['status']
+                  end
+                  games.append(game_record)
+                }
+              else
+                week['game'].each { |game|
+                  game_record = {}
+                  game_record[:week]                = week['week']
+                  if game.class.name == 'Hash'
+                    game_record[:sports_data_guid]  = game['id']
+                    game_record[:scheduled_at]      = game['scheduled']
+                    game_record[:home_team_guid]    = game['home']
+                    game_record[:away_team_guid]    = game['away']
+                    game_record[:status]            = game['status']
+                  else
+                    game_record[:sports_data_guid]  = game[1]['id']
+                    game_record[:scheduled_at]      = game[1]['scheduled']
+                    game_record[:home_team_guid]    = game[1]['home']
+                    game_record[:away_team_guid]    = game[1]['away']
+                    game_record[:status]            = game[1]['status']
+                  end
+                  games.append(game_record)
+                }
+              end
+              }
+          end
+          games
         }
       }
-      games
     end
 
     def self.players(options = {})

@@ -39,7 +39,7 @@ module Sportsdata
 
     def self.teams(options = {:year => Date.today.year})
       teams = []
-      response = self.get_raw(self.teams_url(:year => 2013))
+      response = self.get_raw(self.teams_url(:year => options[:year]))
       all_teams = response['teams'].try(:[], 'team')
       all_teams ||= []
       all_teams.each { |team|
@@ -56,32 +56,32 @@ module Sportsdata
       teams
     end
 
-    # Fetch last year, this year and next year
-    # Their are three season options (PRE, REG, PST)
-    def self.games(options = {:year => Date.today.year})
+    def self.games(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1]})
       games = []
-      response = self.get_raw(games_url(:year => 2013))
-      #games_url(:year => 2012)
-      #games_url(:year => 2012)
-      all_games = response['calendars'].try(:[], 'event')
-      all_games ||= []
-      all_games.each { |game|
-        game_record = {}
-        game_record[:sports_data_guid]    = game['id']
-        game_record[:scheduled_at]        = game['scheduled_start']
-        game_record[:season_type]         = game['season_type']
-        game_record[:status]              = game['status']
-        game_record[:away_team_guid]      = game['visitor']
-        game_record[:home_team_guid]      = game['home']
-        game_record[:venue_guid]          = game['venue']
-        game_record[:tbd]                 = game['tbd']
-        game_record[:broadcast_network]   = game['broadcast']['network']
-        game_record[:broadcast_satellite] = game['broadcast']['satellite']
-        game_record[:broadcast_internet]  = game['broadcast']['internet']
-        game_record[:broadcast_cable]     = game['broadcast']['cable']
-        games.append(game_record)
-      }
-      games
+        options[:years].each{|year|
+          response = self.get_raw(games_url(:year => 2012))
+          if response['calendars']
+            all_games = response['calendars'].try(:[], 'event')
+            all_games ||= []
+            all_games.each { |game|
+              game_record = {}
+              game_record[:sports_data_guid]    = game['id']
+              game_record[:scheduled_at]        = game['scheduled_start']
+              game_record[:season_type]         = game['season_type']
+              game_record[:status]              = game['status']
+              game_record[:away_team_guid]      = game['visitor']
+              game_record[:home_team_guid]      = game['home']
+              game_record[:venue_guid]          = game['venue']
+              game_record[:tbd]                 = game['tbd']
+              game_record[:broadcast_network]   = game['broadcast']['network']
+              game_record[:broadcast_satellite] = game['broadcast']['satellite']
+              game_record[:broadcast_internet]  = game['broadcast']['internet']
+              game_record[:broadcast_cable]     = game['broadcast']['cable']
+              games.append(game_record)
+            }
+          end
+          games
+        }
     end
 
     def self.players(options = {:year => Date.today.year})
