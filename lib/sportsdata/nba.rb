@@ -69,7 +69,6 @@ module Sportsdata
             if all_games['games'] && all_games['games']['game']
               all_games['games']['game'].each { |game|
                 game_record = {}
-                puts game.class
                 game_record[:sports_data_guid]  = game['id']
                 game_record[:status]            = game['status']
                 game_record[:coverage]          = game['coverage']
@@ -84,9 +83,9 @@ module Sportsdata
               }
             end
           end
-          games
         }
       }
+      games
     end
 
     def self.players(options = {})

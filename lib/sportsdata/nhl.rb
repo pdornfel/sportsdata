@@ -84,9 +84,9 @@ module Sportsdata
               }
             end
           end
-          games
         }
       }
+      games
     end
 
     def self.players(options = {})
