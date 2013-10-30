@@ -99,6 +99,7 @@ module Sportsdata
           all_players.each { |player|
             player[1].each{|player_array|
               player_record = {}
+              player_record[:team_guid]         = team[:sports_data_guid]
               player_record[:sports_data_guid]  = player_array['id']
               player_record[:status]            = player_array['status']
               player_record[:full_name]         = player_array['full_name']
