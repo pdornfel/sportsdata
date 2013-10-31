@@ -93,10 +93,11 @@ module Sportsdata
       players = []
       teams = Sportsdata.nhl.teams
       teams.each{|team|
+        sleep(2)
         response = self.get_raw(players_url(:team_guid => team[:sports_data_guid]))
         all_players = response['team'].try(:[], 'players')
         all_players ||= []
-        if all_players
+        if all_players.count > 0
           all_players['player'].each { |player|
             player_record = {}
             player_record[:team_guid]         = team[:sports_data_guid]
