@@ -63,7 +63,7 @@ module Sportsdata
     def self.games(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1], :seasons => [:pre, :reg, :pst]})
       games = []
       options[:seasons].each{|season|
-        sleep(2)
+        #sleep(2)
         options[:years].each{|year|
           response = self.get_raw(games_url(:year => year, :season => season))
           if response['season']
@@ -136,7 +136,7 @@ module Sportsdata
       players = []
       teams = Sportsdata.nfl.teams
       teams.each{|team|
-        sleep(2)
+        #sleep(2)
         response = self.get_raw(players_url(:team_abbr => team[:sports_data_guid]))
         all_players = response['team'].try(:[], 'player')
         all_players ||= []

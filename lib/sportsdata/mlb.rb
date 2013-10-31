@@ -59,7 +59,7 @@ module Sportsdata
     def self.games(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1]})
       games = []
       options[:years].each{|year|
-        sleep(2)
+        #sleep(2)
         response = self.get_raw(games_url(:year => year))
         if response['calendars']
           all_games = response['calendars'].try(:[], 'event')
@@ -88,7 +88,7 @@ module Sportsdata
     def self.players(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1]})
       players = []
       options[:years].each{|year|
-        sleep(2)
+        #sleep(2)
         response = self.get_raw(players_url(:year => year))
         all_players = response['rosters'].try(:[], 'team')
         all_players ||= []
