@@ -69,18 +69,33 @@ module Sportsdata
             all_games ||= []
             if all_games['games'] && all_games['games']['game']
               all_games['games']['game'].each { |game|
-                game_record = {}
-                game_record[:sports_data_guid]  = game['id']
-                game_record[:status]            = game['status']
-                game_record[:coverage]          = game['coverage']
-                game_record[:home_team_guid]    = game['home_team']
-                game_record[:away_team_guid]    = game['away_team']
-                game_record[:scheduled_at]      = game['scheduled']
-                game_record[:home_team_name]    = game['home']['name']
-                game_record[:home_team_abbr]    = game['home']['alias']
-                game_record[:away_team_name]    = game['away']['name']
-                game_record[:away_team_abbr]    = game['away']['alias']
-                games.append(game_record)
+                if game.class.name == 'Hash'
+                  game_record = {}
+                  game_record[:sports_data_guid]  = game['id']
+                  game_record[:status]            = game['status']
+                  game_record[:coverage]          = game['coverage']
+                  game_record[:home_team_guid]    = game['home_team']
+                  game_record[:away_team_guid]    = game['away_team']
+                  game_record[:scheduled_at]      = game['scheduled']
+                  game_record[:home_team_name]    = game['home']['name']
+                  game_record[:home_team_abbr]    = game['home']['alias']
+                  game_record[:away_team_name]    = game['away']['name']
+                  game_record[:away_team_abbr]    = game['away']['alias']
+                  games.append(game_record)
+                else
+                  game_record = {}
+                  game_record[:sports_data_guid]  = all_games['games']['id']
+                  game_record[:status]            = all_games['games']['status']
+                  game_record[:coverage]          = all_games['games']['coverage']
+                  game_record[:home_team_guid]    = all_games['games']['home_team']
+                  game_record[:away_team_guid]    = all_games['games']['away_team']
+                  game_record[:scheduled_at]      = all_games['games']['scheduled']
+                  game_record[:home_team_name]    = all_games['games']['game']['home']['name']
+                  game_record[:home_team_abbr]    = all_games['games']['game']['home']['alias']
+                  game_record[:away_team_name]    = all_games['games']['game']['away']['name']
+                  game_record[:away_team_abbr]    = all_games['games']['game']['away']['alias']
+                  games.append(game_record)
+                end
               }
             end
           end
