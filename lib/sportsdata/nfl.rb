@@ -182,7 +182,6 @@ module Sportsdata
     end
 
     def self.game_statistics_url(options = {})
-      debugger
       "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/statistics.xml"
     end
 
