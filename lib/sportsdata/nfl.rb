@@ -120,7 +120,7 @@ module Sportsdata
 
     def self.game_statistics(options = {:year => 2013, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       statistics = []
-      response = self.get_raw(game_statistics_url(:year => options[:year].to_s, :season => options[:reg].to_s, :away_team => options[:away_team].to_s, :home_team => options[:home_team].to_s))
+      response = self.get_raw(game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       response
     end
 
