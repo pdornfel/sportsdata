@@ -121,7 +121,15 @@ module Sportsdata
     def self.game_statistics(options = {:year => 2013, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       statistics = []
       response = self.get_raw(game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
-      response
+      statistics_record = {}
+      statistics_record[:sports_data_guid]       = response['game']['id']
+      statistics_record[:scheduled_at]           = response['game']['scheduled']
+      statistics_record[:sports_data_home_guid]  = response['game']['home']
+      statistics_record[:sports_data_away_guid]  = response['game']['away']
+      statistics_record[:status]                 = response['game']['status']
+      statistics_record[:params]                 = response
+      statistics.append(statistics_record)
+      statistics
     end
 
     def self.players(options = {})
