@@ -118,6 +118,12 @@ module Sportsdata
       games
     end
 
+    def self.game_statistics(options = {:year => 2013, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
+      statistics = []
+      response = self.get_raw(game_statistics_url(:year => options[:year].to_s, :season => options[:reg].to_s, :away_team => options[:away_team].to_s, :home_team => options[:home_team].to_s))
+      response
+    end
+
     def self.players(options = {})
       players = []
       teams = Sportsdata.nfl.teams
@@ -173,6 +179,11 @@ module Sportsdata
 
     def self.games_url(options = {})
       "#{options[:year]}/#{options[:season]}/schedule.xml"
+    end
+
+    def self.game_statistics_url(options = {})
+      debugger
+      "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/statistics.xml"
     end
 
     def self.players_url(options = {})
