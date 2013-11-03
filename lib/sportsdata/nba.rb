@@ -29,7 +29,7 @@ module Sportsdata
             venue_record[:city]             = team['venue']['city']
             venue_record[:state]            = team['venue']['state']
             venue_record[:zip]              = team['venue']['zip']
-            venue_record[:paramd]           = team
+            venue_record[:params]           = team
             venues.append(venue_record)
           }
         }
