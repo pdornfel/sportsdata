@@ -29,6 +29,7 @@ module Sportsdata
             venue_record[:city]             = team['venue']['city']
             venue_record[:state]            = team['venue']['state']
             venue_record[:zip]              = team['venue']['zip']
+            venue_record[:params]           = team
             venues.append(venue_record)
           }
         }
@@ -51,6 +52,7 @@ module Sportsdata
             team_record[:name]              = team['name']
             team_record[:city]              = team['market']
             team_record[:abbr]              = team['alias']
+            team_record[:params]            = team
             teams.append(team_record)
           }
         }
@@ -80,6 +82,7 @@ module Sportsdata
                 game_record[:away_team_name]    = game['away']['name']
                 game_record[:away_team_abbr]    = game['away']['alias']
                 game_record[:broadcast_network] = game['broadcast']['network'] if game['broadcast']
+                game_record[:params]            = game
                 games.append(game_record)
               }
             end
@@ -117,6 +120,7 @@ module Sportsdata
             player_record[:birth_place]       = player['birth_place']
             player_record[:birthday]          = player['birthdate']
             player_record[:updated]           = player['updated']
+            player_record[:params]            = player
 
             if player['draft'] && player['draft']['team_id']
               player_record[:draft_team_guid]   = player['draft']['team_id']

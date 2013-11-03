@@ -32,6 +32,7 @@ module Sportsdata
         venue_record[:middle_left_center_field]   = venue['distances']['mlcf']
         venue_record[:middle_right_center_field]  = venue['distances']['mrcf']
         venue_record[:middle_right_field]         = venue['distances']['mrf']
+        venue_record[:params]                     = venue
         venues.append(venue_record)
       }
       venues
@@ -51,6 +52,7 @@ module Sportsdata
         team_record[:league]            = team['league']
         team_record[:division]          = team['division']
         team_record[:venue_guid]        = team['venue']
+        team_record[:params]            = team
         teams.append(team_record)
       }
       teams
@@ -78,6 +80,7 @@ module Sportsdata
             game_record[:broadcast_satellite] = game['broadcast']['satellite']
             game_record[:broadcast_internet]  = game['broadcast']['internet']
             game_record[:broadcast_cable]     = game['broadcast']['cable']
+            game_record[:params]              = game
             games.append(game_record)
           }
         end
@@ -121,6 +124,7 @@ module Sportsdata
               player_record[:status]          = player['status']
               player_record[:jersey_number]   = player['jersey']
               player_record[:position]        = player['position']
+              player_record[:params]          = player
               players.append(player_record)
             }
           end

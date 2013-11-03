@@ -29,6 +29,7 @@ module Sportsdata
             venue_record[:city]             = team['venue']['city']
             venue_record[:state]            = team['venue']['state']
             venue_record[:zip]              = team['venue']['zip']
+            venue_record[:paramd]           = team
             venues.append(venue_record)
           }
         }
@@ -51,6 +52,7 @@ module Sportsdata
             team_record[:name]              = team['name']
             team_record[:city]              = team['market']
             team_record[:abbr]              = team['alias']
+            team_record[:params]            = team
             teams.append(team_record)
           }
         }
@@ -81,6 +83,7 @@ module Sportsdata
                   game_record[:home_team_abbr]    = game['home']['alias']
                   game_record[:away_team_name]    = game['away']['name']
                   game_record[:away_team_abbr]    = game['away']['alias']
+                  game_record[:params]            = game
                   games.append(game_record)
                 else
                   game_record = {}
@@ -94,6 +97,7 @@ module Sportsdata
                   game_record[:home_team_abbr]    = all_games['games']['game']['home']['alias']
                   game_record[:away_team_name]    = all_games['games']['game']['away']['name']
                   game_record[:away_team_abbr]    = all_games['games']['game']['away']['alias']
+                  game_record[:params]            = all_games['games']
                   games.append(game_record)
                 end
               }
@@ -133,6 +137,7 @@ module Sportsdata
               player_record[:birth_place]       = player_array['birth_place']
               player_record[:birthday]          = player_array['birthdate']
               player_record[:updated_at]        = player_array['updated']
+              player_record[:params]            = player_array
 
               if player_array['draft'] && player_array['draft']['team_id']
                 player_record[:draft_team_guid]   = player_array['draft']['team_id']

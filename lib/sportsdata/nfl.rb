@@ -31,6 +31,7 @@ module Sportsdata
             venue_record[:capacity]         = team['venue']['capacity']
             venue_record[:surface]          = team['venue']['surface']
             venue_record[:venue_type]       = team['venue']['type']
+            venue_record[:params]           = team
             venues.append(venue_record)
           }
         }
@@ -53,6 +54,7 @@ module Sportsdata
             team_record[:abbr]              = team['id']
             team_record[:name]              = team['name']
             team_record[:city]              = team['market']
+            team_record[:params]            = team
             teams.append(team_record)
           }
         }
@@ -80,12 +82,14 @@ module Sportsdata
                     game_record[:home_team_guid]    = game['home']
                     game_record[:away_team_guid]    = game['away']
                     game_record[:status]            = game['status']
+                    game_record[:params]            = game
                   else
                     game_record[:sports_data_guid]  = game[1]['id']
                     game_record[:scheduled_at]      = game[1]['scheduled']
                     game_record[:home_team_guid]    = game[1]['home']
                     game_record[:away_team_guid]    = game[1]['away']
                     game_record[:status]            = game[1]['status']
+                    game_record[:params]            = game[1]
                   end
                   games.append(game_record)
                 }
@@ -100,12 +104,14 @@ module Sportsdata
                       game_record[:home_team_guid]    = game['home']
                       game_record[:away_team_guid]    = game['away']
                       game_record[:status]            = game['status']
+                      game_record[:params]            = game
                     else
                       game_record[:sports_data_guid]  = game[1]['id']
                       game_record[:scheduled_at]      = game[1]['scheduled']
                       game_record[:home_team_guid]    = game[1]['home']
                       game_record[:away_team_guid]    = game[1]['away']
                       game_record[:status]            = game[1]['status']
+                      game_record[:params]            = game[1]
                     end
                     games.append(game_record)
                   }
@@ -162,6 +168,7 @@ module Sportsdata
           player_record[:draft_pick]        = player['draft_pick']
           player_record[:draft_round]       = player['draft_round']
           player_record[:draft_team]        = player['draft_team']
+          player_record[:params]            = player
           players.append(player_record)
         }
       }
