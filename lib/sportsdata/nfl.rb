@@ -75,49 +75,31 @@ module Sportsdata
               if week['game'].class.name == 'Array'
                 week['game'].each { |game|
                   game_record = {}
-                  game_record[:week]                = week['week']
-                  if game.class.name == 'Hash'
-                    game_record[:sports_data_guid]  = game['id']
-                    game_record[:scheduled_at]      = game['scheduled']
-                    game_record[:home_team_guid]    = game['home']
-                    game_record[:away_team_guid]    = game['away']
-                    game_record[:status]            = game['status']
-                    game_record[:params]            = game
-                  else
-                    game_record[:sports_data_guid]  = game[1]['id']
-                    game_record[:scheduled_at]      = game[1]['scheduled']
-                    game_record[:home_team_guid]    = game[1]['home']
-                    game_record[:away_team_guid]    = game[1]['away']
-                    game_record[:status]            = game[1]['status']
-                    game_record[:params]            = game[1]
-                  end
+                  game_record[:week]              = week['week']
+                  game_record[:sports_data_guid]  = game['id']
+                  game_record[:scheduled_at]      = game['scheduled']
+                  game_record[:home_team_guid]    = game['home']
+                  game_record[:away_team_guid]    = game['away']
+                  game_record[:status]            = game['status']
+                  game_record[:params]            = game
                   games.append(game_record)
                 }
               else
                 if week['game']
-                  week['game'].each { |game|
-                    game_record = {}
-                    game_record[:week]                = week['week']
-                    if game.class.name == 'Hash'
-                      game_record[:sports_data_guid]  = game['id']
-                      game_record[:scheduled_at]      = game['scheduled']
-                      game_record[:home_team_guid]    = game['home']
-                      game_record[:away_team_guid]    = game['away']
-                      game_record[:status]            = game['status']
-                      game_record[:params]            = game
-                    else
-                      game_record[:sports_data_guid]  = game[1]['id']
-                      game_record[:scheduled_at]      = game[1]['scheduled']
-                      game_record[:home_team_guid]    = game[1]['home']
-                      game_record[:away_team_guid]    = game[1]['away']
-                      game_record[:status]            = game[1]['status']
-                      game_record[:params]            = game[1]
-                    end
+                  game_record = {}
+                  game_record[:week]                = week['week']
+                  if week.class.name == 'Hash'
+                    game_record[:sports_data_guid]  = week['game']['id']
+                    game_record[:scheduled_at]      = week['game']['scheduled']
+                    game_record[:home_team_guid]    = week['game']['home']
+                    game_record[:away_team_guid]    = week['game']['away']
+                    game_record[:status]            = week['game']['status']
+                    game_record[:params]            = week
                     games.append(game_record)
-                  }
+                  end
                 end
               end
-              }
+            }
           end
         }
       }
