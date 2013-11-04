@@ -77,6 +77,7 @@ module Sportsdata
                   game_record = {}
                   game_record[:week]              = week['week']
                   game_record[:sports_data_guid]  = game['id']
+                  game_record[:venue_guid]        = game['venue']['id']
                   game_record[:scheduled_at]      = game['scheduled']
                   game_record[:home_team_guid]    = game['home']
                   game_record[:away_team_guid]    = game['away']
@@ -90,6 +91,7 @@ module Sportsdata
                   game_record[:week]                = week['week']
                   if week.class.name == 'Hash'
                     game_record[:sports_data_guid]  = week['game']['id']
+                    game_record[:venue_guid]        = week['game']['venue']['id']
                     game_record[:scheduled_at]      = week['game']['scheduled']
                     game_record[:home_team_guid]    = week['game']['home']
                     game_record[:away_team_guid]    = week['game']['away']
