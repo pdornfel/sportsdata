@@ -190,11 +190,12 @@ module Sportsdata
       play_summary_record = {}
       play_summary_record['sports_data_guid']                     = response['play']['id']
       play_summary_record['sports_data_game_guid']                = response['play']['game']
+      play_summary_record['sports_data_updated_at']               = response['play']['updated']
       play_summary_record['play_type']                            = response['play']['type']
       play_summary_record['official']                             = response['play']['official']
+      play_summary_record['game_clock']                           = response['play']['clock']
       play_summary_record['quarter']                              = response['play']['quarter']
       play_summary_record['controller']                           = response['play']['controller']
-      play_summary_record['updated_at']                           = response['play']['updated']
       play_summary_record['direction']                            = response['play']['direction']
       play_summary_record['summary']                              = response['play']['summary']
       play_summary_record['start_situation_team']                 = response['play']['start_situation']['team']
