@@ -5,6 +5,53 @@ module Sportsdata
 
     attr_accessor :api_key, :api_mode
 
+    def self.positions_legend
+      {
+        'C' => 'Center',
+        'CB' => 'Cornerback',
+        'DE' => 'Defensive End',
+        'DT' => 'Defensive Tackle',
+        'FB' => 'Fullback',
+        'FS' => 'Free Safety',
+        'G' => 'Offensive Guard',
+        'H' => 'Holder',
+        'K' => 'Kicker',
+        'KR' => 'Kick Returner',
+        'LB' => 'Linebacker',
+        'LDE' => 'Left Defensive End',
+        'LDT' => 'Left Defensive Tackle',
+        'LG' => 'Left Guard',
+        'LILB' => 'Left Inside Linebacker',
+        'LOLB' => 'Left Outside Linebacker',
+        'LS' => 'Long Snapper',
+        'LT' => 'Left Tackle',
+        'MLB' => 'Middle Linebacker',
+        'NT' => 'Nose Tackle',
+        'OG' => 'Offensive Guard',
+        'OL' => 'Offensive Lineman',
+        'OLB' => 'Outside Linebacker',
+        'OT' => 'Offensive Tackle',
+        'P' => 'Punter',
+        'PK' => 'Place Kicker',
+        'PR' => 'Punt Returner',
+        'QB' => 'Quarterback',
+        'RB' => 'Running Back',
+        'RDE' => 'Right Defensive End',
+        'RDT' => 'Right Defensive Tackle',
+        'RG' => 'Right Guard',
+        'RILB' => 'Right Inside Linebacker',
+        'ROLB' => 'Right Outside Linebacker',
+        'RT' => 'Right Tackle',
+        'SAF' => 'Safety',
+        'SLB' => 'Strong Side Linebacker',
+        'SS' => 'Strong Safety',
+        'T' => 'Offensive Tackle',
+        'TE' => 'Tight End',
+        'WLB' => 'Weak Side Linebacker',
+        'WR' => 'Wide Receiver',
+      }
+    end
+
     def self.api_key
       Sportsdata.nfl_api_key
     end
@@ -108,7 +155,7 @@ module Sportsdata
       games
     end
 
-    def self.game_statistics(options = {:year => 2013, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
+    def self.game_statistics(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       statistics = []
       response = self.get_raw(game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       statistics_record = {}
@@ -120,6 +167,28 @@ module Sportsdata
       statistics_record[:params]                 = response
       statistics.append(statistics_record)
       statistics
+    end
+
+    def self.play_by_play(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
+      play_by_play = []
+      response = self.get_raw(play_by_play_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      play_by_play_record = {}
+      play_by_play_record['sports_data_guid']   = response['game']['id']
+      play_by_play_record['scheduled_at']       = response['game']['scheduled']
+      play_by_play_record['status']             = response['game']['status']
+      play_by_play_record['home_team']          = response['game']['home']
+      play_by_play_record['away_team']          = response['game']['away']
+      play_by_play_record['completed']          = response['game']['completed']
+      play_by_play_record['params']             = response
+      play_by_play.append(play_by_play_record)
+      play_by_play
+    end
+
+    def self.play_summary(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN', :play_guid => '748c7397-3f36-41b4-b49b-671c55a04589'})
+      play_summary = []
+      response = self.get_raw(play_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team], :play_guid => options[:play_guid]))
+      play_summary.append(play_summary_record)
+      play_summary
     end
 
     def self.players(options = {})
@@ -182,6 +251,14 @@ module Sportsdata
 
     def self.game_statistics_url(options = {})
       "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/statistics.xml"
+    end
+
+    def self.play_by_play_url(options = {})
+      "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/pbp.xml"
+    end
+
+    def self.play_summary_url(options = {})
+      "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/plays/#{options[:play_guid]}.xml"
     end
 
     def self.players_url(options = {})
