@@ -370,6 +370,10 @@ module Sportsdata
       "games/#{options[:game_guid]}/summary.xml"
     end
 
+    def self.game_box_url(options = {})
+      "games/#{options[:game_guid]}/boxscore.xml"
+    end
+
     def self.play_by_play_url(options = {})
       "games/#{options[:game_guid]}/pbp.xml"
     end

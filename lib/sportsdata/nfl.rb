@@ -169,6 +169,10 @@ module Sportsdata
       statistics
     end
 
+    def self.game_summary()
+
+    end
+
     def self.play_by_play(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       play_by_play = []
       response = self.get_raw(play_by_play_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
@@ -276,6 +280,14 @@ module Sportsdata
       "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/statistics.xml"
     end
 
+    def self.game_summary_url(options = {})
+      "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/summary.xml"
+    end
+
+    def self.game_box_url(options = {})
+      "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/boxscore.xml"
+    end
+
     def self.play_by_play_url(options = {})
       "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/pbp.xml"
     end
@@ -286,6 +298,10 @@ module Sportsdata
 
     def self.players_url(options = {})
       "teams/#{options[:team_abbr]}/roster.xml"
+    end
+
+    def self.injuries_url(options = {})
+      "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/injuries.xml"
     end
 
     def self.api

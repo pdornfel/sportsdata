@@ -154,6 +154,18 @@ module Sportsdata
       "schedule/#{options[:year]}.xml"
     end
 
+    def self.game_statistics_url(options = {})
+      "statistics/#{options[:event_guid]}.xml"
+    end
+
+    def self.game_box_url(options = {})
+      "boxscore/#{options[:event_guid]}.xml"
+    end
+
+    def self.play_by_play_url(options = {})
+      "pbp/#{options[:event_guid]}.xml"
+    end
+
     def self.players_url(options = {})
       "rosters-full/#{options[:year]}.xml"
     end
