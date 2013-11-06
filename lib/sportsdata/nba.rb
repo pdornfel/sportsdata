@@ -108,6 +108,43 @@ module Sportsdata
       games
     end
 
+    def self.game_summary(options = {:game_guid => '270aec5b-f538-44dd-adc6-6ef16667257c'})
+      game_summary = []
+      response = self.get_raw(game_summary_url(:game_guid => options[:game_guid]))
+      game_summary_record = {}
+      game_summary_record[:sports_data_guid]    = response['game']['id']
+      game_summary_record[:status]              = response['game']['status']
+      game_summary_record[:coverage]            = response['game']['coverage']
+      game_summary_record[:home_team_guid]      = response['game']['home_team']
+      game_summary_record[:away_team_guid]      = response['game']['away_team']
+      game_summary_record[:scheduled]           = response['game']['scheduled']
+      game_summary_record[:duration]            = response['game']['duration']
+      game_summary_record[:attendance]          = response['game']['attendance']
+      game_summary_record[:clock]               = response['game']['clock']
+      game_summary_record[:quarter]             = response['game']['quarter']
+      game_summary_record[:params]              = response
+      game_summary.append(game_summary_record)
+      game_summary
+    end
+
+    def self.play_by_play(options = {:game_guid => '270aec5b-f538-44dd-adc6-6ef16667257c'})
+      play_by_play = []
+      response = self.get_raw(play_by_play_url(:game_guid => options[:game_guid]))
+      play_by_play_record = {}
+      play_by_play_record[:sports_data_guid]  = response['game']['id']
+      play_by_play_record[:status]            = response['game']['status']
+      play_by_play_record[:coverage]          = response['game']['coverage']
+      play_by_play_record[:home_team_guid]    = response['game']['home_team']
+      play_by_play_record[:away_team_guid]    = response['game']['away_team']
+      play_by_play_record[:scheduled]         = response['game']['scheduled']
+      play_by_play_record[:duration]          = response['game']['duration']
+      play_by_play_record[:attendance]        = response['game']['attendance']
+      play_by_play_record[:clock]             = response['game']['clock']
+      play_by_play_record[:params]            = response
+      play_by_play.append(play_by_play_record)
+      play_by_play_record
+    end
+
     def self.players(options = {})
       players = []
       teams = Sportsdata.nba.teams
@@ -172,6 +209,14 @@ module Sportsdata
 
     def self.games_url(options = {})
       "games/#{options[:year]}/#{options[:season]}/schedule.xml"
+    end
+
+    def self.game_summary_url(options = {})
+      "games/#{options[:game_guid]}/summary.xml"
+    end
+
+    def self.play_by_play_url(options = {})
+      "games/#{options[:game_guid]}/pbp.xml"
     end
 
     def self.players_url(options = {})
