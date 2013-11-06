@@ -187,6 +187,28 @@ module Sportsdata
     def self.play_summary(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN', :play_guid => '748c7397-3f36-41b4-b49b-671c55a04589'})
       play_summary = []
       response = self.get_raw(play_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team], :play_guid => options[:play_guid]))
+      play_summary_record = {}
+      play_summary_record['sports_data_guid']                     = response['play']['id']
+      play_summary_record['sports_data_game_guid']                = response['play']['game']
+      play_summary_record['play_type']                            = response['play']['type']
+      play_summary_record['official']                             = response['play']['official']
+      play_summary_record['quarter']                              = response['play']['quarter']
+      play_summary_record['controller']                           = response['play']['controller']
+      play_summary_record['updated_at']                           = response['play']['updated']
+      play_summary_record['direction']                            = response['play']['direction']
+      play_summary_record['summary']                              = response['play']['summary']
+      play_summary_record['start_situation_team']                 = response['play']['start_situation']['team']
+      play_summary_record['start_situation_side']                 = response['play']['start_situation']['side']
+      play_summary_record['start_situation_yard_line']            = response['play']['start_situation']['yard_line']
+      play_summary_record['start_situation_down']                 = response['play']['start_situation']['down']
+      play_summary_record['start_situation_yards_to_first_down']  = response['play']['start_situation']['yfd']
+      play_summary_record['end_situation_team']                   = response['play']['end_situation']['team']
+      play_summary_record['end_situation_side']                   = response['play']['end_situation']['side']
+      play_summary_record['end_situation_yard_line']              = response['play']['end_situation']['yard_line']
+      play_summary_record['end_situation_down']                   = response['play']['end_situation']['down']
+      play_summary_record['end_situation_yards_to_first_down']    = response['play']['end_situation']['yfd']
+      play_summary_record['players']                              = response['play']['statistics']['player']
+      play_summary_record['params']                               = response
       play_summary.append(play_summary_record)
       play_summary
     end
