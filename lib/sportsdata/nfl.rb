@@ -5,7 +5,92 @@ module Sportsdata
 
     attr_accessor :api_key, :api_mode
 
-    def self.positions_legend
+    def self.season_types
+      {
+        'PRE' => 'Pre-season game',
+        'REG' => 'Regular season game',
+        'PST' => 'Post season game'
+      }
+    end
+
+    def self.game_statuses
+      {
+        'scheduled' => 'The game is scheduled to occur.',
+        'created' => 'We are ready to begin recording actions against a scheduled game.',
+        'inprogress' => 'The game is in progress.',
+        'complete' => 'The game is over, but stat validation is not complete.',
+        'closed' => 'The game is over and the stats have been validated.',
+        'reopened' => 'The game stats are in the process of being corrected.',
+        'delayed' => 'The start of the game has been delayed, or a game that was in progress is currently delayed.'
+      }
+    end
+
+    def self.player_status
+      {
+        'ACT' => 'Active',
+        'DUP' => 'Duplicate',
+        'EXE' => 'Exempt',
+        'IR' => 'Injured Reserve',
+        'NON' => 'Non football related injured reserve',
+        'NWT' => 'Not with Team',
+        'PRA' => 'Practice Squad',
+        'PUP' => 'Physically unable to perform',
+        'RET' => 'Retired',
+        'SUS' => 'Suspended',
+        'UDF' => 'Unsigned draft pick',
+        'UFA' => 'Unsigned free agent'
+      }
+    end
+
+    def self.player_game_statuses
+      {
+        'DOU' => 'Doubtful',
+        'OUT' => 'Out of game',
+        'PRO' => 'Probable',
+        'QST' => 'Questionable',
+        'UNK' => 'Unknown'
+      }
+    end
+
+    def self.player_practice_statuses
+      {
+        'Did Not Participate' => 'The player did not participate in practice',
+        'Limited Participation' => 'The player practiced, but his activities were limited',
+        'Full Participation' => 'The player participated in practice',
+        'OUT' => 'The player is out of games and practices'
+      }
+    end
+
+    def self.event_types
+      {
+        'cointoss',
+        'timeout',
+        'injurytimeout',
+        'tvtimeout',
+        'challenge',
+        'review',
+        'quarterend',
+        'twominuteswarning',
+        'miscnote',
+        'gameover'
+      }
+    end
+
+    def self.play_types
+      {
+        'penalty',
+        'kick',
+        'punt',
+        'rush',
+        'pass',
+        'tackle',
+        'fieldgoal',
+        'extrapoint',
+        'conversion'
+      }
+    end
+
+    def self.position_types
       {
         'C' => 'Center',
         'CB' => 'Cornerback',
@@ -49,6 +134,123 @@ module Sportsdata
         'TE' => 'Tight End',
         'WLB' => 'Weak Side Linebacker',
         'WR' => 'Wide Receiver',
+      }
+    end
+
+    def penalty_codes
+      {
+        'o12' => 'Offense - 12 players',
+        'oaf' => 'Offense - Facemasking',
+        'ocb' => 'Offense - Chop block pdated 10.14.13',
+        'ocw' => 'Offense - Clipping',
+        'odg' => 'Offense - Delay of game',
+        'odk' => 'Offense - Delay of kickoff',
+        'ods' => 'Offense - Delay of game at start of either half',
+        'oec' => 'Offense - Excessive crowd noise',
+        'oet' => 'Offense - Excessive time outs',
+        'ofc' => 'Offense - Invalid fair catch signal',
+        'ofk' => 'Offense - Offside on Free Kick',
+        'ofm' => 'Offense - Facemask Incidental',
+        'ofo' => 'Offense - Helmet off',
+        'ofr' => 'Offense - A punter placekicker or holder who fakes being roughed',
+        'ofs' => 'Offense - False start',
+        'ohc' => 'Offense - Horse Collar',
+        'ohr' => 'Offense - Helping the runner',
+        'oib' => 'Offense - Illegal block in the back',
+        'oic' => 'Offense - Illegal crackback block by offense',
+        'oid' => 'Offense - Ineligible member kicking team beyond scrimmage',
+        'oif' => 'Offense - Illegal formation',
+        'oig' => 'Offense - Intentional grounding',
+        'oih' => 'Offense - Illegal use of hands',
+        'oim' => 'Offense - Illegal motion',
+        'oip' => 'Offense - Illegal Procedure',
+        'oir' => 'Offense - Illegal return',
+        'ois' => 'Offense - Illegal shift',
+        'oiu' => 'Offense - Illegal substitution',
+        'okb' => 'Offense - Kicking a loose ball',
+        'okk' => 'Offense - Kicking or kneeing opponent',
+        'oko' => 'Offense - Kicking team player out of bounds',
+        'ol7' => 'Offense - Less than seven men on offensive line at snap',
+        'olb' => 'Offense - Illegal low block',
+        'olp' => 'Offense - Leaping',
+        'olv' => 'Offense - Leverage',
+        'onc' => 'Offense - Captains not appearing for coin toss',
+        'onz' => 'Offense - Neutral zone infraction',
+        'oob' => 'Offense - Player out of bounds at snap',
+        'oof' => 'Offense - Offside',
+        'ooo' => 'Offense - First onside kickoff out of bounds',
+        'opb' => 'Offense - Forward pass thrown from beyond line of scrimmage',
+        'opd' => 'Offense - Ineligible player downfield during passing down',
+        'opf' => 'Offense - Personal Foul',
+        'opi' => 'Offense - Pass interference',
+        'opo' => 'Offense - Piling on',
+        'ops' => 'Offense - Illegal Forward Pass',
+        'opu' => 'Offense - Palpably unfair act',
+        'ore' => 'Offense - Failure to report change of eligibility',
+        'ori' => 'Offense - Pass touched or caught by ineligible receiver',
+        'oso' => 'Offense - Striking opponent on head or neck',
+        'osp' => 'Offense - Helmet to butt spear or ram',
+        'otm' => 'Offense - 12 men in the huddle',
+        'oto' => 'Offense - Pass touched by receiver who went OOB',
+        'ouh' => 'Offense - Holding',
+        'd12' => '12 players',
+        'daf' => 'Facemasking',
+        'dcw' => 'Clipping',
+        'ddg' => 'Delay of game',
+        'ddk' => 'Delay of kickoff',
+        'ddq' => 'Defensive disqualification',
+        'dds' => 'Delay of game at start of either half',
+        'dec' => 'Excessive crowd noise',
+        'den' => 'Encroachment',
+        'det' => 'Excessive time outs',
+        'dfi' => 'Fair catch interference',
+        'dfm' => 'Facemask Incidental',
+        'dfo' => 'Helmet off',
+        'dgf' => 'Facemasking ball carrier or quarterback',
+        'dhc' => 'Horse Collar',
+        'dhk' => 'Running into kicker',
+        'dho' => 'Striking or shoving a game official',
+        'dhw' => 'Using a helmet (not worn) as a weapon',
+        'dib' => 'Illegal block in the back',
+        'dic' => 'Illegal Contact',
+        'dif' => 'Illegal formation',
+        'dih' => 'Illegal use of hands',
+        'dkb' => 'Kicking a loose ball',
+        'dko' => 'Kicking or kneeing opponent',
+        'dla' => 'Team’s late arrival on the field prior to scheduled kickoff',
+        'dlb' => 'Illegal low block',
+        'dlp' => 'Leaping',
+        'dlv' => 'Leverage',
+        'dnc' => 'Captains not appearing for coin toss',
+        'dnz' => 'Neutral zone infraction',
+        'dob' => 'Player out of bounds at snap',
+        'dof' => 'Offside',
+        'dpb' => 'Batting or punching a loose ball',
+        'dpf' => 'Personal Foul',
+        'dpi' => 'Pass interference',
+        'dpo' => 'Piling on',
+        'dpu' => 'Palpably unfair act',
+        'drc' => 'Roughing the kicker',
+        'drp' => 'Roughing the passer',
+        'dsf' => 'Striking opponent with fisti',
+        'dso' => 'Striking opponent on head or neck',
+        'dsp' => 'Helmet to butt spear or ram',
+        'dth' => 'Using top of his helmet unnecessarily',
+        'dtm' => '12 men in the huddle',
+        'dtn' => 'Taunting',
+        'dtr' => 'Tripping',
+        'duc' => 'Unsportsmanlike conduct',
+        'duh' => 'Holding',
+        'dur' => 'Unnecessary roughness'
+      }
+    end
+
+    def self.playoff_statuses
+      {
+        'division' => 'The team has clinched the division.',
+        'division_homefield' => 'The team has clinched the division and home field advantage for the playoffs.',
+        'playoff_berth' => 'The team has clinched a playoff berth.',
+        'wildcard' => 'The team has clinched the wildcard berth.'
       }
     end
 
