@@ -169,8 +169,35 @@ module Sportsdata
       statistics
     end
 
-    def self.game_summary()
+    def self.game_summary(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
+      summary = []
+      response = self.get_raw(game_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      summary_record = {}
+      summary_record[:sports_data_guid]       = response['game']['id']
+      summary_record[:scheduled]              = response['game']['scheduled']
+      summary_record[:home]                   = response['game']['home']
+      summary_record[:away]                   = response['game']['away']
+      summary_record[:status]                 = response['game']['status']
+      summary_record[:params]                 = response
+      summary.append(summary_record)
+      summary
+    end
 
+    def self.game_box(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
+      game_box = []
+      response = self.get_raw(game_box_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      game_box_record = {}
+      game_box_record[:sports_data_guid]      = response['game']['id']
+      game_box_record[:scheduled]             = response['game']['scheduled']
+      game_box_record[:home_team_guid]        = response['game']['home']
+      game_box_record[:away_team_guid]        = response['game']['away']
+      game_box_record[:status]                = response['game']['status']
+      game_box_record[:quarter]               = response['game']['quarter']
+      game_box_record[:clock]                 = response['game']['clock']
+      game_box_record[:completed]             = response['game']['completed']
+      game_box_record[:params]                = response
+      game_box.append(game_box_record)
+      game_box
     end
 
     def self.play_by_play(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})

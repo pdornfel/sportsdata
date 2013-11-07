@@ -278,6 +278,26 @@ module Sportsdata
       game_summary
     end
 
+    def self.game_box(options = {:game_guid => 'c336d44c-d968-4a6b-b8ec-549e03e2816e'})
+      game_box = []
+      response = self.get_raw(game_box_url(:game_guid => options[:game_guid]))
+      game_box_record = {}
+      game_box_record[:sports_data_guid]  = response['game']['id']
+      game_box_record[:status]            = response['game']['status']
+      game_box_record[:coverage]          = response['game']['coverage']
+      game_box_record[:home_team]         = response['game']['home_team']
+      game_box_record[:away_team]         = response['game']['away_team']
+      game_box_record[:scheduled]         = response['game']['scheduled']
+      game_box_record[:attendance]        = response['game']['attendance']
+      game_box_record[:start_time]        = response['game']['start_time']
+      game_box_record[:end_time]          = response['game']['end_time']
+      game_box_record[:clock]             = response['game']['clock']
+      game_box_record[:period]            = response['game']['period']
+      game_box_record[:params]            = response
+      game_box.append(game_box_record)
+      game_box
+    end
+
     def self.play_by_play(options = {:game_guid => 'c336d44c-d968-4a6b-b8ec-549e03e2816e'})
       play_by_play = []
       response = self.get_raw(play_by_play_url(:game_guid => options[:game_guid]))
