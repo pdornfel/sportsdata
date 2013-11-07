@@ -142,7 +142,7 @@ module Sportsdata
       play_by_play_record[:clock]             = response['game']['clock']
       play_by_play_record[:params]            = response
       play_by_play.append(play_by_play_record)
-      play_by_play_record
+      play_by_play
     end
 
     def self.players(options = {})

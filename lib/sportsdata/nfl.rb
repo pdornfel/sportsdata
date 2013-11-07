@@ -156,16 +156,20 @@ module Sportsdata
     end
 
     def self.game_statistics(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
+      debugger
       statistics = []
       response = self.get_raw(game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       statistics_record = {}
+      debugger
       statistics_record[:sports_data_guid]       = response['game']['id']
       statistics_record[:scheduled_at]           = response['game']['scheduled']
       statistics_record[:sports_data_home_guid]  = response['game']['home']
       statistics_record[:sports_data_away_guid]  = response['game']['away']
       statistics_record[:status]                 = response['game']['status']
       statistics_record[:params]                 = response
+      debugger
       statistics.append(statistics_record)
+      debugger
       statistics
     end
 
@@ -341,6 +345,7 @@ module Sportsdata
     def self.get_raw(url)
       begin
         response = self.api.get(url, { :api_key => self.api_key })
+        debugger
         return response.body
       rescue Faraday::Error::TimeoutError => timeout
         raise Sportsdata::Exception, 'Sportsdata Timeout Error'
