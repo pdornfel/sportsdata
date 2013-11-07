@@ -3,7 +3,21 @@ module Sportsdata
     class Exception < ::Exception
     end
 
+    #require_relative 'request'
+
     attr_accessor :api_key, :api_mode
+
+    def self.api_key
+      Sportsdata.nfl_api_key
+    end
+
+    def self.api_mode
+      Sportsdata.api_mode
+    end
+
+    def self.version
+      "1"
+    end
 
     def self.season_types
       [
@@ -253,14 +267,6 @@ module Sportsdata
       ]
     end
 
-    def self.api_key
-      Sportsdata.nfl_api_key
-    end
-
-    def self.api_mode
-      Sportsdata.api_mode
-    end
-
     def self.venues(options = {})
       venues = []
       response = self.get_raw(self.venues_url)
@@ -392,8 +398,9 @@ module Sportsdata
     end
 
     def self.game_box(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
+debugger
       game_box = []
-      response = self.get_raw(game_box_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      response = Request.get_raw(game_box_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
         game_box_record = {}
         game_box_record[:sports_data_guid]      = response['game']['id']
@@ -407,7 +414,7 @@ module Sportsdata
         game_box_record[:params]                = response
         game_box.append(game_box_record)
       end
-      game_box
+      #game_box
     end
 
     def self.play_by_play(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
@@ -498,14 +505,6 @@ module Sportsdata
     end
 
     private
-    def self.version
-      "1"
-    end
-
-    def self.base_url
-      "http://api.sportsdatallc.org/nfl-#{self.api_mode}#{self.version}"
-    end
-
     def self.venues_url
       "teams/hierarchy.xml"
     end
@@ -546,37 +545,6 @@ module Sportsdata
       "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/injuries.xml"
     end
 
-    def self.api
-      Faraday.new self.base_url do |a|
-        a.response :xml, :content_type => /\bxml$/
-        a.adapter Faraday.default_adapter
-      end
-    end
-
-    def self.get_raw(url)
-      begin
-        response = self.api.get(url, { :api_key => self.api_key })
-        debugger
-        return response.body
-      rescue Faraday::Error::TimeoutError => timeout
-        raise Sportsdata::Exception, 'Sportsdata Timeout Error'
-      rescue Exception => e
-        message = if e.response.headers.key? :x_server_error
-                    JSON.parse(e.response.headers[:x_server_error], { symbolize_names: true })[:message]
-                  elsif e.response.headers.key? :x_mashery_error_code
-                    e.response.headers[:x_mashery_error_code]
-                  else
-                    "The server did not specify a message"
-                  end
-        raise Sportsdata::Exception, message
-      end
-    end
-
-    def self.errors
-      @errors = {
-        0 => "OK",
-        1 => "No Response"
-      }
-    end
+    include Request
   end
 end

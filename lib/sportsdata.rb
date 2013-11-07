@@ -174,20 +174,17 @@ module Sportsdata
           ['Wyoming', 'WY']
         ]
     end
-
   end
 
-
   LIBRARY_PATH = File.join(File.dirname(__FILE__), 'sportsdata')
-
   autoload :Nfl,       File.join(LIBRARY_PATH, 'nfl')
   autoload :Nhl,       File.join(LIBRARY_PATH, 'nhl')
   autoload :Nba,       File.join(LIBRARY_PATH, 'nba')
   autoload :Mlb,       File.join(LIBRARY_PATH, 'mlb')
-  autoload :Ncaafb,       File.join(LIBRARY_PATH, 'ncaafb')
-  autoload :Ncaamb,       File.join(LIBRARY_PATH, 'ncaamb')
-  autoload :Nascar,       File.join(LIBRARY_PATH, 'nascar')
-  autoload :Golf,       File.join(LIBRARY_PATH, 'golf')
+  autoload :Ncaafb,    File.join(LIBRARY_PATH, 'ncaafb')
+  autoload :Ncaamb,    File.join(LIBRARY_PATH, 'ncaamb')
+  autoload :Nascar,    File.join(LIBRARY_PATH, 'nascar')
+  autoload :Golf,      File.join(LIBRARY_PATH, 'golf')
   autoload :Exception, File.join(LIBRARY_PATH, 'exception')
-
+  autoload :Request,   File.join(LIBRARY_PATH, 'request')
 end
