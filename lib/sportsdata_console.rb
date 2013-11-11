@@ -2,6 +2,7 @@ require 'rubygems'
 require 'awesome_print'
 require 'sportsdata'
 require 'debugger'
+require 'pry'
 
 Sportsdata.configure do |config|
   config.nfl_api_key    = ENV['SPORTSDATA_NFL_API_KEY']

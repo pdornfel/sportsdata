@@ -1,10 +1,12 @@
 module Sportsdata
   module Mlb
+    include Request
     class Exception < ::Exception
     end
 
     attr_accessor :api_key, :api_mode
 
+    #request methods
     def self.api_key
       Sportsdata.mlb_api_key
     end
@@ -13,9 +15,17 @@ module Sportsdata
       Sportsdata.api_mode
     end
 
+    def self.version
+      "3"
+    end
+
+    def self.name
+      "mlb"
+    end
+
     def self.venues(options = {})
       venues = []
-      response = self.get_raw(self.venues_url)
+      response = self.get(self.venues_url)
       all_venues = response['venues'].try(:[], 'venue')
       all_venues ||= []
       all_venues.each { |venue|
@@ -40,7 +50,7 @@ module Sportsdata
 
     def self.teams(options = {:year => Date.today.year})
       teams = []
-      response = self.get_raw(self.teams_url(:year => options[:year]))
+      response = self.get(self.teams_url(:year => options[:year]))
       all_teams = response['teams'].try(:[], 'team')
       all_teams ||= []
       all_teams.each { |team|
@@ -62,7 +72,7 @@ module Sportsdata
       games = []
       options[:years].each{|year|
         #sleep(2)
-        response = self.get_raw(games_url(:year => year))
+        response = self.get(games_url(:year => year))
         if response['calendars']
           all_games = response['calendars'].try(:[], 'event')
           all_games ||= []
@@ -92,7 +102,7 @@ module Sportsdata
       players = []
       options[:years].each{|year|
         #sleep(2)
-        response = self.get_raw(players_url(:year => year))
+        response = self.get(players_url(:year => year))
         all_players = response['rosters'].try(:[], 'team')
         all_players ||= []
         all_players.each { |team|
@@ -134,13 +144,6 @@ module Sportsdata
     end
 
     private
-    def self.version
-      "3"
-    end
-
-    def self.base_url
-      "http://api.sportsdatallc.org/mlb-#{self.api_mode}#{self.version}"
-    end
 
     def self.venues_url
       "venues/venues.xml"
@@ -170,36 +173,5 @@ module Sportsdata
       "rosters-full/#{options[:year]}.xml"
     end
 
-    def self.api
-      Faraday.new self.base_url do |a|
-        a.response :xml, :content_type => /\bxml$/
-        a.adapter Faraday.default_adapter
-      end
-    end
-
-    def self.get_raw(url)
-      begin
-        response = self.api.get(url, { :api_key => self.api_key })
-        return response.body
-      rescue Faraday::Error::TimeoutError => timeout
-        raise Sportsdata::Exception, 'Sportsdata Timeout Error'
-      rescue Exception => e
-        message = if e.response.headers.key? :x_server_error
-                    JSON.parse(e.response.headers[:x_server_error], { symbolize_names: true })[:message]
-                  elsif e.response.headers.key? :x_mashery_error_code
-                    e.response.headers[:x_mashery_error_code]
-                  else
-                    "The server did not specify a message"
-                  end
-        raise Sportsdata::Exception, message
-      end
-    end
-
-    def self.errors
-      @errors = {
-        0 => "OK",
-        1 => "No Response"
-      }
-    end
   end
 end

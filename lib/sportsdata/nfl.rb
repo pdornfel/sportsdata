@@ -1,12 +1,12 @@
 module Sportsdata
   module Nfl
+    include Request
     class Exception < ::Exception
     end
 
-    #require_relative 'request'
-
     attr_accessor :api_key, :api_mode
 
+    #request methods
     def self.api_key
       Sportsdata.nfl_api_key
     end
@@ -16,7 +16,11 @@ module Sportsdata
     end
 
     def self.version
-      "1"
+      "2"
+    end
+
+    def self.name
+      "nfl"
     end
 
     def self.season_types
@@ -269,7 +273,7 @@ module Sportsdata
 
     def self.venues(options = {})
       venues = []
-      response = self.get_raw(self.venues_url)
+      response = self.get(self.venues_url)
       unless response.empty?
         all_venues = response['league'].try(:[], 'conference')
         all_venues ||= []
@@ -297,7 +301,7 @@ module Sportsdata
 
     def self.teams(options = {})
       teams = []
-      response = self.get_raw(self.teams_url)
+      response = self.get(self.teams_url)
       unless response.empty?
         all_teams = response['league'].try(:[], 'conference')
         all_teams ||= []
@@ -324,7 +328,7 @@ module Sportsdata
       games = []
       options[:seasons].each{|season|
         options[:years].each{|year|
-          response = self.get_raw(games_url(:year => year, :season => season))
+          response = self.get(games_url(:year => year, :season => season))
           unless response.empty?
             all_games = response['season'].try(:[], 'week')
             all_games ||= []
@@ -367,7 +371,7 @@ module Sportsdata
 
     def self.game_statistics(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       statistics = []
-      response = self.get_raw(game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      response = self.get(game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
         statistics_record = {}
         statistics_record[:sports_data_guid]       = response['game']['id']
@@ -383,7 +387,7 @@ module Sportsdata
 
     def self.game_summary(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       summary = []
-      response = self.get_raw(game_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      response = self.get(game_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
         summary_record = {}
         summary_record[:sports_data_guid]       = response['game']['id']
@@ -400,7 +404,7 @@ module Sportsdata
     def self.game_box(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
 debugger
       game_box = []
-      response = Request.get_raw(game_box_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      response = self.get(game_box_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
         game_box_record = {}
         game_box_record[:sports_data_guid]      = response['game']['id']
@@ -419,7 +423,7 @@ debugger
 
     def self.play_by_play(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       play_by_play = []
-      response = self.get_raw(play_by_play_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      response = self.get(play_by_play_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
         play_by_play_record = {}
         play_by_play_record['sports_data_guid']   = response['game']['id']
@@ -436,7 +440,7 @@ debugger
 
     def self.play_summary(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN', :play_guid => '748c7397-3f36-41b4-b49b-671c55a04589'})
       play_summary = []
-      response = self.get_raw(play_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team], :play_guid => options[:play_guid]))
+      response = self.get(play_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team], :play_guid => options[:play_guid]))
       unless response.empty?
         play_summary_record = {}
         play_summary_record['sports_data_guid']                     = response['play']['id']
@@ -470,7 +474,7 @@ debugger
       players = []
       teams = Sportsdata.nfl.teams
       teams.each{|team|
-        response = self.get_raw(players_url(:team_abbr => team[:sports_data_guid]))
+        response = self.get(players_url(:team_abbr => team[:sports_data_guid]))
         unless response.empty?
           all_players = response['team'].try(:[], 'player')
           all_players ||= []
@@ -544,7 +548,5 @@ debugger
     def self.injuries_url(options = {})
       "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/injuries.xml"
     end
-
-    include Request
   end
 end

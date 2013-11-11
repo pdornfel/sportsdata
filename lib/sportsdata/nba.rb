@@ -1,10 +1,12 @@
 module Sportsdata
   module Nba
+    include Request
     class Exception < ::Exception
     end
 
     attr_accessor :api_key, :api_mode
 
+    #request methods
     def self.api_key
       Sportsdata.nba_api_key
     end
@@ -13,9 +15,17 @@ module Sportsdata
       Sportsdata.api_mode
     end
 
+    def self.version
+      "3"
+    end
+
+    def self.name
+      "nba"
+    end
+
     def self.venues(options = {})
       venues = []
-      response = self.get_raw(self.venues_url)
+      response = self.get(self.venues_url)
       all_venues = response['league'].try(:[], 'conference')
       all_venues ||= []
       all_venues.each { |conference|
@@ -39,7 +49,7 @@ module Sportsdata
 
     def self.teams(options = {})
       teams = []
-      response = self.get_raw(self.teams_url)
+      response = self.get(self.teams_url)
       all_teams = response['league'].try(:[], 'conference')
       all_teams ||= []
       all_teams.each { |conference|
@@ -65,7 +75,7 @@ module Sportsdata
       options[:seasons].each{|season|
         #sleep(2)
         options[:years].each{|year|
-          response = self.get_raw(games_url(:year => year, :season => season))
+          response = self.get(games_url(:year => year, :season => season))
           if response['league']
             all_games = response['league'].try(:[], 'season_schedule')
             all_games ||= []
@@ -110,7 +120,7 @@ module Sportsdata
 
     def self.game_summary(options = {:game_guid => '270aec5b-f538-44dd-adc6-6ef16667257c'})
       game_summary = []
-      response = self.get_raw(game_summary_url(:game_guid => options[:game_guid]))
+      response = self.get(game_summary_url(:game_guid => options[:game_guid]))
       game_summary_record = {}
       game_summary_record[:sports_data_guid]    = response['game']['id']
       game_summary_record[:status]              = response['game']['status']
@@ -129,7 +139,7 @@ module Sportsdata
 
     def self.play_by_play(options = {:game_guid => '270aec5b-f538-44dd-adc6-6ef16667257c'})
       play_by_play = []
-      response = self.get_raw(play_by_play_url(:game_guid => options[:game_guid]))
+      response = self.get(play_by_play_url(:game_guid => options[:game_guid]))
       play_by_play_record = {}
       play_by_play_record[:sports_data_guid]  = response['game']['id']
       play_by_play_record[:status]            = response['game']['status']
@@ -150,7 +160,7 @@ module Sportsdata
       teams = Sportsdata.nba.teams
       teams.each{|team|
         #sleep(2)
-        response = self.get_raw(players_url(:team_guid => team[:sports_data_guid]))
+        response = self.get(players_url(:team_guid => team[:sports_data_guid]))
         all_players = response['team'].try(:[], 'players')
         all_players ||= []
         if all_players
@@ -191,14 +201,6 @@ module Sportsdata
     end
 
     private
-    def self.version
-      "3"
-    end
-
-    def self.base_url
-      "http://api.sportsdatallc.org/nba-#{self.api_mode}#{self.version}"
-    end
-
     def self.venues_url
       "league/hierarchy.xml"
     end
@@ -225,38 +227,6 @@ module Sportsdata
 
     def self.players_url(options = {})
       "teams/#{options[:team_guid]}/profile.xml"
-    end
-
-    def self.api
-      Faraday.new self.base_url do |a|
-        a.response :xml, :content_type => /\bxml$/
-        a.adapter Faraday.default_adapter
-      end
-    end
-
-    def self.get_raw(url)
-      begin
-        response = self.api.get(url, { :api_key => self.api_key })
-        return response.body
-      rescue Faraday::Error::TimeoutError => timeout
-        raise Sportsdata::Exception, 'Sportsdata Timeout Error'
-      rescue Exception => e
-        message = if e.response.headers.key? :x_server_error
-                    JSON.parse(e.response.headers[:x_server_error], { symbolize_names: true })[:message]
-                  elsif e.response.headers.key? :x_mashery_error_code
-                    e.response.headers[:x_mashery_error_code]
-                  else
-                    "The server did not specify a message"
-                  end
-        raise Sportsdata::Exception, message
-      end
-    end
-
-    def self.errors
-      @errors = {
-        0 => "OK",
-        1 => "No Response"
-      }
     end
   end
 end
