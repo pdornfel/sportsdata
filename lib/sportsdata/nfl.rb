@@ -373,7 +373,8 @@ module Sportsdata
       games
     end
 
-    def self.game_statistics(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
+    #options = {:year => '2013', :season => 'REG', :week => 1, :away_team => 'REG', :home_team => 'BAL'})
+    def self.game_statistics(options = {:year => Date.today.year, :season => 'REG'})
       statistics = []
       response = self.get(game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?

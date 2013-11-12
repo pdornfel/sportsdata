@@ -133,7 +133,6 @@ module Sportsdata
               player_record[:status]          = player['status']
               player_record[:jersey_number]   = player['jersey']
               player_record[:position]        = player['position']
-              player_record[:year]            = year
               player_record[:params]          = player
               players.append(player_record)
             }
