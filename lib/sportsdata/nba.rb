@@ -23,6 +23,123 @@ module Sportsdata
       "nba"
     end
 
+    def self.game_statuses
+      [
+        ["scheduled" => "The game is scheduled to occur."],
+        ["inprogress" => "The game is in progress."],
+        ["halftime" => "The game is currently at halftime."],
+        ["complete" => "The game is over, but stat validation is not complete."],
+        ["closed" => "The game is over and the stats have been validated."],
+        ["cancelled" => "The game has been cancelled."],
+        ["delayed" => "The start of the game is currently delayed or the game has gone from in progress to delayed for some reason."],
+        ["postponed" => "The game has been postponed, to be made up at another day and time."],
+        ["time-tbd" => "The game has been scheduled, but a time has yet to be announced."],
+        ["unnecessary" => "The series game was scheduled to occur, but will not take place due to one team clinching the series early."]
+      ]
+    end
+
+    def self.player_primary_positions
+      [
+        ["C"],
+        ["C-F"],
+        ["F"],
+        ["F-C"],
+        ["F-G"],
+        ["G"],
+        ["G-F"],
+        ["NA"],
+        ["PF"],
+        ["PG"],
+        ["SF"],
+        ["SG"]
+      ]
+    end
+
+    def self.player_injury_statuses
+      [
+        ["Unknown"],
+        ["Day To Day"],
+        ["Out"],
+        ["Out For Season"],
+        ["Out Indefinitely"]
+      ]
+    end
+
+    def self.game_statistics
+      [
+        ["Minutes Played"],
+        ["Plus/Minus"],
+        ["Assists"],
+        ["Assist to Turnover Ratio"],
+        ["Blocked Attempts"],
+        ["Blocked Shots"],
+        ["Defensive Rebounds"],
+        ["Field Goal Attempts"],
+        ["Field Goal Percentage"],
+        ["Field Goals Made"],
+        ["Flagrant Fouls"],
+        ["Free Throw Attempts"],
+        ["Free Throw Percentage"],
+        ["Free Throws Made"],
+        ["Offensive Rebounds"],
+        ["Personal Fouls"],
+        ["Points"],
+        ["Rebounds"],
+        ["Steals"],
+        ["Technical Fouls"],
+        ["Three Point Attempts"],
+        ["Three Point Percentage"],
+        ["Three Points Made"],
+        ["Turnovers"],
+        ["Two Point Attempts"],
+        ["Two Point Percentage"],
+        ["Two Points Made"]
+      ]
+    end
+
+    def self.player_statuses
+      [
+        ["ACT" => "Active"],
+        ["IR" => "Injured reserve"],
+        ["M-LEAGUE" => "Sent to minor league team"],
+        ["D-LEAGUE" => "The player is on the team’s development league roster"],
+        ["NWT" => "Not with team"],
+        ["SUS" => "Suspended"]
+      ]
+    end
+
+    def self.event_types
+      [
+        ["clearpathfoul"],
+        ["defensivethreeseconds"],
+        ["delay"],
+        ["ejection"],
+        ["endperiod"],
+        ["flagrantone"],
+        ["flagranttwo"],
+        ["freethrow"],
+        ["jumpball"],
+        ["kickball"],
+        ["offensivefoul"],
+        ["officialtimeout"],
+        ["opentip"],
+        ["personalfoul"],
+        ["possession"],
+        ["rebound"],
+        ["review"],
+        ["shootingfoul"],
+        ["teamtimeout"],
+        ["technicalfoul"],
+        ["threepointmade"],
+        ["threepointmiss"],
+        ["turnover"],
+        ["tvtimeout"],
+        ["twopointmade"],
+        ["twopointmiss"],
+        ["warning"]
+      ]
+    end
+
     def self.venues(options = {})
       venues = []
       response = self.get(self.venues_url)
