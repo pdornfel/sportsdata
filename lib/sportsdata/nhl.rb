@@ -23,6 +23,165 @@ module Sportsdata
       "nhl"
     end
 
+    def self.game_statuses
+      [
+        ["scheduled" => "The game is scheduled to occur."],
+        ["inprogress" => "The game is in progress."],
+        ["complete" => "The game is over, but stat validation is not complete."],
+        ["closed" => "The game is over and the stats have been validated."],
+        ["cancelled" => "The game has been cancelled."],
+        ["delayed" => "The start of the game is currently delayed or the game has gone from in progress to delayed for some reason."],
+        ["postponed" => "The game has been postponed, to be made up at another day and time."],
+        ["time-tbd" => "The game has been scheduled, but a time has yet to be announced."],
+        ["unnecessary" => "The series game was scheduled to occur, but will not take place due to one team clinching the series early."]
+      ]
+    end
+
+    def self.player_positions
+      [
+        ["C"],
+        ["D"],
+        ["F"],
+        ["F-D"],
+        ["G"],
+        ["LW"],
+        ["NA"],
+        ["RW"]
+      ]
+    end
+
+    def self.player_status
+      [
+        ["CT" => "The player is on the team’s active roster."],
+        ["M-LEAGUE" => "The player is on the team’s minor league roster."],
+        ["NWT" => "The player is no longer with the team."]
+
+      ]
+    end
+
+    def self.game_statistics
+      [
+        ["Assists"],
+        ["Blocked Attempts"],
+        ["Blocked Shots"],
+        ["Even Strength Assists"],
+        ["Even Strength Goals"],
+        ["Even Strength Missed Shots"],
+        ["Even Strength Shots on Goal"],
+        ["Goals"],
+        ["Missed Shots"],
+        ["Penalties"],
+        ["Penalty Minutes"],
+        ["Penalty Missed Shots"],
+        ["Penalty Shots on Goal"],
+        ["Points"],
+        ["Power Play Assists"],
+        ["Power Play Goals"],
+        ["Power Play Missed Shots"],
+        ["Power Play Shots on Goal"],
+        ["Shooting Pct"],
+        ["Shootout Goals"],
+        ["Shootout Missed Shots"],
+        ["Shootout Shots on Goal"],
+        ["Short Handed Assists"],
+        ["Short Handed Goals"],
+        ["Short Handed Missed Shots"],
+        ["Short Handed Shots on Goal"],
+        ["Shots on Goal"],
+        ["Even Strength Goals Against"],
+        ["Even Strength Save Percentage"],
+        ["Even Strength Saves"],
+        ["Even Strength Shots Against"],
+        ["Goals Against"],
+        ["Penalty Goals Against"],
+        ["Penalty Save Percentage"],
+        ["Penalty Saves"],
+        ["Penalty Shots Against"],
+        ["Power Play Goals Against"],
+        ["Power Play Save Percentage"],
+        ["Power Play Saves"],
+        ["Power Play Shots Against"],
+        ["Save Pct"],
+        ["Saves"],
+        ["Shootout Goals Against"],
+        ["Shootout Save Percentage"],
+        ["Shootout Saves"],
+        ["Shootout Shots Against"],
+        ["Short Handed Goals Against"],
+        ["Short Handed Save Percentage"],
+        ["Short Handed Saves"],
+        ["Short Handed Shots Against"],
+        ["Shots Against"],
+        ["Faceoff Win Pct"],
+        ["Faceoffs"],
+        ["Faceoffs Won"],
+        ["Faceoffs Lost"],
+        ["Hits"],
+        ["Average Time on Ice"],
+        ["Even Strength Time on Ice"],
+        ["Game Winning Goal Flag"],
+        ["Giveaways"],
+        ["Plus/Minus"],
+        ["Power Play Time on Ice"],
+        ["Shifts"],
+        ["Short Handed Time on Ice"],
+        ["Takeaways"],
+        ["Total Time on Ice"],
+        ["Outcome"],
+        ["Shutout Flag"],
+        ["Time on Ice"]
+      ]
+    end
+
+    def self.player_injury_statuses
+      [
+        ["Unknown"],
+        ["Day To Day"],
+        ["Out"],
+        ["Out For Season"],
+        ["Out Indefinitely"]
+      ]
+    end
+
+    def self.player_statuses
+      [
+        ["ACT" => "Active"],
+        ["IR" => "Injured reserve"],
+        ["M-LEAGUE" => "Sent to minor league team"],
+        ["NWT" => "Not with team"],
+        ["SUS" => "Suspended"]
+      ]
+    end
+
+    def self.event_types
+      [
+        ["emptynetgoal"],
+        ["endperiod"],
+        ["endshootoutperiod"],
+        ["evenstrength"],
+        ["faceoff"],
+        ["giveaway"],
+        ["goal"],
+        ["goaliechange"],
+        ["hit"],
+        ["penalty"],
+        ["penaltygoal"],
+        ["penaltyshotmissed"],
+        ["penaltyshotsaved"],
+        ["powerplay"],
+        ["shootoutgoal"],
+        ["shootoutshotmissed"],
+        ["shootoutshotsaved"],
+        ["shotmissed"],
+        ["shotsaved"],
+        ["startshootoutperiod"],
+        ["stoppage"],
+        ["takeaway"],
+        ["teamtimeout"],
+        ["tvtimeout"]
+      ]
+    end
+
     def self.venues(options = {})
       venues = []
       response = self.get(self.venues_url)
