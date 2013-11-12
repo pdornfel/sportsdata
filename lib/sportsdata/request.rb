@@ -75,7 +75,19 @@ module Sportsdata
           0 => "OK",
           1 => "No Response",
           200 => "Successful",
-          404 => "Not Found"
+          404 => "Not Found",
+          400 => "Bad Request",
+          403 => "Developer Inactive",
+          403 => "Not Authorized",
+          403 => "Account Inactive",
+          403 => "Over Queries Per Second Limit",
+          403 => "Over Rate Limit",
+          403 => "Unknown Referrer",
+          403 => "Service Over Quesries-per-Second-Limit",
+          403 => "Service Requires SSL",
+          414 => "Requst URI Too Long",
+          502 => "Bad Gateway",
+          503 => "API Maintenance/Service Unavailable"
         }
       end
     end
