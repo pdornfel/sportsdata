@@ -39,12 +39,16 @@ module Sportsdata
           if response.status != 200
             message = if response.headers.has_key?("x-server-error")
                         JSON.parse(response.headers[:x_server_error], { symbolize_names: true })[:message]
+                      elsif response.headers.has_key?("x-feed-error")
+                        response.headers["x-feed-error"]
                       elsif response.headers.has_key?("x-mashery-error-code")
                         response.headers[:x_mashery_error_code]
                       else
                         "The server did not specify a message"
                       end
             if message.include?('Unknown Season')
+              return response.body
+            elsif message.include?('InvalidSeasonException')
               return response.body
             else
               raise message
