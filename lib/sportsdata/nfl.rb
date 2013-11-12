@@ -406,7 +406,6 @@ module Sportsdata
     end
 
     def self.game_box(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
-      #debugger
       game_box = []
       response = self.get(game_box_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
@@ -422,7 +421,7 @@ module Sportsdata
         game_box_record[:params]                = response
         game_box.append(game_box_record)
       end
-      #game_box
+      game_box
     end
 
     def self.play_by_play(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
