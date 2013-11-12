@@ -23,6 +23,173 @@ module Sportsdata
       "mlb"
     end
 
+    def self.game_statuses
+      [
+        ["scheduled" => "The game is on the schedules and ready to play."],
+        ["inprogress" => "The first pitch for the game has been received."],
+        ["complete" => "The last pitch for the game has been received and statistics are being reviewed."],
+        ["closed" => "The game has passed review and MLB has officially closed the game."],
+        ["wdelay" => "The game has been delayed because of weather."],
+        ["fdelay" => "The game has been delayed because of facility issues."],
+        ["odelay" => "The game has been delayed."],
+        ["postponed" => "The game has been postponed and will be rescheduled in the future, restarting at the top of the 1st."],
+        ["suspended" => "The game has been suspended and will be rescheduled in the future, continuing where they left off."],
+        ["maintenance" => "The game failed review and is in the process of being repaired."]
+      ]
+    end
+
+    def self.lineup_positions
+      [
+        ["1" => "Pitcher"],
+        ["2" => "Catcher"],
+        ["3" => "First Base"],
+        ["4" => "Second Base"],
+        ["5" => "Third Base"],
+        ["6" => "Shortstop"],
+        ["7" => "Left Field"],
+        ["8" => "Centerfield"],
+        ["9" => "Right Field"],
+        ["10" => "Designated Hitter"],
+        ["11" => "Pinch Hitter"],
+        ["12" => "Pinch Runner"]
+      ]
+    end
+
+    def self.roster_positions
+      [
+        ["1B" => "First base"],
+        ["2B" => "Second base"],
+        ["3B" => "Third Base"],
+        ["SS" => "Shortstop"],
+        ["LF" => "Left Field"],
+        ["CF" => "Centerfield"],
+        ["RF" => "Right Field"],
+        ["IF" => "In Field"],
+        ["OF" => "Out Field"],
+        ["RP" => "Relief Pitcher"],
+        ["SP" => "Starting Pitcher"]
+      ]
+    end
+
+    def self.pitch_types
+      [
+        ["FA = Fastball"],
+        ["SI = Sinker"],
+        ["CT = Cutter"],
+        ["CU = Curveball"],
+        ["SL = Slider"],
+        ["CH = Changeup"],
+        ["KN = Knuckleball"],
+        ["SP = Splitter"],
+        ["SC = Screwball"],
+        ["FO = Forkball"],
+        ["IB = Intentional Ball"],
+        ["PI = Pitchout"],
+        ["Other"]
+      ]
+    end
+
+    def self.player_statuses
+      [
+        ["A" => "Active"],
+        ["BRV" => "Bereavement List"],
+        ["D7" => "7 Day Disabled List"],
+        ["D15" => "15 Day Disabled List"],
+        ["D30" => "30 Day Disabled List"],
+        ["DES" => "Designated for Assignment"],
+        ["NRI" => "Non-roster Invitation"],
+        ["RA" => "Rehab Assignment"],
+        ["RES" => "Reserve List"],
+        ["RL" => "Released"],
+        ["RM" => "Reassigned to Minors"],
+        ["RST" => "Restricted List"],
+        ["SU" => "Suspended List"],
+        ["OFS" => "Out For Season"],
+        ["PL" => "Paternity Leave"],
+      ]
+    end
+
+    def self.pitch_outcomes
+      [
+        ["aD" => "Double"],
+        ["aDAD3" => "Double - Adv 3rd"],
+        ["aDAD4" => "Double - Adv Home"],
+        ["aHBP" => "Hit By Pitch"],
+        ["aHR" => "Homerun"],
+        ["aROE" => "Reached On Error"],
+        ["aS" => "Single"],
+        ["aSAD2" => "Single - Adv 2nd"],
+        ["aSAD3" => "Single - Adv 3rd"],
+        ["aSAD4" => "Single - Adv Home"],
+        ["aT" => "Triple"],
+        ["aTAD4" => "Triple - Adv Home"],
+        ["bB" => "Ball"],
+        ["bDB" => "Dirt Ball"],
+        ["bIB" => "Intentional Ball"],
+        ["bPO" => "Pitchout"],
+        ["kF" => "Foul Ball"],
+        ["kFT" => "Foul Tip"],
+        ["kKL" => "Strike Looking"],
+        ["kKS" => "Strike Swinging"],
+        ["oFC" => "Fielders Choice"],
+        ["oFO" => "Fly Out"],
+        ["oGO" => "Ground Out"],
+        ["oLO" => "Line Out"],
+        ["oPO" => "Pop Out"],
+        ["oSB" => "Sacrifice Bunt"],
+        ["oSF" => "Sacrifice Fly"],
+        ["oST2" => "Single - Out at 2nd"],
+        ["oST3" => "Single - Out at 3rd"],
+        ["oST4" => "Single - Out at Home"],
+        ["oDT3" => "Double - Out at 3rd"],
+        ["oDT4" => "Double - Out at Home"],
+        ["oTT4" => "Triple - Out at Home"],
+        ["oOBB" => "Out of Batters Box"],
+        ["oBI" => "Hitter Interference"],
+        ["oOP" => "Out on Appeal"],
+        ["aCI" => "Catcher Interference"],
+        ["aBK" => "Balk"]
+      ]
+    end
+
+    def self.runner_outcomes
+      [
+        ["CK = Checked"],
+        ["ERN = Earned Run/RBI"],
+        ["eRN = Earned Run/No RBI"],
+        ["URN = Unearned Run/RBI"],
+        ["uRN = Unearned Run/No RBI"],
+        ["PO = Pickoff"],
+        ["AD2 = Advance 2nd"],
+        ["AD3 = Advance 3rd"],
+        ["SB2 = Stole 2nd"],
+        ["SB3 = Stole 3rd"],
+        ["SB4 = Stole Home"],
+        ["TO2 = Tag out 2nd"],
+        ["TO3 = Tag out 3rd"],
+        ["TO4 = Tag out Home"],
+        ["FO1 = Force out 1st"],
+        ["FO2 = Force out 2nd"],
+        ["FO3 = Force out 3rd"],
+        ["FO4 = Force out Home"],
+        ["CS2 = Caught Stealing 2nd"],
+        ["CS3 = Caught Stealing 3rd"],
+        ["CS4 = Caught Stealing Home"],
+        ["SB2E3 = Stole 2nd, error to 3rd"],
+        ["SB2E4 = Stole 2nd, error to Home"],
+        ["SB3E4 = Stole 3nd, error to Home"],
+        ["DI2 = Indeference to 2nd"],
+        ["DI3 = Indeference to 3rd"],
+        ["DO1 = Doubled off 1st"],
+        ["DO2 = Doubled off 2nd"],
+        ["DO3 = Doubled off 3rd"],
+        ["RI = Runner Interference"],
+        ["OOA = Out on Appeal"],
+        ["OBP = Out of Base Path"],
+        ["HBB = Hit by Batted Ball"]
+      ]
+    end
+
     def self.venues(options = {})
       venues = []
       response = self.get(self.venues_url)

@@ -50,15 +50,6 @@ module Sportsdata
       ]
     end
 
-    def self.player_status
-      [
-        ["CT" => "The player is on the team’s active roster."],
-        ["M-LEAGUE" => "The player is on the team’s minor league roster."],
-        ["NWT" => "The player is no longer with the team."]
-
-      ]
-    end
-
     def self.game_statistics
       [
         ["Assists"],
@@ -146,10 +137,11 @@ module Sportsdata
     def self.player_statuses
       [
         ["ACT" => "Active"],
+        ["CT" => "The player is on the team’s active roster."],
         ["IR" => "Injured reserve"],
-        ["M-LEAGUE" => "Sent to minor league team"],
-        ["NWT" => "Not with team"],
-        ["SUS" => "Suspended"]
+        ["M-LEAGUE" => "The player is on the team’s minor league roster."],
+        ["NWT" => "The player is no longer with the team."]
+        ["SUS" => "Suspended"],
       ]
     end
 
