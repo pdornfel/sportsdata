@@ -68,10 +68,9 @@ module Sportsdata
       teams
     end
 
-    def self.games(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1]})
+    def self.games(options = {:years => [Date.today.year-1, Date.today.year]})
       games = []
       options[:years].each{|year|
-        #sleep(2)
         response = self.get(games_url(:year => year))
         if response['calendars']
           all_games = response['calendars'].try(:[], 'event')
@@ -134,6 +133,7 @@ module Sportsdata
               player_record[:status]          = player['status']
               player_record[:jersey_number]   = player['jersey']
               player_record[:position]        = player['position']
+              player_record[:year]            = year
               player_record[:params]          = player
               players.append(player_record)
             }

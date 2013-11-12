@@ -70,7 +70,7 @@ module Sportsdata
       teams
     end
 
-    def self.games(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1], :seasons => ['pre', 'reg', 'pst']})
+    def self.games(options = {:years => [Date.today.year-1, Date.today.year], :seasons => ['pre', 'reg', 'pst']})
       games = []
       options[:seasons].each{|season|
         #sleep(2)
@@ -94,6 +94,8 @@ module Sportsdata
                   game_record[:away_team_name]    = game['away']['name']
                   game_record[:away_team_abbr]    = game['away']['alias']
                   game_record[:params]            = game
+                  game_record[:params]["season_year"] = year.to_s
+                  game_record[:params]["season_type"] = season.to_s.upcase
                   games.append(game_record)
                 else
                   game_record = {}
@@ -108,6 +110,8 @@ module Sportsdata
                   game_record[:away_team_name]    = all_games['games']['game']['away']['name']
                   game_record[:away_team_abbr]    = all_games['games']['game']['away']['alias']
                   game_record[:params]            = all_games['games']
+                  game_record[:params]["season_year"] = year.to_s
+                  game_record[:params]["season_type"] = season.to_s.upcase
                   games.append(game_record)
                 end
               }

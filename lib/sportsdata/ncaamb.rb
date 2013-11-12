@@ -73,7 +73,7 @@ module Sportsdata
       teams
     end
 
-    #fetch last year, this year and next year
+    # fetch last year, this year and next year
     # Their are three season options (PRE, REG, PST)
     def self.games(options = {:year => Date.today.year, :season => 'REG'})
       games = []

@@ -44,7 +44,11 @@ module Sportsdata
                       else
                         "The server did not specify a message"
                       end
-            raise message
+            if message.include?('Unknown Season')
+              return response.body
+            else
+              raise message
+            end
           else
             return response.body
           end

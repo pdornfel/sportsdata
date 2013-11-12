@@ -16,7 +16,7 @@ module Sportsdata
     end
 
     def self.version
-      "2"
+      "1"
     end
 
     def self.name
@@ -324,11 +324,11 @@ module Sportsdata
       teams
     end
 
-    def self.games(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1], :seasons => [:pre, :reg, :pst]})
+    def self.games(options = {:years => [Date.today.year-1, Date.today.year], :seasons => [:pre, :reg, :pst]})
       games = []
       options[:seasons].each{|season|
         options[:years].each{|year|
-          response = self.get(games_url(:year => year, :season => season))
+          response = self.get(games_url(:year => year, :season => season.to_s.upcase))
           unless response.empty?
             all_games = response['season'].try(:[], 'week')
             all_games ||= []
@@ -344,6 +344,8 @@ module Sportsdata
                   game_record[:away_team_guid]    = game['away']
                   game_record[:status]            = game['status']
                   game_record[:params]            = game
+                  game_record[:params]["season_year"] = year.to_s
+                  game_record[:params]["season_type"] = season.to_s.upcase
                   games.append(game_record)
                 }
               else
@@ -358,6 +360,8 @@ module Sportsdata
                     game_record[:away_team_guid]    = week['game']['away']
                     game_record[:status]            = week['game']['status']
                     game_record[:params]            = week
+                    game_record[:params]["season_year"] = year.to_s
+                    game_record[:params]["season_type"] = season.to_s.upcase
                     games.append(game_record)
                   end
                 end
