@@ -285,7 +285,7 @@ module Sportsdata
               player_record[:mlbam_id]        = player['mlbam_id']
               player_record[:first_name]      = player['first']
               player_record[:preferred_first] = player['preferred_first']
-              player_record[:last]            = player['last']
+              player_record[:last_name]       = player['last']
               player_record[:bat_hand]        = player['bat_hand']
               player_record[:throw_hand]      = player['throw_hand']
               player_record[:weight]          = player['weight']
