@@ -23,7 +23,7 @@ module Sportsdata
       "nascar"
     end
 
-    def.race_statuses
+    def self.race_statuses
       [
         ["scheduled" => "The race is scheduled to occur."],
         ["initialized" => ""],

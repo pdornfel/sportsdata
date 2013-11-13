@@ -140,8 +140,8 @@ module Sportsdata
         ["CT" => "The player is on the team’s active roster."],
         ["IR" => "Injured reserve"],
         ["M-LEAGUE" => "The player is on the team’s minor league roster."],
-        ["NWT" => "The player is no longer with the team."]
-        ["SUS" => "Suspended"],
+        ["NWT" => "The player is no longer with the team."],
+        ["SUS" => "Suspended"]
       ]
     end
 

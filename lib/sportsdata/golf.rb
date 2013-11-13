@@ -33,7 +33,7 @@ module Sportsdata
       'golf'
     end
 
-    def. self.player_statuses
+    def self.player_statuses
       [
         ["CUT"],
         ["WD"]
@@ -42,21 +42,21 @@ module Sportsdata
 
     def self.tournament_statuses
       [
-        ["scheduled - The tournament is scheduled to occur."]
-        ["inprogress – The tournament is in progress."]
-        ["complete – The tournament is over, but stat validation is not complete."]
-        ["closed – The tournament is over and the stats have been validated."]
+        ["scheduled - The tournament is scheduled to occur."],
+        ["inprogress – The tournament is in progress."],
+        ["complete – The tournament is over, but stat validation is not complete."],
+        ["closed – The tournament is over and the stats have been validated."],
         ["reopened – The tournament stats are in the process of being corrected."]
       ]
     end
 
     def self.round_statuses
       [
-        ["scheduled - The round is scheduled to occur."]
-        ["delayed – The round has been delayed."]
-        ["inprogress – The round is in progress."]
-        ["complete – The round is over, but stat validation is not complete."]
-        ["closed – The round is over and the stats have been validated."]
+        ["scheduled - The round is scheduled to occur."],
+        ["delayed – The round has been delayed."],
+        ["inprogress – The round is in progress."],
+        ["complete – The round is over, but stat validation is not complete."],
+        ["closed – The round is over and the stats have been validated."],
         ["reopened – The round stats are in the process of being corrected."]
       ]
     end
