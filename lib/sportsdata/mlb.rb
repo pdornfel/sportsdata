@@ -264,7 +264,7 @@ module Sportsdata
       games
     end
 
-    def self.players(options = {:years => [Date.today.year-1, Date.today.year, Date.today.year+1]})
+    def self.players(options = {:years => [Date.today.year]})
       players = []
       options[:years].each{|year|
         #sleep(2)
