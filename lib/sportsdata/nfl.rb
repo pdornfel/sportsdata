@@ -359,7 +359,7 @@ module Sportsdata
                     game_record[:scheduled_at]      = week['game']['scheduled']
                     game_record[:home_team_guid]    = week['game']['home']
                     game_record[:away_team_guid]    = week['game']['away']
-                    game_record[:season_type]       = game['season_type']
+                    game_record[:season_type]       = week['season_type']
                     game_record[:status]            = week['game']['status']
                     game_record[:params]            = week
                     game_record[:params]["season_year"] = year.to_s
