@@ -342,6 +342,7 @@ module Sportsdata
                   game_record[:scheduled_at]      = game['scheduled']
                   game_record[:home_team_guid]    = game['home']
                   game_record[:away_team_guid]    = game['away']
+                  game_record[:season_type]       = game['season_type']
                   game_record[:status]            = game['status']
                   game_record[:params]            = game
                   game_record[:params]["season_year"] = year.to_s
@@ -358,6 +359,7 @@ module Sportsdata
                     game_record[:scheduled_at]      = week['game']['scheduled']
                     game_record[:home_team_guid]    = week['game']['home']
                     game_record[:away_team_guid]    = week['game']['away']
+                    game_record[:season_type]       = game['season_type']
                     game_record[:status]            = week['game']['status']
                     game_record[:params]            = week
                     game_record[:params]["season_year"] = year.to_s
@@ -440,7 +442,7 @@ module Sportsdata
         play_by_play.append(play_by_play_record)
       end
       play_by_play
-    end
+    e8nd
 
     def self.play_summary(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN', :play_guid => '748c7397-3f36-41b4-b49b-671c55a04589'})
       play_summary = []
