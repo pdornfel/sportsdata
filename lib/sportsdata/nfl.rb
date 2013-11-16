@@ -442,7 +442,7 @@ module Sportsdata
         play_by_play.append(play_by_play_record)
       end
       play_by_play
-    e8nd
+    end
 
     def self.play_summary(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN', :play_guid => '748c7397-3f36-41b4-b49b-671c55a04589'})
       play_summary = []
