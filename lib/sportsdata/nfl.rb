@@ -342,7 +342,7 @@ module Sportsdata
                   game_record[:scheduled_at]      = game['scheduled']
                   game_record[:home_team_guid]    = game['home']
                   game_record[:away_team_guid]    = game['away']
-                  game_record[:season_type]       = game['season_type']
+                  game_record[:season_type]       = response['season']['type']
                   game_record[:status]            = game['status']
                   game_record[:params]            = game
                   game_record[:params]["season_year"] = year.to_s
@@ -359,7 +359,7 @@ module Sportsdata
                     game_record[:scheduled_at]      = week['game']['scheduled']
                     game_record[:home_team_guid]    = week['game']['home']
                     game_record[:away_team_guid]    = week['game']['away']
-                    game_record[:season_type]       = week['season_type']
+                    game_record[:season_type]       = response['season']['type']
                     game_record[:status]            = week['game']['status']
                     game_record[:params]            = week
                     game_record[:params]["season_year"] = year.to_s
@@ -375,7 +375,6 @@ module Sportsdata
       games
     end
 
-    #options = {:year => '2013', :season => 'REG', :week => 1, :away_team => 'REG', :home_team => 'BAL'})
     def self.game_statistics(options = {:year => Date.today.year, :season => 'REG'})
       statistics = []
       response = self.get(game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
