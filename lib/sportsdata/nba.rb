@@ -243,17 +243,17 @@ module Sportsdata
       game_summary = []
       response = self.get(game_summary_url(:game_guid => options[:game_guid]))
       game_summary_record = {}
-      game_summary_record[:sports_data_guid]    = response['game']['id']
-      game_summary_record[:status]              = response['game']['status']
-      game_summary_record[:coverage]            = response['game']['coverage']
-      game_summary_record[:home_team_guid]      = response['game']['home_team']
-      game_summary_record[:away_team_guid]      = response['game']['away_team']
-      game_summary_record[:scheduled]           = response['game']['scheduled']
-      game_summary_record[:duration]            = response['game']['duration']
-      game_summary_record[:attendance]          = response['game']['attendance']
-      game_summary_record[:clock]               = response['game']['clock']
-      game_summary_record[:quarter]             = response['game']['quarter']
-      game_summary_record[:params]              = response
+      game_summary_record[:sports_data_guid]        = response['game']['id']
+      game_summary_record[:status]                  = response['game']['status']
+      game_summary_record[:coverage]                = response['game']['coverage']
+      game_summary_record[:sports_data_home_guid]   = response['game']['home_team']
+      game_summary_record[:sports_data_away_guid]   = response['game']['away_team']
+      game_summary_record[:scheduled_at]            = response['game']['scheduled']
+      game_summary_record[:duration]                = response['game']['duration']
+      game_summary_record[:attendance]              = response['game']['attendance']
+      game_summary_record[:clock]                   = response['game']['clock']
+      game_summary_record[:quarter]                 = response['game']['quarter']
+      game_summary_record[:params]                  = response
       game_summary.append(game_summary_record)
       game_summary
     end

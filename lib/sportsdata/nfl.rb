@@ -397,7 +397,7 @@ module Sportsdata
       unless response.empty?
         summary_record = {}
         summary_record[:sports_data_guid]       = response['game']['id']
-        summary_record[:scheduled]              = response['game']['scheduled']
+        summary_record[:scheduled_at]           = response['game']['scheduled']
         summary_record[:home]                   = response['game']['home']
         summary_record[:away]                   = response['game']['away']
         summary_record[:status]                 = response['game']['status']
@@ -413,7 +413,7 @@ module Sportsdata
       unless response.empty?
         game_box_record = {}
         game_box_record[:sports_data_guid]      = response['game']['id']
-        game_box_record[:scheduled]             = response['game']['scheduled']
+        game_box_record[:scheduled_at]          = response['game']['scheduled']
         game_box_record[:home_team_guid]        = response['game']['home']
         game_box_record[:away_team_guid]        = response['game']['away']
         game_box_record[:status]                = response['game']['status']
