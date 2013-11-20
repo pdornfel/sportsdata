@@ -432,7 +432,7 @@ module Sportsdata
       unless response.empty?
         play_by_play_record = {}
         play_by_play_record['sports_data_game_guid']    = response['game']['id']
-        play_by_play_record['scheduled_at']             = response['game']['scheduled']
+        #play_by_play_record['scheduled_at']             = response['game']['scheduled']
         play_by_play_record['status']                   = response['game']['status']
         play_by_play_record['home_team']                = response['game']['home']
         play_by_play_record['away_team']                = response['game']['away']
