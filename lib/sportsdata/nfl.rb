@@ -375,7 +375,7 @@ module Sportsdata
       games
     end
 
-    def self.game_statistics(options = {:year => Date.today.year, :season => 'REG'})
+    def self.game_statistics(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       statistics = []
       response = self.get(game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
@@ -431,13 +431,13 @@ module Sportsdata
       response = self.get(play_by_play_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
         play_by_play_record = {}
-        play_by_play_record['sports_data_guid']   = response['game']['id']
-        play_by_play_record['scheduled_at']       = response['game']['scheduled']
-        play_by_play_record['status']             = response['game']['status']
-        play_by_play_record['home_team']          = response['game']['home']
-        play_by_play_record['away_team']          = response['game']['away']
-        play_by_play_record['completed']          = response['game']['completed']
-        play_by_play_record['params']             = response
+        play_by_play_record['sports_data_game_guid']    = response['game']['id']
+        play_by_play_record['scheduled_at']             = response['game']['scheduled']
+        play_by_play_record['status']                   = response['game']['status']
+        play_by_play_record['home_team']                = response['game']['home']
+        play_by_play_record['away_team']                = response['game']['away']
+        play_by_play_record['completed']                = response['game']['completed']
+        play_by_play_record['params']                   = response
         play_by_play.append(play_by_play_record)
       end
       play_by_play
