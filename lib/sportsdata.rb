@@ -6,14 +6,23 @@ require 'active_support/all'
 module Sportsdata
   class << self
     attr_accessor :nfl_api_key
-    attr_accessor :nhl_api_key
-    attr_accessor :nba_api_key
+    attr_accessor :nfl_images_api_key
     attr_accessor :mlb_api_key
-    attr_accessor :nascar_api_key
-    attr_accessor :golf_api_key
+    attr_accessor :mlb_images_api_key
+    attr_accessor :nhl_api_key
+    attr_accessor :nhl_images_api_key
+    attr_accessor :nba_api_key
+    attr_accessor :nba_images_api_key
     attr_accessor :ncaafb_api_key
+    attr_accessor :ncaafb_images_api_key
     attr_accessor :ncaamb_api_key
+    attr_accessor :ncaamb_images_api_key
+    attr_accessor :nascar_api_key
+    attr_accessor :nascar_images_api_key
+    attr_accessor :golf_api_key
+    attr_accessor :golf_images_api_key
     attr_accessor :api_mode
+    attr_accessor :images_api_mode
     attr_accessor :log_level
     attr_accessor :nfl
 
@@ -72,9 +81,19 @@ module Sportsdata
       @nfl_api_key
     end
 
+    def nfl_images_api_key
+      raise Sportsdata::Exception, "nfl_images_api_key is not configured" unless @nfl_images_api_key
+      @nfl_images_api_key
+    end
+
     def nhl_api_key
       raise Sportsdata::Exception, "nhl_api_key is not configured" unless @nhl_api_key
       @nhl_api_key
+    end
+
+    def nhl_images_api_key
+      raise Sportsdata::Exception, "nhl_images_api_key is not configured" unless @nhl_images_api_key
+      @nhl_images_api_key
     end
 
     def nba_api_key
@@ -82,9 +101,19 @@ module Sportsdata
       @nba_api_key
     end
 
+    def nba_images_api_key
+      raise Sportsdata::Exception, "nba_images_api_key is not configured" unless @nba_images_api_key
+      @nba_images_api_key
+    end
+
     def mlb_api_key
       raise Sportsdata::Exception, "mlb_api_key is not configured" unless @mlb_api_key
       @mlb_api_key
+    end
+
+    def mlb_images_api_key
+      raise Sportsdata::Exception, "mlb_images_api_key is not configured" unless @mlb_images_api_key
+      @mlb_images_api_key
     end
 
     def ncaafb_api_key
@@ -92,9 +121,19 @@ module Sportsdata
       @ncaafb_api_key
     end
 
+    def ncaafb_images_api_key
+      raise Sportsdata::Exception, "ncaafb_images_api_key is not configured" unless @ncaafb_images_api_key
+      @ncaafb_images_api_key
+    end
+
     def ncaamb_api_key
       raise Sportsdata::Exception, "ncaamb_api_key is not configured" unless @ncaamb_api_key
       @ncaamb_api_key
+    end
+
+    def ncaamb_images_api_key
+      raise Sportsdata::Exception, "ncaamb_images_api_key is not configured" unless @ncaamb_images_api_key
+      @ncaamb_images_api_key
     end
 
     def nascar_api_key
@@ -102,9 +141,19 @@ module Sportsdata
       @nascar_api_key
     end
 
+    def nascar_images_api_key
+      raise Sportsdata::Exception, "nascar_images_api_key is not configured" unless @nascar_images_api_key
+      @nascar_images_api_key
+    end
+
     def golf_api_key
       raise Sportsdata::Exception, "golf_api_key is not configured" unless @golf_api_key
       @golf_api_key
+    end
+
+    def golf_images_api_key
+      raise Sportsdata::Exception, "golf_images_api_key is not configured" unless @golf_images_api_key
+      @golf_images_api_key
     end
 
     DEFAULT_LOG_LEVEL = 'info'

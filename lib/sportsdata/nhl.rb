@@ -11,12 +11,24 @@ module Sportsdata
       Sportsdata.nhl_api_key
     end
 
+    def self.images_api_key
+      Sportsdata.nhl_images_api_key
+    end
+
     def self.api_mode
       Sportsdata.api_mode
     end
 
+    def self.images_api_mode
+      Sportsdata.images_api_mode
+    end
+
     def self.version
       "3"
+    end
+
+    def self.images_version
+      "1"
     end
 
     def self.name
@@ -555,6 +567,18 @@ module Sportsdata
 
     def self.players_url(options = {})
       "teams/#{options[:team_guid]}/profile.xml"
+    end
+
+    def self.schema_manifest
+      "schema/manifest-v1.0.xsd"
+    end
+
+    def self.manifest(options = {})
+      "manifests/#{options[:image_type]}/all_assets.xml"
+    end
+
+    def self.images(options = {})
+      "#{options[:image_type]}/#{options[:asset_id]}/#{options[:filename]}.#{options[:format]}"
     end
   end
 end
