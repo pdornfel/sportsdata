@@ -548,7 +548,7 @@ module Sportsdata
 
     def self.game_box_url(options = {})
       "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/boxscore.xml"
-
+    end
 
     def self.play_by_play_url(options = {})
       "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/pbp.xml"
@@ -556,7 +556,7 @@ module Sportsdata
 
     def self.play_summary_url(options = {})
       "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/plays/#{options[:play_guid]}.xml"
-
+    end
 
     def self.players_url(options = {})
       "teams/#{options[:team_abbr]}/roster.xml"

@@ -6,7 +6,7 @@ require 'pry'
 
 Sportsdata.configure do |config|
   config.nfl_api_key            = ENV['SPORTSDATA_NFL_API_KEY']
-  config.nfl_iamges_api_key     = ENV['SPORTSDATA_NFL_IMAGES_API_KEY']
+  config.nfl_images_api_key     = ENV['SPORTSDATA_NFL_IMAGES_API_KEY']
   config.mlb_api_key            = ENV['SPORTSDATA_MLB_API_KEY']
   config.mlb_images_api_key     = ENV['SPORTSDATA_MLB_IMAGES_API_KEY']
   config.nhl_api_key            = ENV['SPORTSDATA_NHL_API_KEY']

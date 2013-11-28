@@ -9,12 +9,24 @@ module Sportsdata
         raise Sportsdata::Exception, "api key is not configured"
       end
 
+      def images_api_key
+        raise Sportsdata::Exception, "images_api key is not configured"
+      end
+
       def api_mode
         raise Sportsdata::Exception, "api mode is not configured"
       end
 
+      def images_api_mode
+        raise Sportsdata::Exception, "images_api mode is not configured"
+      end
+
       def version
         raise Sportsdata::Exception, "version is not configured"
+      end
+
+      def images_version
+        raise Sportsdata::Exception, "images version is not configured"
       end
 
       def name
@@ -23,6 +35,10 @@ module Sportsdata
 
       def base_url
         "http://api.sportsdatallc.org/#{self.name}-#{self.api_mode}#{self.version}"
+      end
+
+      def images_base_url
+        "http://api.sportsdatallc.org/#{self.name}-images-#{self.images_api_mode}#{self.images_version}"
       end
 
       #do not change the methods below
