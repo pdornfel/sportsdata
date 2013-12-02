@@ -340,7 +340,7 @@ module Sportsdata
       games = []
       options[:seasons].each{|season|
         options[:years].each{|year|
-          response = self.get(games_url(:year => year, :season => season.to_s.upcase))
+          response = self.get(self.games_url(:year => year, :season => season.to_s.upcase))
           unless response.empty?
             all_games = response['season'].try(:[], 'week')
             all_games ||= []
@@ -389,7 +389,7 @@ module Sportsdata
 
     def self.game_statistics(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       statistics = []
-      response = self.get(game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      response = self.get(self.game_statistics_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
         statistics_record = {}
         statistics_record[:sports_data_guid]       = response['game']['id']
@@ -405,7 +405,7 @@ module Sportsdata
 
     def self.game_summary(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       summary = []
-      response = self.get(game_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      response = self.get(self.game_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
         summary_record = {}
         summary_record[:sports_data_guid]       = response['game']['id']
@@ -421,7 +421,7 @@ module Sportsdata
 
     def self.game_box(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       game_box = []
-      response = self.get(game_box_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      response = self.get(self.game_box_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
         game_box_record = {}
         game_box_record[:sports_data_guid]      = response['game']['id']
@@ -440,7 +440,7 @@ module Sportsdata
 
     def self.play_by_play(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN'})
       play_by_play = []
-      response = self.get(play_by_play_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
+      response = self.get(self.play_by_play_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team]))
       unless response.empty?
         play_by_play_record = {}
         play_by_play_record['sports_data_game_guid']    = response['game']['id']
@@ -457,7 +457,7 @@ module Sportsdata
 
     def self.play_summary(options = {:year => Date.today.year, :season => 'REG', :week => 1, :away_team => 'BAL', :home_team => 'DEN', :play_guid => '748c7397-3f36-41b4-b49b-671c55a04589'})
       play_summary = []
-      response = self.get(play_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team], :play_guid => options[:play_guid]))
+      response = self.get(self.play_summary_url(:year => options[:year], :season => options[:season], :week => options[:week], :away_team => options[:away_team], :home_team => options[:home_team], :play_guid => options[:play_guid]))
       unless response.empty?
         play_summary_record = {}
         play_summary_record['sports_data_guid']                     = response['play']['id']
@@ -491,7 +491,7 @@ module Sportsdata
       players = []
       teams = Sportsdata.nfl.teams
       teams.each{|team|
-        response = self.get(players_url(:team_abbr => team[:sports_data_guid]))
+        response = self.get(self.players_url(:team_abbr => team[:sports_data_guid]))
         unless response.empty?
           all_players = response['team'].try(:[], 'player')
           all_players ||= []
@@ -578,15 +578,15 @@ module Sportsdata
       "#{options[:year]}/#{options[:season]}/#{options[:week]}/#{options[:away_team]}/#{options[:home_team]}/injuries.xml"
     end
 
-    def self.schema_manifest
+    def self.schema_manifest_url
       "schema/manifest-v1.0.xsd"
     end
 
-    def self.feed_manifest(options = {})
+    def self.feed_manifest_url(options = {})
       "manifests/#{options[:image_type]}/all_assets.xml"
     end
 
-    def self.images(options = {})
+    def self.images_url(options = {})
       "#{options[:image_type]}/#{options[:asset_id]}/#{options[:filename]}.#{options[:format]}"
     end
   end

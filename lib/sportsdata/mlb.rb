@@ -250,7 +250,7 @@ module Sportsdata
     def self.games(options = {:years => [Date.today.year-1, Date.today.year]})
       games = []
       options[:years].each{|year|
-        response = self.get(games_url(:year => year))
+        response = self.get(self.games_url(:year => year))
         if response['calendars']
           all_games = response['calendars'].try(:[], 'event')
           all_games ||= []
@@ -280,7 +280,7 @@ module Sportsdata
       players = []
       options[:years].each{|year|
         #sleep(2)
-        response = self.get(players_url(:year => year))
+        response = self.get(self.players_url(:year => year))
         all_players = response['rosters'].try(:[], 'team')
         all_players ||= []
         all_players.each { |team|
@@ -351,15 +351,15 @@ module Sportsdata
       "rosters-full/#{options[:year]}.xml"
     end
 
-    def self.schema_manifest
+    def self.schema_manifest_url
       "schema/manifest-v1.0.xsd"
     end
 
-    def self.manifest(options = {})
+    def self.manifest_url(options = {})
       "manifests/#{options[:image_type]}/all_assets.xml"
     end
 
-    def self.images(options = {})
+    def self.images_url(options = {})
       "#{options[:image_type]}/#{options[:asset_id]}/#{options[:filename]}.#{options[:format]}"
     end
   end

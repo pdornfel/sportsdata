@@ -204,7 +204,7 @@ module Sportsdata
       options[:seasons].each{|season|
         #sleep(2)
         options[:years].each{|year|
-          response = self.get(games_url(:year => year, :season => season))
+          response = self.get(self.games_url(:year => year, :season => season))
           if response['league']
             all_games = response['league'].try(:[], 'season_schedule')
             all_games ||= []
@@ -253,7 +253,7 @@ module Sportsdata
 
     def self.game_summary(options = {:game_guid => '270aec5b-f538-44dd-adc6-6ef16667257c'})
       game_summary = []
-      response = self.get(game_summary_url(:game_guid => options[:game_guid]))
+      response = self.get(self.game_summary_url(:game_guid => options[:game_guid]))
       game_summary_record = {}
       game_summary_record[:sports_data_guid]        = response['game']['id']
       game_summary_record[:status]                  = response['game']['status']
@@ -272,7 +272,7 @@ module Sportsdata
 
     def self.play_by_play(options = {:game_guid => '270aec5b-f538-44dd-adc6-6ef16667257c'})
       play_by_play = []
-      response = self.get(play_by_play_url(:game_guid => options[:game_guid]))
+      response = self.get(self.play_by_play_url(:game_guid => options[:game_guid]))
       play_by_play_record = {}
       play_by_play_record[:sports_data_guid]  = response['game']['id']
       play_by_play_record[:status]            = response['game']['status']
@@ -293,7 +293,7 @@ module Sportsdata
       teams = Sportsdata.nba.teams
       teams.each{|team|
         #sleep(2)
-        response = self.get(players_url(:team_guid => team[:sports_data_guid]))
+        response = self.get(self.players_url(:team_guid => team[:sports_data_guid]))
         all_players = response['team'].try(:[], 'players')
         all_players ||= []
         if all_players
@@ -362,15 +362,15 @@ module Sportsdata
       "teams/#{options[:team_guid]}/profile.xml"
     end
 
-    def self.schema_manifest
+    def self.schema_manifest_url
       "schema/manifest-v1.0.xsd"
     end
 
-    def self.manifest(options = {})
+    def self.manifest_url(options = {})
       "manifests/#{options[:image_type]}/all_assets.xml"
     end
 
-    def self.images(options = {})
+    def self.images_url(options = {})
       "#{options[:image_type]}/#{options[:asset_id]}/#{options[:filename]}.#{options[:format]}"
     end
   end

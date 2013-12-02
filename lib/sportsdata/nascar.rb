@@ -122,7 +122,7 @@ module Sportsdata
     ## Their are three season options (PRE, REG, PST)
     #def self.games(options = {:year => Date.today.year, :season => 'REG'})
     #  games = []
-    #  response = self.get(games_url(:year => 2012))
+    #  response = self.get(self.games_url(:year => 2012))
     #  #games_url(:year => 2012)
     #  #games_url(:year => 2012)
     #  all_games = response['season'].try(:[], 'week')
@@ -144,7 +144,7 @@ module Sportsdata
 
     #def self.players(options = {})
     #  players = []
-    #  response = self.get(players_url(:team_abbr => 'MIA'))
+    #  response = self.get(self.players_url(:team_abbr => 'MIA'))
     #  all_players = response['team'].try(:[], 'player')
     #  all_players ||= []
     #  all_players.each { |player|
