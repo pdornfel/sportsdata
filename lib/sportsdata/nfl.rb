@@ -526,15 +526,21 @@ module Sportsdata
     end
 
     def self.manifest_schema
-        response = self.images_get(self.schema_manifest)
+      response = self.images_get(self.schema_manifest_url)
     end
 
-    def self.manifests_feed(options = {:image_type => [:headshot, :headshot_square, :headshot_coaches_square]})
-        response = self.images_get(self.feed_manifest(:image_type => options[:image_type]))
+    def self.manifest_feed(options = {:image_type => [:headshot, :headshot_square, :headshot_coaches_square]})
+      players = []
+      response = self.images_get(self.feed_manifest_url(:image_type => options[:image_type]))
+      all_players = response['assetlist']
+      all_players.each{|player|
+        player_record = {}
+      }
+      debugger
     end
 
     def self.image(options = {:image_type => [:headshot, :headshot_square, :headshot_coaches_square], :asset_id => 'edc6920e-0933-4d61-bd6f-a60c64d12b3d', :filename => 1658, :format => 'jpg'})
-        response = self.images_get(self.images(:image_type => options[:image_type]))
+      response = self.images_get(self.images_url(:image_type => options[:image_type]))
     end
 
     private
