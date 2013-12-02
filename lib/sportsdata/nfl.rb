@@ -532,15 +532,25 @@ module Sportsdata
     def self.manifest_feed(options = {:image_type => [:headshot, :headshot_square, :headshot_coaches_square]})
       players = []
       response = self.images_get(self.feed_manifest_url(:image_type => options[:image_type]))
-      all_players = response['assetlist']
+      all_players = response['assetlist'].try(:[], 'asset')
       all_players.each{|player|
         player_record = {}
+        player_record[:title]                   = player['title']
+        player_record[:description]             = player['description']
+        player_record[:player_image]            = player['links']['link'][0]['href']
+        player_record[:sports_data_image_guid]  = player['id']
+        player_record[:sports_data_player_guid] = player['player_id']
+        player_record[:sports_data_created]     = player['created']
+        player_record[:sports_data_updated]     = player['updated']
+        players.append(player_record)
       }
-      debugger
+      players
     end
 
-    def self.image(options = {:image_type => [:headshot, :headshot_square, :headshot_coaches_square], :asset_id => 'edc6920e-0933-4d61-bd6f-a60c64d12b3d', :filename => 1658, :format => 'jpg'})
-      response = self.images_get(self.images_url(:image_type => options[:image_type]))
+    def self.player_image(options = {:image_type => [:headshot, :headshot_square, :headshot_coaches_square], :asset_id => 'edc6920e-0933-4d61-bd6f-a60c64d12b3d', :filename => 1658, :format => 'jpg'})
+      players = []
+      response = self.images_get(self.images_url(:image_type => options[:image_type], :asset_id => options[:asset_id], :filename => options[:filename], :format => options[:format]))
+      response
     end
 
     private

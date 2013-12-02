@@ -321,6 +321,35 @@ module Sportsdata
       players
     end
 
+    def self.manifest_schema
+      response = self.images_get(self.schema_manifest_url)
+    end
+
+    def self.manifest_feed(options = {:image_type => 'headshot'})
+      players = []
+      response = self.images_get(self.feed_manifest_url(:image_type => options[:image_type]))
+      all_players = response['assetlist'].try(:[], 'asset')
+      all_players.each{|player|
+        player_record = {}
+        player_record[:title]                   = player['title']
+        player_record[:description]             = player['description']
+        player_record[:player_image]            = player['links']['link'][0]['href']
+        player_record[:sports_data_image_guid]  = player['id']
+        player_record[:sports_data_player_guid] = player['player_id']
+        player_record[:sports_data_created]     = player['created']
+        player_record[:sports_data_updated]     = player['updated']
+        players.append(player_record)
+      }
+      players
+    end
+
+    def self.player_image(options = {:image_type => 'headshot', :asset_id => 'edc6920e-0933-4d61-bd6f-a60c64d12b3d', :filename => 1658, :format => 'jpg'})
+      players = []
+      response = self.images_get(self.images_url(:image_type => options[:image_type], :asset_id => options[:asset_id], :filename => options[:filename], :format => options[:format]))
+      response
+    end
+
+
     private
 
     def self.venues_url
@@ -355,7 +384,7 @@ module Sportsdata
       "schema/manifest-v1.0.xsd"
     end
 
-    def self.manifest_url(options = {})
+    def self.feed_manifest_url(options = {})
       "manifests/#{options[:image_type]}/all_assets.xml"
     end
 
