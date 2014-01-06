@@ -74,7 +74,8 @@ module Sportsdata
             elsif message.include?('InvalidSeasonException')
               return response.body
             else
-              raise message
+              return []
+              #raise message
             end
           else
             return response.body
