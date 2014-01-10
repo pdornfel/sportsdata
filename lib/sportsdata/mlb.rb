@@ -227,22 +227,24 @@ module Sportsdata
       venues
     end
 
-    def self.teams(options = {:year => Date.today.year})
+    def self.teams(options = {:years => [Date.today.year-1, Date.today.year]})
       teams = []
-      response = self.get(self.teams_url(:year => options[:year]))
-      all_teams = response['teams'].try(:[], 'team')
-      all_teams ||= []
-      all_teams.each { |team|
-        team_record = {}
-        team_record[:sports_data_guid]  = team['id']
-        team_record[:abbr]              = team['abbr']
-        team_record[:name]              = team['name']
-        team_record[:city]              = team['market']
-        team_record[:league]            = team['league']
-        team_record[:division]          = team['division']
-        team_record[:venue_guid]        = team['venue']
-        team_record[:params]            = team
-        teams.append(team_record)
+      options[:years].each{|year|
+        response = self.get(self.teams_url(:year => year))
+        all_teams = response['teams'].try(:[], 'team')
+        all_teams ||= []
+        all_teams.each { |team|
+          team_record = {}
+          team_record[:sports_data_guid]  = team['id']
+          team_record[:abbr]              = team['abbr']
+          team_record[:name]              = team['name']
+          team_record[:city]              = team['market']
+          team_record[:league]            = team['league']
+          team_record[:division]          = team['division']
+          team_record[:venue_guid]        = team['venue']
+          team_record[:params]            = team
+          teams.append(team_record)
+        }
       }
       teams
     end
@@ -274,6 +276,30 @@ module Sportsdata
         end
       }
       games
+    end
+
+    def self.game_summary(options = {:event_id => '270aec5b-f538-44dd-adc6-6ef16667257c'})
+      game_summary = []
+      response = self.get(self.game_statistics_url(:event_id => options[:event_id]))
+      game_summary_record = {}
+      game_summary_record[:sports_data_guid]        = response['statistics']['id']
+      game_summary_record[:status]                  = response['statistics']['status']
+      game_summary_record[:params]                  = response
+      game_summary.append(game_summary_record)
+      game_summary
+    end
+
+    def self.play_by_play(options = {:event_id => '99a0f209-2c69-49a4-99f9-8aebdf55b6e9'})
+      play_by_play = []
+      response = self.get(self.play_by_play_url(:event_id => options[:event_id]))
+      play_by_play_record = {}
+      play_by_play_record[:sports_data_guid]  = response['play_by_play']['id']
+      play_by_play_record[:status]            = response['play_by_play']['status']
+      play_by_play_record[:home_team_guid]    = response['play_by_play']['home']
+      play_by_play_record[:away_team_guid]    = response['play_by_play']['visitor']
+      play_by_play_record[:params]            = response
+      play_by_play.append(play_by_play_record)
+      play_by_play
     end
 
     def self.players(options = {:years => [Date.today.year]})
@@ -365,7 +391,7 @@ module Sportsdata
     end
 
     def self.game_statistics_url(options = {})
-      "statistics/#{options[:event_guid]}.xml"
+      "statistics/#{options[:event_id]}.xml"
     end
 
     def self.game_box_url(options = {})
@@ -373,7 +399,7 @@ module Sportsdata
     end
 
     def self.play_by_play_url(options = {})
-      "pbp/#{options[:event_guid]}.xml"
+      "pbp/#{options[:event_id]}.xml"
     end
 
     def self.players_url(options = {})
