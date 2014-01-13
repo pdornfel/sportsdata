@@ -302,10 +302,9 @@ module Sportsdata
       play_by_play
     end
 
-    def self.players(options = {:years => [Date.today.year]})
+    def self.players(options = {:years => [(Date.today - 1.year).year, Date.today.year]})
       players = []
       options[:years].each{|year|
-        #sleep(2)
         response = self.get(self.players_url(:year => year))
         all_players = response['rosters'].try(:[], 'team')
         all_players ||= []
