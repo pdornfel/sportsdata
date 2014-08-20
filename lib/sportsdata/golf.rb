@@ -131,36 +131,36 @@ module Sportsdata
     #  games
     #end
 
-    #def self.players(options = {})
-    #  players = []
-    #  response = self.get(players_url(:team_abbr => 'MIA'))
-    #  all_players = response['team'].try(:[], 'player')
-    #  all_players ||= []
-    #  all_players.each { |player|
-    #    player_record = {}
-    #    player_record[:guid]            = player['id']
-    #    player_record[:name_full]       = player['name_full']
-    #    player_record[:name_first]      = player['name_first']
-    #    player_record[:name_last]       = player['name_last']
-    #    player_record[:name_abbr]       = player['name_abbr']
-    #    player_record[:birthdate]       = player['birthdate']
-    #    player_record[:birth_place]     = player['birth_place']
-    #    player_record[:high_school]     = player['high_school']
-    #    player_record[:height]          = player['height']
-    #    player_record[:weight]          = player['weight']
-    #    player_record[:college]         = player['college']
-    #    player_record[:position]        = player['position']
-    #    player_record[:jersey_number]   = player['jersey_number']
-    #    player_record[:status]          = player['status']
-    #    player_record[:salary]          = player['salary']
-    #    player_record[:experience]      = player['experience']
-    #    player_record[:draft_pick]      = player['draft_pick']
-    #    player_record[:draft_round]     = player['draft_round']
-    #    player_record[:draft_team]      = player['draft_team']
-    #    players.append(Player.new(player_record))
-    #  }
-    #  players
-    #end
+    def self.players(options = {})
+     players = []
+     response = self.get(players_url(:team_abbr => 'MIA'))
+     all_players = response['team'].try(:[], 'player')
+     all_players ||= []
+     all_players.each { |player|
+       player_record = {}
+       player_record[:guid]            = player['id']
+       player_record[:name_full]       = player['name_full']
+       player_record[:name_first]      = player['name_first']
+       player_record[:name_last]       = player['name_last']
+       player_record[:name_abbr]       = player['name_abbr']
+       player_record[:birthdate]       = player['birthdate']
+       player_record[:birth_place]     = player['birth_place']
+       player_record[:high_school]     = player['high_school']
+       player_record[:height]          = player['height']
+       player_record[:weight]          = player['weight']
+       player_record[:college]         = player['college']
+       player_record[:position]        = player['position']
+       player_record[:jersey_number]   = player['jersey_number']
+       player_record[:status]          = player['status']
+       player_record[:salary]          = player['salary']
+       player_record[:experience]      = player['experience']
+       player_record[:draft_pick]      = player['draft_pick']
+       player_record[:draft_round]     = player['draft_round']
+       player_record[:draft_team]      = player['draft_team']
+       players.append(Player.new(player_record))
+     }
+     players
+    end
 
     #private
     #def self.venues_url
@@ -175,8 +175,8 @@ module Sportsdata
     #  "#{options[:year]}/#{options[:season]}/schedule.xml"
     #end
 
-    #def self.players_url(options = {})
-    #  "teams/#{options[:team_abbr]}/roster.xml"
-    #end
+    def self.players_url(options = {})
+     "teams/#{options[:team_abbr]}/roster.xml"
+    end
   end
 end
