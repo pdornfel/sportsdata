@@ -92,6 +92,7 @@ module Sportsdata
        hash[:event_id]           = event['id']
        hash[:event_name]         = event['name']
        hash[:event_type]         = event['event_type']
+       hash[:purse]              = event['purse']   
        hash[:event_purse]        = event['event_purse']
        hash[:event_start_date]   = event['start_date']
        hash[:event_end_date]     = event['end_date']
@@ -104,6 +105,19 @@ module Sportsdata
        schedule.append(Event.new(hash))
      end
      schedule
+    end
+
+    def self.tournament_leaderboard(options)
+      default_otpions = {
+        year: '2014'
+      }
+      options = options.reverse_merge(default_otpions)
+      leaderboard = []
+      response = self.get(self.tournament_leaderboard_url(options))
+    end
+
+    def self.tournament_leaderboard_url(options = {})
+     "#{self.base_url}/leaderboard/pga/#{options[:year]}/tournaments/#{options[:uid]}/leaderboard.xml"
     end
 
     def self.player_profiles_url(options = {})
